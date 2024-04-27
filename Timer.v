@@ -19,6 +19,7 @@ always @(posedge clock ) begin
     else begin
         if (start_timer) begin
             count <= value;
+            expirou <= 1'b0;
         end
         else if (timer_1sec > 28'd0) begin
             timer_1sec <= timer_1sec - 28'd1;
