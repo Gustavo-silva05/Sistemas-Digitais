@@ -1,0 +1,56 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/USER/Downloads/SD---T2-main/Parametros_Tempo
+vParametros_Tempo
+Z1 !s110 1714233958
+!i10b 1
+!s100 >ih>e99e;Ve8gRlj;=2k:0
+I<K<?CGDaVIXR49VEH5e4S2
+R0
+w1714232781
+8Parametros_Tempo.v
+FParametros_Tempo.v
+!i122 0
+L0 1 47
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+Z4 !s108 1714233958.000000
+!s107 Parametros_Tempo.v|
+!s90 -reportprogress|300|-work|work|Parametros_Tempo.v|
+!i113 1
+Z5 o-work work
+Z6 tCvgOpt 0
+n@parametros_@tempo
+vtb_parametros
+R1
+!i10b 1
+!s100 mm<]mRgTeQP;R]QE52<KV3
+I8XDfW2E`2MI]Sm58gNKQV0
+R0
+w1714233953
+8tb_parametros.v
+Ftb_parametros.v
+!i122 1
+L0 3 49
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 tb_parametros.v|
+!s90 -reportprogress|300|-work|work|tb_parametros.v|
+!i113 1
+R5
+R6

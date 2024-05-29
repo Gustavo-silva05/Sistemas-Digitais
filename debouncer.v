@@ -4,8 +4,20 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-module debounce ( input reset, clock, noisy,
-                  output reg clean );
+module debounce ( 
+    inout reset, 
+    inout clock, 
+    inout noisy, 
+    inout reprogram, 
+    inout door_pass, 
+    inout door_pass, 
+    inout ignition, 
+    inout hidden_sw, 
+    inout break,
+    output reg clean 
+    );
+
+    
 
     // debouncer
     reg [19:0] count;
@@ -14,7 +26,7 @@ module debounce ( input reset, clock, noisy,
     // debouncer
     always @(posedge clock)
     begin
-        if (reset_in) begin 
+        if (reset) begin 
             new_input <= noisy; 
             clean <= noisy; 
             count <= 20'd0;
