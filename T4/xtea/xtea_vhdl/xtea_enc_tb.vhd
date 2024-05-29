@@ -18,7 +18,6 @@ begin
     process
     begin
     clk <= '0', not clk after 10 ns;
-    wait for 10 ns;
     end process;
 
 end architecture;
