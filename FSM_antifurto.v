@@ -4,31 +4,31 @@ module FSM_antifurto (
     output start_timer, eneble_siren
 );
 
-Timer temporizador (
-    .clock(clock),
-    .reset(reset),
-    .value(),
-    .start_timer(start_timer),
-    .expired(expired),
-    .one_hz_enable(one_hz_enable)
-);
-Parametros_Tempo param ( 
-    .time_param_sel(), 
-    .interval(interval),
-    .time_value(),
-    .reprogram(reprogram), 
-    .clock(clock), 
-    .reset(reset),
-    .value()
-);
-gerador_sirene generator (
-    .clock(clock), 
-    .reset(reset),
-    .eneble_siren(eneble_siren), 
-    .two_hz_enable(),
-    .siren(), 
-    .color()
-);
+// Timer temporizador (
+//     .clock(clock),
+//     .reset(reset),
+//     .value(),
+//     .start_timer(start_timer),
+//     .expired(expired),
+//     .one_hz_enable(one_hz_enable)
+// );
+// Parametros_Tempo param ( 
+//     .time_param_sel(), 
+//     .interval(interval),
+//     .time_value(),
+//     .reprogram(reprogram), 
+//     .clock(clock), 
+//     .reset(reset),
+//     .value()
+// );
+// gerador_sirene generator (
+//     .clock(clock), 
+//     .reset(reset),
+//     .eneble_siren(eneble_siren), 
+//     .two_hz_enable(),
+//     .siren(), 
+//     .color()
+// );
 
 
 reg [1:0] intervalo;
