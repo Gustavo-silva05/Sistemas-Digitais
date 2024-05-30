@@ -3,13 +3,13 @@ vlib work
 vmap work work
 
 vcom -work work xtea_enc.vhd
-vcom -work work xtea_enc_tb.vhd
+vcom -work work tb_enc.vhd
 
-vsim -voptargs=+acc=lprn -t ns work.xtea_enc_tb
+vsim -voptargs=+acc=lprn -t ns work.tb_enc
 
 set StdArithNoWarnings 1
 set StdVitalGlitchNoWarnings 1
 
-do wave_enc.do
+do wave.do
 
 run 300 ns

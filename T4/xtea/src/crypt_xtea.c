@@ -10,10 +10,30 @@ void xtea_enc(unsigned int **dest, const unsigned int **v, const unsigned int **
 
     for(i = 0; i < 32; i++) {
         y0  += ((z0 << 4 ^ z0 >> 5) + z0) ^ (sum + *k[sum & 3]);
+        printf("encriptacao (%d):\t", i);
+        printf("%08X_", z1);
+        printf("%08X_", y1);
+        printf("%08X_", z0);
+        printf("%08X\n", y0);
         y1  += ((z1 << 4 ^ z1 >> 5) + z1) ^ (sum + *k[sum & 3]);
+        printf("encriptacao (%d):\t", i);
+        printf("%08X_", z1);
+        printf("%08X_", y1);
+        printf("%08X_", z0);
+        printf("%08X\n", y0);
         sum += delta;
         z0  += ((y0 << 4 ^ y0 >> 5) + y0) ^ (sum + *k[sum>>11 & 3]);
+        printf("encriptacao (%d):\t", i);
+        printf("%08X_", z1);
+        printf("%08X_", y1);
+        printf("%08X_", z0);
+        printf("%08X\n", y0);
         z1  += ((y1 << 4 ^ y1 >> 5) + y1) ^ (sum + *k[sum>>11 & 3]);
+        printf("encriptacao (%d):\t", i);
+        printf("%08X_", z1);
+        printf("%08X_", y1);
+        printf("%08X_", z0);
+        printf("%08X\n", y0);
     }
     *dest[0]=y0; *dest[1]=z0; *dest[2]=y1; *dest[3]=z1;
 }
