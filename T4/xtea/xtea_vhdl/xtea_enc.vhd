@@ -53,6 +53,7 @@ begiN
                 key_temp <= key(31 downto 0) & key(63 downto 32) & key(95 downto 64) & key(127 downto 96);
                 PE <= ENCRIP;       
             When ENCRIP => 
+                
                 temp    <=  data_temp (95 downto 64) sll 4 xor  data_temp (95 downto 64) srl 5;
                 temp2   <= temp + data_temp(95 downto 64);
                 index_key   <= sum (1 downto 0) and "11";
@@ -68,6 +69,7 @@ begiN
                 temp4 <= sum + temp3;
                 temp5 <= temp2 xor temp4;
                 temp6 <= data_temp (127 downto 96) +  temp5;
+                data_temp (127 downto 96) <= temp6;
 
             when others=>
                 PE <= IDLE;
