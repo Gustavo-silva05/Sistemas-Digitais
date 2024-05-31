@@ -13,10 +13,9 @@ port(
 end entity;
 
 architecture xtea_enc of xtea_enc is
-    type state_type is (IDLE, INV, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
+    type state_type is (IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
     signal EA, PE           : state_type;
     signal data_temp        : std_logic_vector  (127 downto 0);
-    signal key_temp         : std_logic_vector  (127 downto 0);
     signal sum              : std_logic_vector  (31 downto 0);
     signal delta            : std_logic_vector  (31 downto 0);
     signal temp             : std_logic_vector  (31 downto 0);
@@ -71,19 +70,18 @@ begin
         end if;
     end process countering;
 
-    data: process(clk, reset, EA)
+    data: process(clk, reset, EA, op)
     begin
         if reset = '1' then
             data_o <= x"00000000000000000000000000000000";
             data_temp <= data_i(31 downto 0) & data_i(63 downto 32) & data_i(95 downto 64) & data_i(127 downto 96);
         elsif rising_edge(clk) then
+            data_o <= data_encriptada(31 downto 0) & data_encriptada(63 downto 32) & data_encriptada(95 downto 64) & data_encriptada(127 downto 96);
             if EA =  ENCRIP_DATA then
                 if op = "11" then
                     data_temp <= data_encriptada;
                 end if;
-            elsif EA = IDLE then
-                data_o <= data_encriptada(31 downto 0) & data_encriptada(63 downto 32) & data_encriptada(95 downto 64) & data_encriptada(127 downto 96);
-            end if ;
+            end if;
         end if;
     end process data;
 
@@ -93,7 +91,9 @@ begin
             sum <= x"00000000";
         elsif rising_edge(clk) then
             if EA = ENCRIP_SUM then
-                sum <= sum + delta;
+                if op = "01" then 
+                    sum <= sum + delta;
+                end if;
             end if;
         end if;
     end process somador;
@@ -103,14 +103,11 @@ begin
         case EA is
             When IDLE =>
                 if start = '1' then
-                    PE <= INV;
+                    PE <= ENCRIP_XOR;
                 else
                     PE <= IDLE;
                 end if ;
             
-            When INV => 
-                key_temp <= key(31 downto 0) & key(63 downto 32) & key(95 downto 64) & key(127 downto 96);
-                PE <= ENCRIP_XOR;  
     
             When ENCRIP_XOR => 
                 if counter < x"20" then
@@ -165,14 +162,14 @@ begin
                         temp3   <=  key(127 downto 96);
                     end if ;
                 end if;
-                PE <= ENCRIP_SUM;
+                PE <= ENCRIP_SOMA2;
             
             WHEN ENCRIP_SUM =>        
-                PE <= ENCRIP_SOMA2;
+                PE <= ENCRIP_XOR2;
             
             WHEN ENCRIP_SOMA2 =>
                 temp4 <= sum + temp3;
-                PE <= ENCRIP_XOR2;
+                PE <= ENCRIP_SUM;
             
             WHEN ENCRIP_XOR2 =>
                 temp5 <= temp2 xor temp4;
@@ -195,4 +192,5 @@ begin
             
         end case;
     end process fsm;
+    
 end architecture;
