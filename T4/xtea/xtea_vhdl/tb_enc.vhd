@@ -17,15 +17,10 @@ begin
                 data_o=> data_o 
             ); 
     
-    clk     <= not clk after 2 ns;
-    reset   <= '1', '0' after 10 ns;
+    clk     <= not clk after 5 ns;
+    reset   <= '1', '0' after 20 ns;
     data_i  <= x"A5A5A5A501234567FEDCBA985A5A5A5A"; 
     key     <= x"DEADBEEF0123456789ABCDEFDEADBEEF";
-    process
-    begin
-        wait for 50 ns;
-        start <= '1', '0' after 10 ns;
-    end process;
-
+    start <= '1', '0' after 30 ns;
 
 end architecture;
