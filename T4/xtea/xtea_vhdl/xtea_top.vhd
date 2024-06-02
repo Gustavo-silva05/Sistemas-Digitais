@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 Entity xtea_top is 
 port(
-    start, clk, reset config : IN std_logic;
+    start, clk, reset, config : IN std_logic;
     data_i, key : IN std_logic_vector (127 downto 0);
     busy, ready : out std_logic;
     key : OUT std_logic_vector (127 downto 0)
@@ -12,7 +12,7 @@ port(
 end Entity;
 architecture xtea_top of xtea_top is
 
-    Type state is (IDLE, ENC, DEC, END);
+    Type state is (IDLE, ENC, DEC);
     signal EA, PE : state;
 
 begin
@@ -41,12 +41,10 @@ begin
             When ENC => 
                 encriptador: entity work.xtea_enc
                         port map ();
-                PE <= FIM;
+                PE <= IDLE;
             When DEC =>
                 descriptador: entity work.xtea_dec
                         port map ();
-                PE <= FIM;
-            When END =>
                 PE <= IDLE;
         end case;
     end process;
