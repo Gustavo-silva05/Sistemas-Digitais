@@ -6,9 +6,10 @@ use IEEE.std_logic_arith.all;
 
 entity xtea_enc is 
 port(
-    clk, reset,start   : in std_logic;
-    data_i, key  : in std_logic_vector (127 downto 0);
-    data_o  : out std_logic_vector (127 downto 0)
+    clk, reset,start            : in std_logic;
+    data_i, key                 : in std_logic_vector (127 downto 0);
+    data_o                      : out std_logic_vector (127 downto 0);
+    busy, ready                 : out std_logic
 );
 end entity;
 
@@ -60,7 +61,7 @@ begin
         if reset = '1' then
             counter <= x"00";
         elsif rising_edge(clk) then
-            if EA = IDLE then
+            if EA = IDLE and start = '1' then
                 counter <= x"00";
             elsif EA = ENCRIP_DATA then
                 if op = "11" then
@@ -96,11 +97,27 @@ begin
         end if;
     end process somador;
 
-   fsm : process (clk , EA , op, start, index_key,counter) 
+    saidas: process(clk, reset, EA)
+    begin
+        if reset = '1' then
+            busy    <= '0';
+            ready   <= '0';
+        elsif rising_edge(clk) then
+            if EA = IDLE  and start = '1' then
+                busy    <= '1';
+                ready   <= '0';
+            elsif counter = x"20" then
+                ready <= '1';
+                busy <= '0';
+            end if;
+        end if;
+    end process saidas;
+
+    fsm : process (clk , EA , op, start, index_key,counter) 
     begin
         case EA is
             When IDLE =>
-                if start = '1' then
+                if start = '1'  then
                     data_encriptada <= data_temp;
                     PE <= ENCRIP_XOR;
                 else

@@ -13,6 +13,6 @@ vsim -voptargs=+acc=lprn -t ns work.tb_top
 set StdArithNoWarnings 1
 set StdVitalGlitchNoWarnings 1
 
+do wave_top.do
 
-
-run 10000 ns
+run 15000 ns
