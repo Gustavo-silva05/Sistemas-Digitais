@@ -6,6 +6,7 @@ use IEEE.std_logic_arith.all;
 
 entity xtea_enc is 
 port(
+    config                      : in std_logic;
     clk, reset,start            : in std_logic;
     data_i, key                 : in std_logic_vector (127 downto 0);
     data_o                      : out std_logic_vector (127 downto 0);
@@ -14,7 +15,7 @@ port(
 end entity;
 
 architecture xtea_enc of xtea_enc is
-    type state_type is (IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
+    type state_type is (CONF, IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
     signal EA, PE           : state_type;
     signal data_temp        : std_logic_vector  (127 downto 0);
     signal sum              : std_logic_vector  (31 downto 0);
@@ -33,8 +34,7 @@ begin
     begin
         if rising_edge(clk) then
             if reset = '1' then
-                EA <= IDLE;
-                delta <= x"9E3779B9";
+                EA <= CONF;
             else
                 EA <= PE;
             end if ;
@@ -43,10 +43,10 @@ begin
 
     operations: process(clk, reset)
     begin
-        if reset = '1' then
-            op <= "000";
-        elsif rising_edge(clk) then
-            if EA = ENCRIP_DATA then
+        if rising_edge(clk) then
+            if EA = IDLE then
+                op <= "000";
+            elsif EA = ENCRIP_DATA then
                 if op = "011" then
                     op <= "000";
                 else 
@@ -58,9 +58,7 @@ begin
 
     countering: process(clk, reset)
     begin
-        if reset = '1' then
-            counter <= x"00";
-        elsif rising_edge(clk) then
+        if rising_edge(clk) then
             if EA = IDLE and start = '1' then
                 counter <= x"00";
             elsif EA = ENCRIP_DATA then
@@ -73,12 +71,13 @@ begin
 
     data: process(clk, reset, EA, op)
     begin
-        if reset = '1' then
-            data_o <= x"00000000000000000000000000000000";
-            data_temp <= data_i(31 downto 0) & data_i(63 downto 32) & data_i(95 downto 64) & data_i(127 downto 96);
-        elsif rising_edge(clk) then
+        if rising_edge(clk) then
             data_o <= data_encriptada(31 downto 0) & data_encriptada(63 downto 32) & data_encriptada(95 downto 64) & data_encriptada(127 downto 96);
-            if EA =  ENCRIP_DATA then
+            if EA  = CONF and config = '1' then
+                data_temp <= data_i(31 downto 0) & data_i(63 downto 32) & data_i(95 downto 64) & data_i(127 downto 96);
+            elsif EA = IDLE then
+                data_o <= x"00000000000000000000000000000000";
+            elsif EA =  ENCRIP_DATA then
                     data_temp <= data_encriptada;
             end if;
         end if;
@@ -86,10 +85,11 @@ begin
 
     somador: process(clk, reset,EA)
     begin
-        if reset = '1' then
-            sum <= x"00000000";
-        elsif rising_edge(clk) then
-            if EA = ENCRIP_SUM then
+        if rising_edge(clk) then
+            if EA = IDLE then
+                sum <= x"00000000";
+                delta <= x"9E3779B9";
+            elsif EA = ENCRIP_SUM then
                 if op = "01" then 
                     sum <= sum + delta;
                 end if;
@@ -116,6 +116,12 @@ begin
     fsm : process (clk , EA , op, start, index_key,counter) 
     begin
         case EA is
+            when CONF =>
+                if config = '1' then
+                    PE <= IDLE;
+                else
+                    PE <= CONF;
+                end if;
             When IDLE =>
                 if start = '1'  then
                     data_encriptada <= data_temp;
@@ -138,7 +144,7 @@ begin
                     end if;
                     PE <= ENCRIP_SOMA;
                 else
-                    PE <= IDLE;
+                    PE <= CONF;
                 end if;
 
             
@@ -204,7 +210,7 @@ begin
                 PE <= ENCRIP_XOR;
             
             when others=>
-                PE <= IDLE;
+                PE <= CONF;
             
         end case;
     end process fsm;

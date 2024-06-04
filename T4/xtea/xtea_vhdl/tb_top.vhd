@@ -23,7 +23,7 @@ begin
     reset   <= '1', '0' after 20 ns;
     data_i  <= x"A5A5A5A501234567FEDCBA985A5A5A5A"; 
     key     <= x"DEADBEEF0123456789ABCDEFDEADBEEF";
-    start   <= '1', '0' after 30 ns;
+    start   <= '0', '1' after 10010 ns;
     config  <= '0', '1' after 10000 ns;
 
 end architecture;

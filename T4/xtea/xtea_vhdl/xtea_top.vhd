@@ -13,8 +13,8 @@ end Entity;
 architecture xtea_top of xtea_top is
 begin
     encrip: entity work.xtea_enc
-    port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready);
+    port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready, config=>config);
     
-    -- descrip: entity work.xtea_dec
-    -- port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready);
+    descrip: entity work.xtea_dec
+    port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready, config=>config);
 end architecture xtea_top;
