@@ -1,20 +1,23 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
 
-Entity xtea_top is 
-port(
-    start, clk, reset, config : IN std_logic;
-    data_i, key : IN std_logic_vector (127 downto 0);
-    busy, ready : out std_logic;
-    data_o : OUT std_logic_vector (127 downto 0)
-);
-end Entity;
-architecture xtea_top of xtea_top is
-begin
-    encrip: entity work.xtea_enc
-    port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready, config=>config);
+ENTITY xtea_top IS
+    PORT (
+        start, clk, reset, config : IN STD_LOGIC;
+        data_i, key : IN STD_LOGIC_VECTOR (127 DOWNTO 0);
+        busy, ready : OUT STD_LOGIC;
+        data_o : OUT STD_LOGIC_VECTOR (127 DOWNTO 0)
+    );
+END ENTITY;
+ARCHITECTURE xtea_top OF xtea_top IS
+
+BEGIN
+
+    encrip : ENTITY work.xtea_enc
+        PORT MAP(clk => clk, reset => reset, start => start, key => key, data_i => data_i, data_o => data_o, busy => busy, ready => ready, config => config);
     
-    descrip: entity work.xtea_dec
-    port map (clk=>clk, reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o, busy=>busy, ready=>ready, config=>config);
-end architecture xtea_top;
+    -- descrip : ENTITY work.xtea_dec
+    --     PORT MAP (clk => clk, reset => reset, start => start, key => key, data_i => data_i, data_o => data_o, busy => busy, ready => ready, config => config);
+    
+END ARCHITECTURE xtea_top;

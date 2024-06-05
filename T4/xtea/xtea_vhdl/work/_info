@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T4/xtea/xtea_vhdl
 Etb_top
-Z1 w1717538636
+Z1 w1717557674
 Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
@@ -24,25 +24,25 @@ Ve>PI;QbjZnRk>FKU8VAm43
 !s100 6`:B<57d?58UPzFe6<<S51
 Z7 OV;C;2021.1;73
 33
-Z8 !s110 1717539916
+Z8 !s110 1717561501
 !i10b 1
-Z9 !s108 1717539916.000000
+Z9 !s108 1717561501.000000
 Z10 !s90 -reportprogress|300|-work|work|tb_top.vhd|
 !s107 tb_top.vhd|
 !i113 1
 Z11 o-work work
 Z12 tExplicit 1 NoCoverage 1 CvgOpt 0
 Atb_top
-Z13 DEx4 work 8 xtea_top 0 22 _RWEG7g6_HHlW`n<Ne6iJ0
+Z13 DEx4 work 8 xtea_top 0 22 ^m9PYYM^260c0iT9P?c^^2
 R2
 R3
 R4
 DEx4 work 6 tb_top 0 22 e>PI;QbjZnRk>FKU8VAm43
 !i122 3
 l14
-L8 22
-V=Gc?5>Zf[QZ0hgF5FekJ?1
-!s100 omM3zYY5Yi>=A86Q]aX<?0
+L8 21
+VRE;Wnd]4n6Qk=iHHaXG^A3
+!s100 71hBM2P<jmMgKKOEAYBg03
 R7
 33
 R8
@@ -54,7 +54,7 @@ Z14 !s107 tb_top.vhd|
 R11
 R12
 Extea_dec
-Z15 w1717539871
+Z15 w1717561318
 Z16 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
 Z17 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 R2
@@ -66,13 +66,13 @@ Z18 8DEC/xtea_dec.vhd
 Z19 FDEC/xtea_dec.vhd
 l0
 L7 1
-V[R=4FVXZmWn[mf@L9:JUH0
-!s100 nKAGO@]G:ha]k92HDGRPO1
+Vz_C@o7i^32MTj@aQh]]An1
+!s100 :7`Cn7lae>0DZeE:;_H383
 R7
 33
-Z20 !s110 1717539915
+Z20 !s110 1717561500
 !i10b 1
-Z21 !s108 1717539915.000000
+Z21 !s108 1717561500.000000
 Z22 !s90 -reportprogress|300|-work|work|DEC/xtea_dec.vhd|
 Z23 !s107 DEC/xtea_dec.vhd|
 !i113 1
@@ -84,12 +84,12 @@ R17
 R2
 R3
 R4
-Z24 DEx4 work 8 xtea_dec 0 22 [R=4FVXZmWn[mf@L9:JUH0
+DEx4 work 8 xtea_dec 0 22 z_C@o7i^32MTj@aQh]]An1
 !i122 1
 l32
-L17 204
-V@W0;eVh?ej5EFR1kQ98030
-!s100 Mb=XVkgh=@HS3T^VDoAJU2
+L17 215
+VX^z4Q3LC9;YSGT`X[T4CX1
+!s100 lLMBPLNnN:jFCGzRZkEYc1
 R7
 33
 R20
@@ -101,7 +101,7 @@ R23
 R11
 R12
 Extea_enc
-Z25 w1717539703
+Z24 w1717560622
 R16
 R17
 R2
@@ -109,19 +109,19 @@ R3
 R4
 !i122 0
 R0
-Z26 8ENC/xtea_enc.vhd
-Z27 FENC/xtea_enc.vhd
+Z25 8ENC/xtea_enc.vhd
+Z26 FENC/xtea_enc.vhd
 l0
 L7 1
-VXaPN7V1F2:6D<<]kWP:W]3
-!s100 Ub4o]nYY[:caE]nPzc8A[1
+VVT047AgEJUQ^]b2;h>V=g1
+!s100 oA0:[1KBOnkG5XPd8LNM]3
 R7
 33
 R20
 !i10b 1
 R21
-Z28 !s90 -reportprogress|300|-work|work|ENC/xtea_enc.vhd|
-Z29 !s107 ENC/xtea_enc.vhd|
+Z27 !s90 -reportprogress|300|-work|work|ENC/xtea_enc.vhd|
+Z28 !s107 ENC/xtea_enc.vhd|
 !i113 1
 R11
 R12
@@ -131,66 +131,65 @@ R17
 R2
 R3
 R4
-Z30 DEx4 work 8 xtea_enc 0 22 XaPN7V1F2:6D<<]kWP:W]3
+Z29 DEx4 work 8 xtea_enc 0 22 VT047AgEJUQ^]b2;h>V=g1
 !i122 0
 l32
-L17 202
-VRl`XjIj3JZ4QbVHcCB^ge3
-!s100 EPhC>j3=L3U=^1FDe=SjW1
+L17 216
+V82ZTLcS?d9_`QPXRe7FOP3
+!s100 Bc]ild9lzN;HU3<8z1_HL2
 R7
 33
 R20
 !i10b 1
 R21
+R27
 R28
-R29
 !i113 1
 R11
 R12
 Extea_top
-Z31 w1717539907
+Z30 w1717561497
 R2
 R3
 R4
 !i122 2
 R0
-Z32 8xtea_top.vhd
-Z33 Fxtea_top.vhd
+Z31 8xtea_top.vhd
+Z32 Fxtea_top.vhd
 l0
 L5 1
-V_RWEG7g6_HHlW`n<Ne6iJ0
-!s100 ejQzc_=>AKmDNm?MB4AOC3
+V^m9PYYM^260c0iT9P?c^^2
+!s100 `<Ii[eXlOk>nS8YOkSRLe1
 R7
 33
 R20
 !i10b 1
 R21
-Z34 !s90 -reportprogress|300|-work|work|xtea_top.vhd|
-Z35 !s107 xtea_top.vhd|
+Z33 !s90 -reportprogress|300|-work|work|xtea_top.vhd|
+Z34 !s107 xtea_top.vhd|
 !i113 1
 R11
 R12
 Axtea_top
-R24
 R16
 R17
-R30
+R29
 R2
 R3
 R4
 R13
 !i122 2
-l14
-L13 8
-Vj@D[YIMo]zL3h1eRR[l0X0
-!s100 gRZ>X;@dXVJ8AcO>SWE2Y2
+l15
+L13 11
+VLd<3?XnJS6YT>0a4]O@KJ0
+!s100 NI]W76VNQM`YVFnOk58OK2
 R7
 33
 R20
 !i10b 1
 R21
+R33
 R34
-R35
 !i113 1
 R11
 R12

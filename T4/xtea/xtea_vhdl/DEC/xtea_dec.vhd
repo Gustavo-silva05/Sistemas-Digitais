@@ -1,220 +1,231 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
-use IEEE.std_logic_unsigned.all;
-use IEEE.std_logic_arith.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+USE IEEE.std_logic_unsigned.ALL;
+USE IEEE.std_logic_arith.ALL;
 
-entity xtea_dec is 
-port(
-    config                      : in std_logic;
-    clk, reset,start            : in std_logic;
-    data_i, key                 : in std_logic_vector (127 downto 0);
-    data_o                      : out std_logic_vector (127 downto 0);
-    busy, ready                 : out std_logic
-);
-end entity;
+ENTITY xtea_dec IS
+    PORT (
+        config : IN STD_LOGIC;
+        clk, reset, start : IN STD_LOGIC;
+        data_i, key : IN STD_LOGIC_VECTOR (127 DOWNTO 0);
+        data_o : OUT STD_LOGIC_VECTOR (127 DOWNTO 0);
+        busy, ready : OUT STD_LOGIC
+    );
+END ENTITY;
 
-architecture xtea_dec of xtea_dec is
-    type state_type is (CONF, IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_DECRESE, ENCRIP_DECRESE2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
-    signal EA, PE           : state_type;
-    signal data_temp        : std_logic_vector  (127 downto 0);
-    signal sum              : std_logic_vector  (31 downto 0);
-    signal delta            : std_logic_vector  (31 downto 0);
-    signal temp             : std_logic_vector  (31 downto 0);
-    signal temp2            : std_logic_vector  (31 downto 0);
-    signal temp3            : std_logic_vector  (31 downto 0);
-    signal temp4            : std_logic_vector  (31 downto 0);
-    signal temp5            : std_logic_vector  (31 downto 0);
-    signal data_encriptada  : std_logic_vector  (127 downto 0);
-    signal index_key        : std_logic_vector  (1 downto 0);
-    signal counter          : std_logic_vector  (7 downto 0);
-    signal op               : std_logic_vector  (2 downto 0);
-begin
-    states: process (clk, reset) 
-    begin
-        if rising_edge(clk) then
-            if reset = '1' then
+ARCHITECTURE xtea_dec OF xtea_dec IS
+    TYPE state_type IS (CONF, IDLE, DECRIP_XOR, DECRIP_XOR2, DECRIP_DECRESE, DECRIP_DECRESE2, DECRIP_KEY, DECRIP_DATA, DECRIP_SUM, RES);
+    SIGNAL EA, PE : state_type;
+    SIGNAL data_temp : STD_LOGIC_VECTOR (127 DOWNTO 0);
+    SIGNAL sum : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL delta : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp2 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp3 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp4 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp5 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL data_decriptada : STD_LOGIC_VECTOR (127 DOWNTO 0);
+    SIGNAL index_key : STD_LOGIC_VECTOR (1 DOWNTO 0);
+    SIGNAL counter : STD_LOGIC_VECTOR (7 DOWNTO 0);
+    SIGNAL op : STD_LOGIC_VECTOR (2 DOWNTO 0);
+BEGIN
+    states : PROCESS (clk, reset)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF reset = '1' THEN
                 EA <= CONF;
-            else
+            ELSE
                 EA <= PE;
-            end if ;
-        end if;
-    end process states;
-
-    operations: process(clk, reset)
-    begin
-        if rising_edge(clk) then
-            if EA = IDLE then
+            END IF;
+        END IF;
+    END PROCESS states;
+--------------------------------------------------------
+    operations : PROCESS (clk, reset)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF EA = IDLE THEN
                 op <= "000";
-            elsif EA = ENCRIP_DATA then
-                if op = "011" then
+            ELSIF EA = DECRIP_DATA THEN
+                IF op = "011" THEN
                     op <= "000";
-                else 
+                ELSE
                     op <= op + '1';
-                end if;
-            end if;
-        end if;
-    end process operations;
-
-    countering: process(clk, reset)
-    begin
-        if rising_edge(clk) then
-            if EA = IDLE then
+                END IF;
+            END IF;
+        END IF;
+    END PROCESS operations;
+----------------------------------------------------------
+    countering : PROCESS (clk, reset)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF EA = IDLE THEN
                 counter <= x"00";
-            elsif EA = ENCRIP_DATA then
-                if op = "11" then
+            ELSIF EA = DECRIP_DATA THEN
+                IF op = "11" THEN
                     counter <= counter + '1';
-                end if;
-            end if;
-        end if;
-    end process countering;
-
-    data: process(clk, reset, EA, op)
-    begin
-        if rising_edge(clk) then
-            data_o <= data_encriptada(31 downto 0) & data_encriptada(63 downto 32) & data_encriptada(95 downto 64) & data_encriptada(127 downto 96);
-            if EA = CONF and config = '0' then
-                data_temp <= data_i(31 downto 0) & data_i(63 downto 32) & data_i(95 downto 64) & data_i(127 downto 96);
-            elsif EA = IDLE then
-                data_o <= x"00000000000000000000000000000000";
-            elsif EA =  ENCRIP_DATA then
-                data_temp <= data_encriptada;
-            end if;
-        end if;
-    end process data;
-
-    somador: process(clk, reset,EA)
-    begin
-        if rising_edge(clk) then
-            if EA = IDLE then
+                END IF;
+            END IF;
+        END IF;
+    END PROCESS countering;
+-------------------------------------------------------
+    data : PROCESS (clk, reset, EA, op)
+    BEGIN
+        IF rising_edge(clk) THEN
+            data_o <= data_decriptada(31 DOWNTO 0) & data_decriptada(63 DOWNTO 32) & data_decriptada(95 DOWNTO 64) & data_decriptada(127 DOWNTO 96);
+            IF EA = IDLE THEN
+                data_temp <= data_i(31 DOWNTO 0) & data_i(63 DOWNTO 32) & data_i(95 DOWNTO 64) & data_i(127 DOWNTO 96);
+            ELSIF EA = DECRIP_DATA THEN
+                data_temp <= data_decriptada;
+            END IF;
+        END IF;
+    END PROCESS data;
+------------------------------------------------------------
+    somador : PROCESS (clk, reset, EA)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF EA = IDLE THEN
                 sum <= x"C6EF3720";
                 delta <= x"9E3779B9";
-            elsif EA = ENCRIP_SUM then
-                if op = "01" then 
+            ELSIF EA = DECRIP_SUM THEN
+                IF op = "01" THEN
                     sum <= sum - delta;
-                end if;
-            end if;
-        end if;
-    end process somador;
-
-    saidas: process(clk, reset, EA)
-    begin
-        if rising_edge(clk) then
-            if EA = IDLE then
-                busy    <= '0';
-                ready   <= '0';
-            elsif EA = IDLE  and start = '1' then
-                busy    <= '1';
-                ready   <= '0';
-            elsif counter = x"20" then
-                ready <= '1';
-                busy <= '0';
-            end if;
-        end if;
-    end process saidas;
-
-   fsm : process (clk , EA , op, start, index_key,counter) 
-    begin
-        case EA is
-            WHEN CONF =>
-                if config = '0' then
+                END IF;
+            END IF;
+        END IF;
+    END PROCESS somador;
+------------------------------------------------------------
+    saidas : PROCESS (clk, reset, EA)
+    BEGIN
+        IF rising_edge(clk) THEN
+            CASE EA IS
+                WHEN IDLE =>
+                    busy <= '0';
+                    ready <= '0';
+                WHEN DECRIP_XOR =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_XOR2 =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_DECRESE =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_DECRESE2 =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_KEY =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_DATA =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN DECRIP_SUM =>
+                    busy <= '1';
+                    ready <= '0';
+                WHEN RES =>
+                    busy <= '0';
+                    ready <= '1';
+                WHEN OTHERS =>
+                    busy <= '0';
+                    ready <= '0';
+            END CASE;
+        END IF;
+    END PROCESS saidas;
+--------------------------------------------------------------
+    fsm : PROCESS (clk, EA, op, start, index_key, counter)
+    BEGIN
+        CASE EA IS
+            WHEN IDLE =>
+                IF start = '1' and config = '0' THEN
+                    PE <= DECRIP_XOR;
+                ELSE
                     PE <= IDLE;
-                else 
-                    PE <= CONF;
-                end if;
+                END IF;
+            WHEN DECRIP_XOR =>
+                data_decriptada <= data_temp;
+                IF counter < x"20" THEN
+                    IF op = "11" THEN
+                        temp <= data_temp (95 DOWNTO 64) SLL 4 XOR data_temp (95 DOWNTO 64) SRL 5;
+                    ELSIF op = "10" THEN
+                        temp <= data_temp (31 DOWNTO 0) SLL 4 XOR data_temp (31 DOWNTO 0) SRL 5;
+                    ELSIF op = "01" THEN
+                        temp <= data_temp (127 DOWNTO 96) SLL 4 XOR data_temp (127 DOWNTO 96) SRL 5;
+                    ELSIF op = "00" THEN
+                        temp <= data_temp (63 DOWNTO 32) SLL 4 XOR data_temp (63 DOWNTO 32) SRL 5;
+                    END IF;
+                    PE <= DECRIP_DECRESE;
+                ELSE
+                    PE <= RES;
+                END IF;
+            WHEN DECRIP_DECRESE =>
+                IF op = "11" THEN
+                    temp2 <= temp + data_temp(95 DOWNTO 64);
+                ELSIF op = "10" THEN
+                    temp2 <= temp + data_temp(31 DOWNTO 0);
+                ELSIF op = "01" THEN
+                    temp2 <= temp + data_temp(127 DOWNTO 96);
+                ELSIF op = "00" THEN
+                    temp2 <= temp + data_temp(63 DOWNTO 32);
+                END IF;
+                PE <= DECRIP_KEY;
 
-            When IDLE =>
-                
-                if start = '1' then
-                    data_encriptada <= data_temp;
-                    PE <= ENCRIP_XOR;
-                else
-                    PE <= IDLE;
-                end if ;
-            
-    
-            When ENCRIP_XOR => 
-                if counter < x"20" then
-                    if op = "11" then
-                        temp    <=  data_temp (95 downto 64) sll 4 xor  data_temp (95 downto 64) srl 5;
-                    elsif op = "10" then
-                        temp    <=  data_temp (31 downto 0) sll 4 xor  data_temp (31 downto 0) srl 5;
-                    elsif op = "01" then
-                        temp    <=  data_temp (127 downto 96) sll 4 xor  data_temp (127 downto 96) srl 5;
-                    elsif op = "00" then
-                        temp    <=  data_temp (63 downto 32) sll 4 xor  data_temp (63 downto 32) srl 5;   
-                    end if;
-                    PE <= ENCRIP_DECRESE;
-                else
-                    PE <= IDLE;
-                end if;
+            WHEN DECRIP_KEY =>
+                IF op = "11" OR op = "10" THEN
+                    index_key <= sum (1 DOWNTO 0) AND "11";
+                    IF index_key = "00" THEN
+                        temp3 <= key(31 DOWNTO 0);
+                    ELSIF index_key = "01" THEN
+                        temp3 <= key(63 DOWNTO 32);
+                    ELSIF index_key = "10" THEN
+                        temp3 <= key(95 DOWNTO 64);
+                    ELSIF index_key = "11" THEN
+                        temp3 <= key(127 DOWNTO 96);
+                    END IF;
+                ELSE
+                    index_key <= sum (12 DOWNTO 11) AND "11";
+                    IF index_key = "00" THEN
+                        temp3 <= key(31 DOWNTO 0);
+                    ELSIF index_key = "01" THEN
+                        temp3 <= key(63 DOWNTO 32);
+                    ELSIF index_key = "10" THEN
+                        temp3 <= key(95 DOWNTO 64);
+                    ELSIF index_key = "11" THEN
+                        temp3 <= key(127 DOWNTO 96);
+                    END IF;
+                END IF;
+                PE <= DECRIP_DECRESE2;
 
-            
-            when ENCRIP_DECRESE =>
-                if op = "11" then
-                    temp2   <= temp + data_temp(95 downto 64);
-                elsif op = "10" then
-                    temp2   <= temp + data_temp(31 downto 0);
-                elsif op = "01" then
-                    temp2   <= temp + data_temp(127 downto 96);
-                elsif op = "00" then
-                    temp2   <= temp + data_temp(63 downto 32);
-                end if;
-                PE <= ENCRIP_KEY;
-            
-            WHEN ENCRIP_KEY =>
-                if op = "11" or op = "10" then
-                    index_key   <= sum (1 downto 0) and "11";
-                    if index_key = "00" then
-                        temp3   <=  key(31 downto 0);
-                    elsif index_key = "01" then
-                        temp3   <=  key(63 downto 32);
-                    elsif index_key = "10" then
-                        temp3   <=  key(95 downto 64);
-                    elsif index_key = "11"  then
-                        temp3   <=  key(127 downto 96);
-                    end if ;
-                else
-                    index_key <= sum (12 DOWNTO 11) and "11";
-                    if index_key = "00" then
-                        temp3   <=  key(31 downto 0);
-                    elsif index_key = "01" then
-                        temp3   <=  key(63 downto 32);
-                    elsif index_key = "10" then
-                        temp3   <=  key(95 downto 64);
-                    elsif index_key = "11"  then
-                        temp3   <=  key(127 downto 96);
-                    end if ;
-                end if;
-                PE <= ENCRIP_DECRESE2;
-            
-            WHEN ENCRIP_DECRESE2 =>
+            WHEN DECRIP_DECRESE2 =>
                 temp4 <= sum + temp3;
-                PE <= ENCRIP_SUM;
+                PE <= DECRIP_SUM;
 
-            WHEN ENCRIP_SUM =>        
-                PE <= ENCRIP_XOR2;
+            WHEN DECRIP_SUM =>
+                PE <= DECRIP_XOR2;
+
+            WHEN DECRIP_XOR2 =>
+                temp5 <= temp2 XOR temp4;
+                PE <= DECRIP_DATA;
+
+            WHEN DECRIP_DATA =>
+                IF op = "11" THEN
+                    data_DECRIPtada (127 DOWNTO 96) <= data_temp (127 DOWNTO 96) - temp5;
+                ELSIF op = "10" THEN
+                    data_DECRIPtada (63 DOWNTO 32) <= data_temp (63 DOWNTO 32) - temp5;
+                ELSIF op = "01" THEN
+                    data_DECRIPtada (95 DOWNTO 64) <= data_temp (95 DOWNTO 64) - temp5;
+                ELSIF op = "00" THEN
+                    data_DECRIPtada (31 DOWNTO 0) <= data_temp (31 DOWNTO 0) - temp5;
+                END IF;
+                PE <= DECRIP_XOR;
             
-            WHEN ENCRIP_XOR2 =>
-                temp5 <= temp2 xor temp4;
-                PE <= ENCRIP_DATA;
-            
-            WHEN ENCRIP_DATA =>
-                if op = "11" then
-                    data_encriptada (127 downto 96) <= data_temp (127 downto 96) -  temp5;
-                elsif op = "10" then
-                    data_encriptada (63 downto 32) <= data_temp (63 downto 32) -  temp5;
-                elsif op = "01" then
-                    data_encriptada (95 downto 64) <= data_temp (95 downto 64) -  temp5;
-                elsif op = "00" then
-                    data_encriptada (31 downto 0) <= data_temp (31 downto 0) -  temp5;
-                end if;
-                PE <= ENCRIP_XOR;
-            
-            when others=>
+            WHEN RES=>
                 PE <= IDLE;
-            
-        end case;
-    end process fsm;
-    
-end architecture;
+
+            WHEN OTHERS =>
+                PE <= IDLE;
+
+        END CASE;
+    END PROCESS fsm;
+
+END ARCHITECTURE;
