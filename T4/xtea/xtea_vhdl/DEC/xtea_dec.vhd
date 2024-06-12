@@ -6,16 +6,15 @@ USE IEEE.std_logic_arith.ALL;
 
 ENTITY xtea_dec IS
     PORT (
-        config : IN STD_LOGIC;
         clk, reset, start : IN STD_LOGIC;
         data_i, key : IN STD_LOGIC_VECTOR (127 DOWNTO 0);
         data_o : OUT STD_LOGIC_VECTOR (127 DOWNTO 0);
-        busy, ready : OUT STD_LOGIC
+        ready : OUT STD_LOGIC
     );
 END ENTITY;
 
 ARCHITECTURE xtea_dec OF xtea_dec IS
-    TYPE state_type IS (CONF, IDLE, DECRIP_XOR, DECRIP_XOR2, DECRIP_DECRESE, DECRIP_DECRESE2, DECRIP_KEY, DECRIP_DATA, DECRIP_SUM, RES);
+    TYPE state_type IS (IDLE, DECRIP_XOR, DECRIP_XOR2, DECRIP_DECRESE, DECRIP_DECRESE2, DECRIP_KEY, DECRIP_DATA, DECRIP_SUM, RES);
     SIGNAL EA, PE : state_type;
     SIGNAL data_temp : STD_LOGIC_VECTOR (127 DOWNTO 0);
     SIGNAL sum : STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -32,112 +31,72 @@ ARCHITECTURE xtea_dec OF xtea_dec IS
 BEGIN
     states : PROCESS (clk, reset)
     BEGIN
-        IF rising_edge(clk) THEN
-            IF reset = '1' THEN
-                EA <= CONF;
-            ELSE
-                EA <= PE;
-            END IF;
+        IF reset = '1' THEN
+            EA <= IDLE;
+        ELSIF rising_edge(clk) THEN
+            EA <= PE;
         END IF;
     END PROCESS states;
---------------------------------------------------------
-    operations : PROCESS (clk, reset)
-    BEGIN
-        IF rising_edge(clk) THEN
-            IF EA = IDLE THEN
-                op <= "000";
-            ELSIF EA = DECRIP_DATA THEN
-                IF op = "011" THEN
-                    op <= "000";
-                ELSE
-                    op <= op + '1';
-                END IF;
-            END IF;
-        END IF;
-    END PROCESS operations;
-----------------------------------------------------------
-    countering : PROCESS (clk, reset)
-    BEGIN
-        IF rising_edge(clk) THEN
-            IF EA = IDLE THEN
-                counter <= x"00";
-            ELSIF EA = DECRIP_DATA THEN
-                IF op = "11" THEN
-                    counter <= counter + '1';
-                END IF;
-            END IF;
-        END IF;
-    END PROCESS countering;
--------------------------------------------------------
-    data : PROCESS (clk, reset, EA, op)
+
+    
+    operations : PROCESS (clk, reset, EA, op)
     BEGIN
         IF rising_edge(clk) THEN
             data_o <= data_decriptada(31 DOWNTO 0) & data_decriptada(63 DOWNTO 32) & data_decriptada(95 DOWNTO 64) & data_decriptada(127 DOWNTO 96);
             IF EA = IDLE THEN
-                data_temp <= data_i(31 DOWNTO 0) & data_i(63 DOWNTO 32) & data_i(95 DOWNTO 64) & data_i(127 DOWNTO 96);
-            ELSIF EA = DECRIP_DATA THEN
-                data_temp <= data_decriptada;
-            END IF;
-        END IF;
-    END PROCESS data;
-------------------------------------------------------------
-    somador : PROCESS (clk, reset, EA)
-    BEGIN
-        IF rising_edge(clk) THEN
-            IF EA = IDLE THEN
                 sum <= x"C6EF3720";
                 delta <= x"9E3779B9";
+                op <= "000";
+                counter <= x"00";
+                data_temp <= data_i(31 DOWNTO 0) & data_i(63 DOWNTO 32) & data_i(95 DOWNTO 64) & data_i(127 DOWNTO 96);
+
+            ELSIF EA = DECRIP_DATA THEN
+                data_temp <= data_decriptada;
+                IF op = "011" THEN
+                    op <= "000";
+                    counter <= counter + '1';
+                ELSE
+                    op <= op + '1';
+                END IF;
             ELSIF EA = DECRIP_SUM THEN
                 IF op = "01" THEN
                     sum <= sum - delta;
                 END IF;
             END IF;
         END IF;
-    END PROCESS somador;
-------------------------------------------------------------
+    END PROCESS operations;
+   
     saidas : PROCESS (clk, reset, EA)
     BEGIN
-        IF rising_edge(clk) THEN
-            CASE EA IS
-                WHEN IDLE =>
-                    busy <= '0';
-                    ready <= '0';
-                WHEN DECRIP_XOR =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_XOR2 =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_DECRESE =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_DECRESE2 =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_KEY =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_DATA =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN DECRIP_SUM =>
-                    busy <= '1';
-                    ready <= '0';
-                WHEN RES =>
-                    busy <= '0';
-                    ready <= '1';
-                WHEN OTHERS =>
-                    busy <= '0';
-                    ready <= '0';
-            END CASE;
-        END IF;
+        CASE EA IS
+            WHEN IDLE =>
+                ready <= '0';
+            WHEN DECRIP_XOR =>
+                ready <= '0';
+            WHEN DECRIP_XOR2 =>
+                ready <= '0';
+            WHEN DECRIP_DECRESE =>
+                ready <= '0';
+            WHEN DECRIP_DECRESE2 =>
+                ready <= '0';
+            WHEN DECRIP_KEY =>
+                ready <= '0';
+            WHEN DECRIP_DATA =>
+                ready <= '0';
+            WHEN DECRIP_SUM =>
+                ready <= '0';
+            WHEN RES =>
+                ready <= '1';
+            WHEN OTHERS =>
+                ready <= '0';
+        END CASE;
     END PROCESS saidas;
---------------------------------------------------------------
+    --------------------------------------------------------------
     fsm : PROCESS (clk, EA, op, start, index_key, counter)
     BEGIN
         CASE EA IS
             WHEN IDLE =>
-                IF start = '1' and config = '0' THEN
+                IF start = '1' THEN
                     PE <= DECRIP_XOR;
                 ELSE
                     PE <= IDLE;
@@ -218,8 +177,8 @@ BEGIN
                     data_DECRIPtada (31 DOWNTO 0) <= data_temp (31 DOWNTO 0) - temp5;
                 END IF;
                 PE <= DECRIP_XOR;
-            
-            WHEN RES=>
+
+            WHEN RES =>
                 PE <= IDLE;
 
             WHEN OTHERS =>
