@@ -4,41 +4,16 @@ module FSM_antifurto (
     output start_timer, eneble_siren
 );
 
-// Timer temporizador (
-//     .clock(clock),
-//     .reset(reset),
-//     .value(),
-//     .start_timer(start_timer),
-//     .expired(expired),
-//     .one_hz_enable(one_hz_enable)
-// );
-// Parametros_Tempo param ( 
-//     .time_param_sel(), 
-//     .interval(interval),
-//     .time_value(),
-//     .reprogram(reprogram), 
-//     .clock(clock), 
-//     .reset(reset),
-//     .value()
-// );
-// gerador_sirene generator (
-//     .clock(clock), 
-//     .reset(reset),
-//     .eneble_siren(eneble_siren), 
-//     .two_hz_enable(),
-//     .siren(), 
-//     .color()
-// );
-
-
+reg [1:0] desarmed;
 reg [1:0] intervalo;
 reg start, enable, stats;
-reg [1:0] EA;
-reg [1:0] PE;
+reg [2:0] EA;
+reg [2:0] PE;
 
 always @(posedge clock ) begin
     if (reset) begin
-        state <= 2'b00;
+        state <= 3'd0;
+        desarmed <= 2'd0;
     end
     else begin
         EA <= PE;
@@ -47,49 +22,95 @@ end
 
 always @* begin
     case (EA)
-        2'b00:  if (ignition) begin  //Armado
-                    PE <= 2'b11;   
+        3'b000:  if (ignition) begin  //Armado
+                    PE <= 3'b011;   
                 end
-                else if (expired) begin
-                    PE <= 2'b01;
+                else if (door_driver or door_pass) begin
+                    start <= 1'b1;
+                    PE <= 3'b001;
                 end
                 else begin
-                    start <= 1'b1;
+                    PE <= 3'b000;
                 end
-        2'b01:  if (ignition) begin // Acionado
-                    PE <= 2'b11;
+        
+        3'b001:  if (ignition) begin // Acionado
+                    PE <= 3'b011;
                 else
+                    start <= 1'b0;
                     if (expired) begin
-                        PE <= 2'b10;
+                        PE <= 3'b010;
+                        start <= 1'b1;
+                    end
+                    else begin
+                        PE <= 3'b001;
                     end
                 end
 
-        2'b10:  if (expired) begin// Ativar_Alarme
-                    PE <= 2'b00;
+        3'b010:  start <= 1'b0;
+                if (expired) begin// Ativar_Alarme
+                    PE <= 3'b000;
                 else
                     if (ignition) begin
-                        PE <= 2'b11;
-                    end                
+                        PE <= 3'b011;
+                    end  
+                    else begin
+                        PE <= 3'b010;
+                    end              
                 end 
 
-        2'b11:  if (ignition = 1'b0) begin// Desarmado
-                    
-                else
-                    PE <= 2'b11;
+        3'b011: if (ignition) begin
+                    PE <= 3'b001;
+                end
+                else begin
+                    PE <= 3'b100;
+                end
+
+        3'b100: if (door_driver) begin
+                    PE <= 3'b101;
+                end
+                else begin
+                    PE <= 3'b100;
+                end
+
+        3'b101: if (door_driver) begin
+                    PE <= 3'b101;
+                end
+                else begin
+                    start <= 1'b1;
+                    PE <= 3'b110;
+                end
+
+        3'b110: start <= 1'b0;
+                if (expired) begin
+                    PE <= 3'b000;
+                end
+                else begin
+                    PE <= 3'b110;
                 end
     endcase
 end
     
 always @* begin
     case (EA)
-        2'b00: intervalo <= 2'b00;
-        2'b01:  if (door_driver) begin
-                    intervalo <= 2'b01;
-                else
-                    intervalo <= 2'b00;
+        3'b000:  if (door_driver) begin
+                   intervalo <= 2'b01;
                 end 
-        2'b10: intervalo <= 2'b11;
-        2'b11: 
+                else if (door_pass) begin
+                    intervalo <= 2'b10;
+                end
+
+        3'b001:  if (expired) begin
+                    intervalo <= 2'b11;   
+                end
+
+        3'b010: if (conditions) begin
+                    intervalo <= 2'b00;
+                end
+        
+        3'b011: intervalo <= 2'b00;
+        3'b100: intervalo <= 2'b00;
+        3'b101: intervalo <= 2'b00;
+        3'b110: intervalo <= 2'b00;
     endcase
 end
 

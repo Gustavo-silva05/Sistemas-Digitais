@@ -9,5 +9,5 @@ vsim -voptargs=+acc=lprn -t ns work.tb_Timer
 
 do wave_timer.do
 
-run 1000000000 ns
+run 100000 ns
 

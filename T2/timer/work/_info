@@ -1,0 +1,57 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T2/timer
+vtb_Timer
+Z1 !s110 1718308596
+!i10b 1
+!s100 M9dXEc:L:icTdYkeYkkzO0
+I@YX9X?SXmiYY30Ig==cUN1
+R0
+w1714186189
+8tb_Timer.v
+Ftb_Timer.v
+!i122 1
+L0 3 33
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+Z4 !s108 1718308596.000000
+!s107 tb_Timer.v|
+!s90 -reportprogress|300|-work|work|tb_Timer.v|
+!i113 1
+Z5 o-work work
+Z6 tCvgOpt 0
+ntb_@timer
+vTimer
+R1
+!i10b 1
+!s100 A_b?H@oFKXzz2Hf1UEJYh1
+IbEVdcjE]B7J]2HBz5M3XD3
+R0
+w1718308564
+8Timer.v
+FTimer.v
+!i122 0
+L0 1 57
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 Timer.v|
+!s90 -reportprogress|300|-work|work|Timer.v|
+!i113 1
+R5
+R6
+n@timer
