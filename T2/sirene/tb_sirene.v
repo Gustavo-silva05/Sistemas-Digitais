@@ -13,7 +13,6 @@ gerador_sirene alarme (
 );
 
 localparam PERIOD = 10;
-localparam PULSE = 11;
 
 always #(PERIOD/2) clock = ~clock;
 
@@ -23,15 +22,21 @@ initial begin
     #PERIOD;
     reset <= 1'b0;
     eneble_siren <= 1'b1;
-    #PERIOD;
+    repeat (10) begin
+        #PERIOD;
+    end
     two_hz_enable <= 1'b1;
-    #PULSE;
+    #PERIOD
     two_hz_enable <= 1'b0;
-    #PERIOD;
+    repeat (10) begin
+        #PERIOD;
+    end
     two_hz_enable <= 1'b1;
-    #PULSE;
-    two_hz_enable <= 1'b0;
     #PERIOD;
+    two_hz_enable <= 1'b0;
+    repeat (10) begin
+        #PERIOD;
+    end
     eneble_siren <= 1'b0;
     #PERIOD;
 end

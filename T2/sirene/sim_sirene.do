@@ -9,4 +9,4 @@ vsim -voptargs=+acc=lprn -t ns work.tb_sirene
 
 do wave_sirene.do
 
-run 1000 ns
+run 5000 ns

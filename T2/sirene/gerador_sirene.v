@@ -6,18 +6,21 @@ module gerador_sirene(
 reg sirene;
 reg cor;
 
-always @(posedge clock ) begin
+always @(posedge clock) begin
     if (reset) begin
         sirene <= 1'b0;
         cor <= 1'b0;
     end
-end
-always@* begin
-    if (eneble_siren) begin
-        sirene <= 1'b1;
-    end
-    if (two_hz_enable) begin
-        cor <= ~cor;
+    else begin
+        if (eneble_siren) begin
+            sirene <= 1'b1;
+        end
+        else if (two_hz_enable) begin
+            cor <= ~cor;
+        end
+        else begin
+            sirene <= 1'b0;
+        end
     end
 end
 

@@ -1,0 +1,55 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T2/sirene
+vgerador_sirene
+Z1 !s110 1718315673
+!i10b 1
+!s100 D0A`SVI=k>2k3lBViKTCF3
+I`];Al1]`B3zK4?YW08FFd3
+R0
+w1718315670
+8gerador_sirene.v
+Fgerador_sirene.v
+!i122 0
+L0 1 31
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+Z4 !s108 1718315673.000000
+!s107 gerador_sirene.v|
+!s90 -reportprogress|300|-work|work|gerador_sirene.v|
+!i113 1
+Z5 o-work work
+Z6 tCvgOpt 0
+vtb_sirene
+R1
+!i10b 1
+!s100 @P:RNhm6_]j1Ezbb@J<_i1
+IGBl3[e^e?fhhEWUz>_dKK1
+R0
+w1718315402
+8tb_sirene.v
+Ftb_sirene.v
+!i122 1
+L0 3 42
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 tb_sirene.v|
+!s90 -reportprogress|300|-work|work|tb_sirene.v|
+!i113 1
+R5
+R6
