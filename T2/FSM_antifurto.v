@@ -1,7 +1,10 @@
 module FSM_antifurto (
     input ignition, door_driver, door_pass, reprogram, clock, reset, expired, one_hz_enable,
-    output [1:0] interval, status,
-    output start_timer, eneble_siren
+    output [1:0] interval,
+    output status,
+    output start_timer, eneble_siren,
+    output [2:0] estado
+
 );
 
 reg [1:0] desarmed;
@@ -113,5 +116,7 @@ always @* begin
         3'b110: intervalo <= 2'b00;
     endcase
 end
+
+assign estado = EA;
 
 endmodule
