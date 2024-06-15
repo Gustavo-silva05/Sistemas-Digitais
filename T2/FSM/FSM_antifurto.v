@@ -23,7 +23,8 @@ end
 
 always @(posedge clock) begin
     if (reset) begin
-        start <= 1'b1;
+        start <= 1'b0;
+        PE <= 3'd0;
     end
     case (EA) 
         3'b000:  if (ignition) begin  //Armado
@@ -54,6 +55,7 @@ always @(posedge clock) begin
 
         3'b010: if (expired) begin // Ativar_Alarme
                     PE <= 3'b000;
+                    start <= 1'b1;
                 end
                 else begin
                     if (ignition) begin
@@ -106,9 +108,6 @@ always @(posedge clock) begin
                 else if (door_pass) begin
                     intervalo <= 2'b10;
                 end
-                else begin
-                    intervalo <= 2'b01;
-                end
 
         3'b001:  if (expired) begin
                     intervalo <= 2'b11;   
@@ -138,7 +137,12 @@ always @(posedge clock ) begin
                     stats <= 1'b1; 
                     enable <= 1'b0;
                 end
-        3'b010: begin
+        3'b010: if (expired) begin
+                    
+                    stats <= 1'b0;
+                    enable <= 1'b0;
+                end
+                else begin
                     stats <= 1'b1;
                     enable <= 1'b1;
                 end

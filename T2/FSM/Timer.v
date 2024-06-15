@@ -16,7 +16,7 @@ always @(posedge clock ) begin
     if (reset) begin
         timer_2sec <= 29'd200_0;
         expirou = 1'b0;
-        count <= 4'd1;;
+        count <= 4'd1;
     end
     else begin
         if (start_timer) begin
