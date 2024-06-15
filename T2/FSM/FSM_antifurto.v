@@ -101,6 +101,9 @@ always @* begin
                 else if (door_pass) begin
                     intervalo <= 2'b10;
                 end
+                else begin
+                    intervalo <= 2'b01;
+                end
 
         3'b001:  if (expired) begin
                     intervalo <= 2'b11;   
