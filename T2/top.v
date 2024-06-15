@@ -11,18 +11,49 @@ module top(
     input reprogram,
     input [1:0] time_param_sel,
     input [3:0] time_value,
-    input [3:0] estado,
-    input [3:0] counter,
+    output [3:0] estado,
+    output [3:0] counter,
     output fuel_pump,
     output siren,
     output status,
     output [7:0] an,
     output [7:0] dec_cat
 );
+reg noisy;
+wire clean;
 
-reg [1:0] interval_param;
-reg value, start_timer, expired, one_hz_enable, two_hz_enable, noisy, clean, eneble_siren;
-reg siren, color, fuel_pump;
+reg expired, one_hz_enable;
+wire [1:0] interval;
+wire start_timer, eneble_siren;
+
+reg start;
+reg [3:0] value;
+wire expired_timer, one_hz_enable_timer, two_hz_enable;
+
+reg [1:0]  interval_param;
+wire [3:0] value_param;
+
+
+assign one_hz_enable = one_hz_enable_timer;
+assign expired = expired_timer;
+FSM_antifurto FSM(
+.ignition(ignition), 
+.door_driver(door_driver), 
+.door_pass(door_pass), 
+.reprogram(reprogram), 
+.clock(clock), 
+.reset(reset), 
+.expired(expired), 
+.one_hz_enable(one_hz_enable),
+
+.interval(interval),
+.status(status),
+.start_timer(start_timer), 
+.eneble_siren(eneble_siren),
+.estado(estado)
+);
+
+assign interval_param = interval;
 
 Parametros_Tempo parametros(
     .time_param_sel(time_param_sel), 
@@ -31,18 +62,41 @@ Parametros_Tempo parametros(
     .reprogram(reprogram), 
     .clock(clock), 
     .reset(reset),
-    .value(value)
+    
+    .value(value_param)
 );
+
+
+assign start = start_timer;
+assign value = value_param;
 
 Timer relogio(.reset (reset),
     .clock (clock),
     .value(value),
-    .start_timer(start_timer),
-    .expired(expired),
-    .one_hz_enable(one_hz_enable),
+    .start_timer(start),
+    
+    .expired(expired_timer),
+    .one_hz_enable(one_hz_enable_timer),
     .two_hz_enable(two_hz_enable),
     .counter(counter)    
 );
+
+// logica_comb combustivel(
+//     .clock(clock),
+//     .reset(reset),
+//     .break(break),
+//     .hidden_sw(hidden_sw),
+//     .ignition(ignition),
+    
+//     .fuel_pump(fuel_pump)
+// );
+
+// gerador_sirene sirene(
+//     .clock(clock), .reset(reset),
+//     .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
+    
+//     .siren(siren), .color(color)
+// );
 
 debouncer deb (
     .reset(reset), 
@@ -64,38 +118,6 @@ dspl_drv_NexysA7 display(
     .d8({1'b0,count,1'b0}),
     .dec_cat(dec_cat),
     .an(an)
-);
-
-logica_comb combustivel(
-    .clock(clock),
-    .reset(reset),
-    .break(break),
-    .hidden_sw(hidden_sw),
-    .ignition(ignition),
-    .fuel_pump(fuel_pump)
-);
-
-gerador_sirene sirene(
-    .clock(clock), .reset(reset),
-    .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
-    .siren(siren), .color(color)
-);
-
-FSM_antifurt fsm(
-.ignition(ignition), 
-.door_driver(door_driver), 
-.door_pass(door_pass), 
-.reprogram(reprogram), 
-.clock(clock), 
-.reset(reset), 
-.expired(expired), 
-.one_hz_enable(one_hz_enable),
-.interval(interval),
-.status(status),
-.start_timer(start_timer), 
-.eneble_siren(eneble_siren),
-.estado(estado)
-
 );
 
 

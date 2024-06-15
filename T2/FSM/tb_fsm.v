@@ -17,7 +17,8 @@ reg [3:0] time_value;
 wire [3:0] value_param;
 
 
-
+assign one_hz_enable = one_hz_enable_timer;
+assign expired = expired_timer;
 FSM_antifurto FSM(
 .ignition(ignition), 
 .door_driver(door_driver), 
@@ -50,8 +51,6 @@ Parametros_Tempo parametros(
 
 
 assign start = start_timer;
-assign expired_timer = expired;
-assign one_hz_enable_timer = one_hz_enable;
 assign value = value_param;
 
 Timer relogio(.reset (reset),
@@ -94,7 +93,12 @@ initial begin
     repeat (10) begin
         #PERIOD;
     end
-    door_driver <= 1'b1;
+    door_pass <= 1'b1;
+    repeat (1000) begin
+        #PERIOD;
+    end
+    door_pass <= 1'b0;
+
 end
 
 endmodule

@@ -21,7 +21,10 @@ always @(posedge clock ) begin
     end
 end
 
-always @* begin
+always @(posedge clock) begin
+    if (reset) begin
+        start <= 1'b1;
+    end
     case (EA) 
         3'b000:  if (ignition) begin  //Armado
                     PE <= 3'b011;   
@@ -32,18 +35,19 @@ always @* begin
                 end
                 else begin
                     PE <= 3'b000;
+                    start <= 1'b0;
                 end
         
         3'b001:  if (ignition) begin // Acionado
                     PE <= 3'b011;
                 end
                 else begin
-                    start <= 1'b0;
                     if (expired) begin
                         PE <= 3'b010;
                         start <= 1'b1;
                     end
                     else begin
+                        start <= 1'b0;
                         PE <= 3'b001;
                     end
                 end
@@ -52,17 +56,17 @@ always @* begin
                     PE <= 3'b000;
                 end
                 else begin
-                     start <= 1'b0;
                     if (ignition) begin
                         PE <= 3'b011;
                     end  
                     else begin
+                        start <= 1'b0;
                         PE <= 3'b010;
                     end              
                 end 
 
         3'b011: if (ignition) begin
-                    PE <= 3'b001;
+                    PE <= 3'b011;
                 end
                 else begin
                     PE <= 3'b100;
@@ -85,6 +89,7 @@ always @* begin
 
         3'b110: if (expired) begin
                     PE <= 3'b000;
+                    start <= 1'b1;
                 end
                 else begin
                     start <= 1'b0;
@@ -93,7 +98,7 @@ always @* begin
     endcase
 end
     
-always @* begin
+always @(posedge clock) begin
     case (EA)
         3'b000:  if (door_driver) begin
                    intervalo <= 2'b01;
@@ -116,8 +121,39 @@ always @* begin
     endcase
 end
 
+always @(posedge clock ) begin
+    if (reset) begin
+        stats <= 1'b0;
+        enable <= 1'b0;
+    end
+    case (EA)
+        3'b000: if (one_hz_enable) begin
+                    stats <= ~stats;
+                    enable <= 1'b0;
+                end
+                else begin
+                    enable <= 1'b0;
+                end 
+        3'b001: begin
+                    stats <= 1'b1; 
+                    enable <= 1'b0;
+                end
+        3'b010: begin
+                    stats <= 1'b1;
+                    enable <= 1'b1;
+                end
+
+        default: begin 
+                    stats <= 1'b0;
+                    enable <= 1'b0;
+                end
+    endcase
+end
+
 assign estado = EA;
 assign start_timer = start;
 assign interval = intervalo;
+assign status = stats;
+assign eneble_siren = enable;
 
 endmodule

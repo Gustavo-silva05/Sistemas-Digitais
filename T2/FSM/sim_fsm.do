@@ -13,4 +13,4 @@ vsim -voptargs=+acc=lprn -t ns work.tb_fsm
 
 do wave.do
 
-run 100000 ns
+run 1000000 ns
