@@ -5,7 +5,7 @@ module Timer(
     input start_timer,
     output expired,
     output one_hz_enable, two_hz_enable,
-    output [3:0] counter;
+    output [3:0] counter
 );
 reg [3:0] count;
 reg [28:0] timer_2sec;

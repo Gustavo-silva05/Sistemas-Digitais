@@ -1,0 +1,15 @@
+# Current time Fri Jun 14 22:26:20 2024
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 6a409e6f. Traceback:
+# 0    0x6a409e6f: 'Tcl_GetString + 0xf'
+# 1    0x6a3f1f5a: 'TclListObjSetElement + 0x31a'
+# 2    0x6a363a49: 'TclNRRunCallbacks + 0x49'
+StackWalk failed 299
+# End of Stack Trace
+

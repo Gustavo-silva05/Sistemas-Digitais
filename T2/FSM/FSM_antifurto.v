@@ -114,5 +114,7 @@ always @* begin
 end
 
 assign estado = EA;
+assign start_timer = start;
+assign interval = intervalo;
 
 endmodule
