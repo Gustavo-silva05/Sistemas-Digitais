@@ -1,0 +1,104 @@
+m255
+K4
+z2
+!s11e vcom 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T4/xtea/xtea_vhdl/ENC
+Etb_enc
+Z1 w1717371629
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 1
+R0
+Z5 8tb_enc.vhd
+Z6 Ftb_enc.vhd
+l0
+L5 1
+V@g[^V4XMFnlcABSNHz:gQ2
+!s100 d6@k[:XMenAXdFW0_eHa13
+Z7 OV;C;2021.1;73
+33
+Z8 !s110 1717599669
+!i10b 1
+Z9 !s108 1717599669.000000
+Z10 !s90 -reportprogress|300|-work|work|tb_enc.vhd|
+!s107 tb_enc.vhd|
+!i113 1
+Z11 o-work work
+Z12 tExplicit 1 NoCoverage 1 CvgOpt 0
+Atb_enc
+Z13 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z14 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z15 DEx4 work 8 xtea_enc 0 22 h>dnHk_C0U=iGHO47W_V92
+R2
+R3
+R4
+DEx4 work 6 tb_enc 0 22 @g[^V4XMFnlcABSNHz:gQ2
+!i122 1
+l13
+L8 19
+V97>j;G:Hb><OTYVJQWQz?2
+!s100 VlT@AcHmReBn<2^]32o2S1
+R7
+33
+R8
+!i10b 1
+R9
+R10
+Z16 !s107 tb_enc.vhd|
+!i113 1
+R11
+R12
+Extea_enc
+Z17 w1717599581
+R13
+R14
+R2
+R3
+R4
+!i122 0
+R0
+Z18 8xtea_enc.vhd
+Z19 Fxtea_enc.vhd
+l0
+L7 1
+Vh>dnHk_C0U=iGHO47W_V92
+!s100 <I9feNAVe>i:n8B`9?g_S2
+R7
+33
+R8
+!i10b 1
+R9
+Z20 !s90 -reportprogress|300|-work|work|xtea_enc.vhd|
+Z21 !s107 xtea_enc.vhd|
+!i113 1
+R11
+R12
+Axtea_enc
+R13
+R14
+R2
+R3
+R4
+R15
+!i122 0
+l31
+L16 172
+VZlN=`ZTo4GG]V3i?fSBY=2
+!s100 :@H8lcSo@;MKMGH=R_H@F3
+R7
+33
+R8
+!i10b 1
+R9
+R20
+R21
+!i113 1
+R11
+R12

@@ -1,195 +1,188 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
-use IEEE.std_logic_unsigned.all;
-use IEEE.std_logic_arith.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+USE IEEE.std_logic_unsigned.ALL;
+USE IEEE.std_logic_arith.ALL;
 
-entity xtea_enc is 
-port(
-    clk, reset,start   : in std_logic;
-    data_i, key  : in std_logic_vector (127 downto 0);
-    data_o  : out std_logic_vector (127 downto 0)
-);
-end entity;
+ENTITY xtea_enc IS
+    PORT (
+        clk, reset, start : IN STD_LOGIC;
+        data_i, key : IN STD_LOGIC_VECTOR (127 DOWNTO 0);
+        data_o : OUT STD_LOGIC_VECTOR (127 DOWNTO 0);
+        busy, ready : OUT STD_LOGIC
+    );
+END ENTITY;
 
-architecture xtea_enc of xtea_enc is
-    type state_type is (IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM);
-    signal EA, PE           : state_type;
-    signal data_temp        : std_logic_vector  (127 downto 0);
-    signal sum              : std_logic_vector  (31 downto 0);
-    signal delta            : std_logic_vector  (31 downto 0);
-    signal temp             : std_logic_vector  (31 downto 0);
-    signal temp2            : std_logic_vector  (31 downto 0);
-    signal temp3            : std_logic_vector  (31 downto 0);
-    signal temp4            : std_logic_vector  (31 downto 0);
-    signal temp5            : std_logic_vector  (31 downto 0);
-    signal data_encriptada  : std_logic_vector  (127 downto 0);
-    signal index_key        : std_logic_vector  (1 downto 0);
-    signal counter          : std_logic_vector  (7 downto 0);
-    signal op               : std_logic_vector  (2 downto 0);
-begin
-    states: process (clk, reset) 
-    begin
-        if rising_edge(clk) then
-            if reset = '1' then
-                EA <= IDLE;
-                delta <= x"9E3779B9";
-            else
-                EA <= PE;
-            end if ;
-        end if;
-    end process states;
-
-    operations: process(clk, reset)
-    begin
-        if reset = '1' then
+ARCHITECTURE xtea_enc OF xtea_enc IS
+    TYPE state_type IS (IDLE, ENCRIP_XOR, ENCRIP_XOR2, ENCRIP_SOMA, ENCRIP_SOMA2, ENCRIP_KEY, ENCRIP_DATA, ENCRIP_SUM, RES);
+    SIGNAL EA, PE : state_type;
+    SIGNAL data_temp : STD_LOGIC_VECTOR (127 DOWNTO 0);
+    SIGNAL sum : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL delta : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp2 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp3 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp4 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL temp5 : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL data_encriptada : STD_LOGIC_VECTOR (127 DOWNTO 0);
+    SIGNAL index_key : STD_LOGIC_VECTOR (1 DOWNTO 0);
+    SIGNAL counter : STD_LOGIC_VECTOR (7 DOWNTO 0);
+    SIGNAL op : STD_LOGIC_VECTOR (2 DOWNTO 0);
+BEGIN
+    states : PROCESS (clk, reset)
+    BEGIN
+        IF reset = '1' THEN
+            EA <= IDLE;
+        ELSIF rising_edge(clk) THEN
+            EA <= PE;
+        END IF;
+    END PROCESS states;
+    ---------------------------------------------------------------------------------
+    operations : PROCESS (clk, reset, EA, op)
+    BEGIN
+    
+    IF rising_edge(clk) THEN
+        data_o <= data_encriptada(31 DOWNTO 0) & data_encriptada(63 DOWNTO 32) & data_encriptada(95 DOWNTO 64) & data_encriptada(127 DOWNTO 96);
+        IF EA = IDLE THEN
             op <= "000";
-        elsif rising_edge(clk) then
-            if EA = ENCRIP_DATA then
-                if op = "011" then
-                    op <= "000";
-                else 
-                    op <= op + '1';
-                end if;
-            end if;
-        end if;
-    end process operations;
-
-    countering: process(clk, reset)
-    begin
-        if reset = '1' then
             counter <= x"00";
-        elsif rising_edge(clk) then
-            if EA = IDLE then
-                counter <= x"00";
-            elsif EA = ENCRIP_DATA then
-                if op = "11" then
-                    counter <= counter + '1';
-                end if;
-            end if;
-        end if;
-    end process countering;
-
-    data: process(clk, reset, EA, op)
-    begin
-        if reset = '1' then
-            data_o <= x"00000000000000000000000000000000";
-            data_temp <= data_i(31 downto 0) & data_i(63 downto 32) & data_i(95 downto 64) & data_i(127 downto 96);
-        elsif rising_edge(clk) then
-            data_o <= data_encriptada(31 downto 0) & data_encriptada(63 downto 32) & data_encriptada(95 downto 64) & data_encriptada(127 downto 96);
-            if EA =  ENCRIP_DATA then
-                    data_temp <= data_encriptada;
-            end if;
-        end if;
-    end process data;
-
-    somador: process(clk, reset,EA)
-    begin
-        if reset = '1' then
+            data_temp <= data_i(31 DOWNTO 0) & data_i(63 DOWNTO 32) & data_i(95 DOWNTO 64) & data_i(127 DOWNTO 96);
             sum <= x"00000000";
-        elsif rising_edge(clk) then
-            if EA = ENCRIP_SUM then
-                if op = "01" then 
-                    sum <= sum + delta;
-                end if;
-            end if;
-        end if;
-    end process somador;
-
-   fsm : process (clk , EA , op, start, index_key,counter) 
-    begin
-        case EA is
-            When IDLE =>
-                if start = '1' then
-                    data_encriptada <= data_temp;
-                    PE <= ENCRIP_XOR;
-                else
-                    PE <= IDLE;
-                end if ;
-            
-    
-            When ENCRIP_XOR => 
-                if counter < x"20" then
-                    if op = "00" then
-                        temp    <=  data_temp (95 downto 64) sll 4 xor  data_temp (95 downto 64) srl 5;
-                    elsif op = "01" then
-                        temp    <=  data_temp (31 downto 0) sll 4 xor  data_temp (31 downto 0) srl 5;
-                    elsif op = "10" then
-                        temp    <=  data_temp (127 downto 96) sll 4 xor  data_temp (127 downto 96) srl 5;
-                    elsif op = "11" then
-                        temp    <=  data_temp (63 downto 32) sll 4 xor  data_temp (63 downto 32) srl 5;   
-                    end if;
-                    PE <= ENCRIP_SOMA;
-                else
-                    PE <= IDLE;
-                end if;
-
-            
-            when ENCRIP_SOMA =>
-                if op = "00" then
-                    temp2   <= temp + data_temp(95 downto 64);
-                elsif op = "01" then
-                    temp2   <= temp + data_temp(31 downto 0);
-                elsif op = "10" then
-                    temp2   <= temp + data_temp(127 downto 96);
-                elsif op = "11" then
-                    temp2   <= temp + data_temp(63 downto 32);
-                end if;
-                PE <= ENCRIP_KEY;
-            
-            WHEN ENCRIP_KEY =>
-                if op = "00" or op = "01" then
-                    index_key   <= sum (1 downto 0) and "11";
-                    if index_key = "00" then
-                        temp3   <=  key(31 downto 0);
-                    elsif index_key = "01" then
-                        temp3   <=  key(63 downto 32);
-                    elsif index_key = "10" then
-                        temp3   <=  key(95 downto 64);
-                    elsif index_key = "11"  then
-                        temp3   <=  key(127 downto 96);
-                    end if ;
-                else
-                    index_key <= sum (12 DOWNTO 11) and "11";
-                    if index_key = "00" then
-                        temp3   <=  key(31 downto 0);
-                    elsif index_key = "01" then
-                        temp3   <=  key(63 downto 32);
-                    elsif index_key = "10" then
-                        temp3   <=  key(95 downto 64);
-                    elsif index_key = "11"  then
-                        temp3   <=  key(127 downto 96);
-                    end if ;
-                end if;
-                PE <= ENCRIP_SOMA2;
-            
-            WHEN ENCRIP_SOMA2 =>
-                temp4 <= sum + temp3;
-                PE <= ENCRIP_SUM;
-
-            WHEN ENCRIP_SUM =>        
-                PE <= ENCRIP_XOR2;
-            
-            WHEN ENCRIP_XOR2 =>
-                temp5 <= temp2 xor temp4;
-                PE <= ENCRIP_DATA;
-            
-            WHEN ENCRIP_DATA =>
-                if op = "00" then
-                    data_encriptada (127 downto 96) <= data_temp (127 downto 96) +  temp5;
-                elsif op = "01" then
-                    data_encriptada (63 downto 32) <= data_temp (63 downto 32) +  temp5;
-                elsif op = "10" then
-                    data_encriptada (95 downto 64) <= data_temp (95 downto 64) +  temp5;
-                elsif op = "11" then
-                    data_encriptada (31 downto 0) <= data_temp (31 downto 0) +  temp5;
-                end if;
+            delta <= x"9E3779B9";
+        ELSIF EA = ENCRIP_DATA THEN
+            data_temp <= data_encriptada;
+            IF op = "011" THEN
+                op <= "000";
+                counter <= counter + '1';
+            ELSE
+                op <= op + '1';
+            END IF;
+        ELSIF EA = ENCRIP_SUM THEN
+            IF op = "01" THEN
+                sum <= sum + delta;
+            END IF;
+        END IF;
+    END IF;
+END PROCESS operations;
+-----------------------------------------------------------------------------------------------------------------
+saidas : PROCESS (clk, reset, EA)
+BEGIN
+    CASE EA IS
+        WHEN IDLE =>
+            ready <= '0';
+        WHEN ENCRIP_XOR =>
+            ready <= '0';
+        WHEN ENCRIP_XOR2 =>
+            ready <= '0';
+        WHEN ENCRIP_SOMA =>
+            ready <= '0';
+        WHEN ENCRIP_SOMA2 =>
+            ready <= '0';
+        WHEN ENCRIP_KEY =>
+            ready <= '0';
+        WHEN ENCRIP_DATA =>
+            ready <= '0';
+        WHEN ENCRIP_SUM =>
+            ready <= '0';
+        WHEN RES =>
+            ready <= '1';
+        WHEN OTHERS =>
+            ready <= '0';
+    END CASE;
+END PROCESS saidas;
+---------------------------------------------------------------------------------------------
+fsm_NEXT_STATE : PROCESS (clk, EA, op, start, index_key, counter)
+BEGIN
+    CASE EA IS
+        WHEN IDLE =>
+            IF start = '1' THEN
                 PE <= ENCRIP_XOR;
-            
-            when others=>
+            ELSE
                 PE <= IDLE;
-            
-        end case;
-    end process fsm;
-    
-end architecture;
+            END IF;
+        WHEN ENCRIP_XOR =>
+            data_encriptada <= data_temp;
+            IF counter < x"20" THEN
+                IF op = "00" THEN
+                    temp <= data_temp (95 DOWNTO 64) SLL 4 XOR data_temp (95 DOWNTO 64) SRL 5;
+                ELSIF op = "01" THEN
+                    temp <= data_temp (31 DOWNTO 0) SLL 4 XOR data_temp (31 DOWNTO 0) SRL 5;
+                ELSIF op = "10" THEN
+                    temp <= data_temp (127 DOWNTO 96) SLL 4 XOR data_temp (127 DOWNTO 96) SRL 5;
+                ELSIF op = "11" THEN
+                    temp <= data_temp (63 DOWNTO 32) SLL 4 XOR data_temp (63 DOWNTO 32) SRL 5;
+                END IF;
+                PE <= ENCRIP_SOMA;
+            ELSE
+                PE <= RES;
+            END IF;
+        WHEN ENCRIP_SOMA =>
+            IF op = "00" THEN
+                temp2 <= temp + data_temp(95 DOWNTO 64);
+            ELSIF op = "01" THEN
+                temp2 <= temp + data_temp(31 DOWNTO 0);
+            ELSIF op = "10" THEN
+                temp2 <= temp + data_temp(127 DOWNTO 96);
+            ELSIF op = "11" THEN
+                temp2 <= temp + data_temp(63 DOWNTO 32);
+            END IF;
+            PE <= ENCRIP_KEY;
+
+        WHEN ENCRIP_KEY =>
+            IF op = "00" OR op = "01" THEN
+                index_key <= sum (1 DOWNTO 0) AND "11";
+                IF index_key = "00" THEN
+                    temp3 <= key(31 DOWNTO 0);
+                ELSIF index_key = "01" THEN
+                    temp3 <= key(63 DOWNTO 32);
+                ELSIF index_key = "10" THEN
+                    temp3 <= key(95 DOWNTO 64);
+                ELSIF index_key = "11" THEN
+                    temp3 <= key(127 DOWNTO 96);
+                END IF;
+            ELSE
+                index_key <= sum (12 DOWNTO 11) AND "11";
+                IF index_key = "00" THEN
+                    temp3 <= key(31 DOWNTO 0);
+                ELSIF index_key = "01" THEN
+                    temp3 <= key(63 DOWNTO 32);
+                ELSIF index_key = "10" THEN
+                    temp3 <= key(95 DOWNTO 64);
+                ELSIF index_key = "11" THEN
+                    temp3 <= key(127 DOWNTO 96);
+                END IF;
+            END IF;
+            PE <= ENCRIP_SOMA2;
+
+        WHEN ENCRIP_SOMA2 =>
+            temp4 <= sum + temp3;
+            PE <= ENCRIP_SUM;
+
+        WHEN ENCRIP_SUM =>
+            PE <= ENCRIP_XOR2;
+
+        WHEN ENCRIP_XOR2 =>
+            temp5 <= temp2 XOR temp4;
+            PE <= ENCRIP_DATA;
+
+        WHEN ENCRIP_DATA =>
+            IF op = "00" THEN
+                data_encriptada (127 DOWNTO 96) <= data_temp (127 DOWNTO 96) + temp5;
+            ELSIF op = "01" THEN
+                data_encriptada (63 DOWNTO 32) <= data_temp (63 DOWNTO 32) + temp5;
+            ELSIF op = "10" THEN
+                data_encriptada (95 DOWNTO 64) <= data_temp (95 DOWNTO 64) + temp5;
+            ELSIF op = "11" THEN
+                data_encriptada (31 DOWNTO 0) <= data_temp (31 DOWNTO 0) + temp5;
+            END IF;
+            PE <= ENCRIP_XOR;
+
+        WHEN RES =>
+            PE <= IDLE;
+
+        WHEN OTHERS =>
+            PE <= IDLE;
+
+    END CASE;
+END PROCESS fsm_NEXT_STATE;
+END ARCHITECTURE;

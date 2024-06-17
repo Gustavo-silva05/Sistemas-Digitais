@@ -1,74 +1,101 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
 
-Entity xtea_top is 
-port(
-    start, clk, reset, config : IN std_logic;
-    data_i, key : IN std_logic_vector (127 downto 0);
-    busy, ready : out std_logic;
-    data_o : OUT std_logic_vector (127 downto 0)
-);
-end Entity;
-architecture xtea_top of xtea_top is
+ENTITY xtea_top IS
+    PORT (
+        start, clk, reset, config : IN STD_LOGIC;
+        data_i, key : IN STD_LOGIC_VECTOR (127 DOWNTO 0);
+        busy, ready : OUT STD_LOGIC;
+        data_o : OUT STD_LOGIC_VECTOR (127 DOWNTO 0)
+    );
+END ENTITY;
+ARCHITECTURE xtea_top OF xtea_top IS
+    TYPE state_type IS (IDLE, ENC, DEC, RES);
+    SIGNAL EA, PE : state_type;
+    SIGNAL start_enc, start_dec : STD_LOGIC;
+    SIGNAL ready_enc, ready_dec : STD_LOGIC;
+    SIGNAL data_o_enc, data_o_dec : STD_LOGIC_VECTOR (127 DOWNTO 0);
 
-    Type state is (IDLE, ENC, DEC, FIM);
-    signal EA, PE : state;
-    signal busy_temp, ready_temp : std_logic;
 
-begin
-    states: process(clk,reset)
-    begin
-        if reset = '1' then
+BEGIN
+
+    PROCESS (clk, reset)
+    BEGIN
+        IF reset = '1' THEN
             EA <= IDLE;
-        elsif rising_edge(clk) then
+        ELSIF rising_edge(clk) THEN
             EA <= PE;
-        end if;
-    end process states;
+        END IF;
+    END PROCESS;
 
-    saidas: process(clk, reset, EA)
-    begin
-        if reset = '1' then
-            busy <= '0';
-        elsif rising_edge(clk) then
-            if EA = IDLE or EA = FIM then
-                busy <= '0';
-                if EA = FIM then
-                    ready <= '1';
-                elsif EA = IDLE then
-                    ready <= '0';
-                end if;
-            else 
-                ready <= '0';
-                busy <= '1';
-            end if;
-        end if;
-    end process saidas;
-
-
-    process (clk, EA)
-    begin
-        case EA is
-            When IDLE =>
-                if start = '1' then
-                    if config = '1' then
+    next_state : PROCESS (clk, start, config, EA, ready_enc, ready_dec)
+    BEGIN
+        CASE EA IS
+            WHEN IDLE =>
+                IF start = '1' THEN
+                    IF config = '1' THEN
+                        start_enc <= '1';
+                        start_dec <= '0';
                         PE <= ENC;
-                    else
+                    ELSIF config = '0' THEN
+                        start_enc <= '0';
+                        start_dec <= '1';
                         PE <= DEC;
-                    end if ;
-                else
+                    END IF;
+                ELSE
                     PE <= IDLE;
-                end if ;
-            When ENC => 
-                encriptador_TOP: entity work.xtea_enc
-                        port map (clk=>clk,reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o);
-                PE <= FIM;
-            When DEC =>
-                descriptador_TOP: entity work.xtea_dec
-                        port map (clk=>clk,reset =>reset, start=>start, key=>key, data_i=>data_i, data_o=>data_o);
-                PE <= FIM;
-            WHEN FIM =>
+                END IF;
+            WHEN ENC =>
+                IF ready_enc = '1' THEN
+                    PE <= RES;
+                ELSE
+                    PE <= ENC;
+                END IF;
+            WHEN DEC =>
+                IF ready_dec = '1' THEN
+                    PE <= RES;
+                ELSE
+                    PE <= DEC;
+                END IF;
+            WHEN RES =>
+                start_enc <= '0';
+                start_dec <= '0';
                 PE <= IDLE;
-        end case;
-    end process;
-end architecture;
+            WHEN OTHERS =>
+                PE <= IDLE;
+        END CASE;
+    END PROCESS next_state;
+
+    saidas : PROCESS (clk,EA, start_enc)
+    BEGIN
+        CASE EA IS
+            WHEN IDLE =>
+                busy <= '0';
+                ready <= '0';
+            WHEN ENC =>
+                busy <= '1';
+                ready <= '0';
+                data_o <= data_o_enc;
+            WHEN DEC =>
+                busy <= '1';
+                ready <= '0';
+                data_o <= data_o_dec;
+            WHEN RES =>
+                IF ready_enc = '1' THEN
+                    data_o <= data_o_enc;
+                ELSIF ready_dec = '1' THEN
+                    data_o <= data_o_dec;
+                END IF;
+                busy <= '0';
+                ready <= '1';
+        END CASE;
+    END PROCESS saidas;
+
+    encrip : ENTITY work.xtea_enc
+        PORT MAP(clk => clk, reset => reset, start => start_enc, key => key, data_i => data_i, data_o => data_o_enc, ready => ready_enc);
+
+    descrip : ENTITY work.xtea_dec
+        PORT MAP(clk => clk, reset => reset, start => start_dec, key => key, data_i => data_i, data_o => data_o_dec, ready => ready_dec);
+
+END ARCHITECTURE xtea_top;

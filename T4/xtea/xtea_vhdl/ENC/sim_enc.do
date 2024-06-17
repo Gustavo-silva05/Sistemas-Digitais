@@ -10,6 +10,6 @@ vsim -voptargs=+acc=lprn -t ns work.tb_enc
 set StdArithNoWarnings 1
 set StdVitalGlitchNoWarnings 1
 
-do wave.do
+do wave_enc.do
 
 run 10000 ns

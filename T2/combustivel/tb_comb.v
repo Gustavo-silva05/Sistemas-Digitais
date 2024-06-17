@@ -6,7 +6,7 @@ reg reset;
 reg break;
 reg hidden_sw;
 reg ignition;
-reg fuel_pump;
+wire fuel_pump;
 
 
 logica_comb combustivel (
@@ -30,7 +30,18 @@ initial begin
     ignition <= 1'b1;
     #PERIOD;
     hidden_sw <= 1'b1;
+    #PERIOD;
     break <= 1'b1;
+    #PERIOD;
+    hidden_sw <= 1'b0;
+    break <= 1'b0;
+    repeat (100) begin
+        #PERIOD;
+    end
+    ignition <= 1'b0;
+    repeat (10) begin
+        #PERIOD;
+    end
 end
 
 endmodule

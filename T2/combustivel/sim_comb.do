@@ -7,6 +7,6 @@ vlog -work work tb_comb.v
 
 vsim -voptargs=+acc=lprn -t ns work.tb_comb
 
+do wave_comb.do
 
-
-run 100 ns
+run 5000 ns

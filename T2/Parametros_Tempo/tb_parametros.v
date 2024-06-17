@@ -28,7 +28,7 @@ initial begin
     #PERIOD;
     reset <= 1'b0;
     interval <= 2'b11;
-    repeat(5) begin
+    repeat(10) begin
         #PERIOD;
     end
     reprogram <= 1'b1;
@@ -37,7 +37,7 @@ initial begin
     #PERIOD;
     reprogram <= 1'b0;
     interval <= 2'b01; 
-    repeat (5) begin
+    repeat (10) begin
         #PERIOD;
     end
     reset <= 1'b1;

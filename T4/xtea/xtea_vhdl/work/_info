@@ -1,122 +1,200 @@
 m255
 K4
 z2
+!s11e vcom 2021.1 2021.02, Feb  3 2021
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dC:/Users/gusss/Documents/GitHub/Sistemas-Digitais/T4/xtea/xtea_vhdl
-Extea_dec
-Z1 w1717277484
+Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T4/xtea/xtea_vhdl
+Etb_top
+Z1 w1717622102
 Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
 Z3 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
-Z4 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z4 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z5 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z6 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z6 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 3
 R0
-Z7 8xtea_dec.vhd
-Z8 Fxtea_dec.vhd
+Z7 8tb_top.vhd
+Z8 Ftb_top.vhd
 l0
-L7
-VZ8KbJmOBP4e7B^Nf^h8[a1
-!s100 G<::Jb2be;z_H]lV1eXDO0
-Z9 OV;C;10.5b;63
+L7 1
+VHFB`E00:GMc>mHb@LK4YH2
+!s100 jbXJ3=S<dF`KaZKP^An:32
+Z9 OV;C;2021.1;73
 33
-Z10 !s110 1717350513
+Z10 !s110 1717622702
 !i10b 1
-Z11 !s108 1717350513.000000
-Z12 !s90 -reportprogress|300|-work|work|xtea_dec.vhd|
-Z13 !s107 xtea_dec.vhd|
+Z11 !s108 1717622702.000000
+Z12 !s90 -reportprogress|300|-work|work|tb_top.vhd|
+!s107 tb_top.vhd|
 !i113 1
-Z14 o-work work
-Z15 tExplicit 1 NoCoverage 1 CvgOpt 0
-Axtea_dec
+Z13 o-work work
+Z14 tExplicit 1 NoCoverage 1 CvgOpt 0
+Atb_top
+Z15 DEx4 work 8 xtea_top 0 22 ^m9PYYM^260c0iT9P?c^^2
 R2
 R3
 R4
 R5
 R6
-DEx4 work 8 xtea_dec 0 22 Z8KbJmOBP4e7B^Nf^h8[a1
-l30
-L15
-Vm^]4Em?:=DDg;kZD[SQ>=2
-!s100 EIPBJ>[ZC3LPC=W2W;bN73
+DEx4 work 6 tb_top 0 22 HFB`E00:GMc>mHb@LK4YH2
+!i122 3
+l37
+L10 51
+VHmXmKD`g0o?KAa3a[>ok71
+!s100 _<680Y0:^5Tbnb=zS6BzP2
 R9
 33
 R10
 !i10b 1
 R11
 R12
-R13
+Z16 !s107 tb_top.vhd|
 !i113 1
+R13
 R14
-R15
-Extea_enc
-Z16 w1717277274
+Extea_dec
+Z17 w1717599307
 R2
 R3
 R4
 R5
 R6
+!i122 1
 R0
-Z17 8xtea_enc.vhd
-Z18 Fxtea_enc.vhd
+Z18 8DEC/xtea_dec.vhd
+Z19 FDEC/xtea_dec.vhd
 l0
-L7
-Vh3QiF9bZ8`4OzlX0APJiR0
-!s100 RO]n7e2`YCo2l0de<L2X@1
+L7 1
+VB4AT;PGhaN=K0O=V4E1MH3
+!s100 fN;S=NiSRGPPUjfM>EklM3
 R9
 33
 R10
 !i10b 1
-R11
-Z19 !s90 -reportprogress|300|-work|work|xtea_enc.vhd|
-Z20 !s107 xtea_enc.vhd|
+Z20 !s108 1717622701.000000
+Z21 !s90 -reportprogress|300|-work|work|DEC/xtea_dec.vhd|
+Z22 !s107 DEC/xtea_dec.vhd|
 !i113 1
+R13
 R14
-R15
+Axtea_dec
+R2
+R3
+R4
+R5
+R6
+Z23 DEx4 work 8 xtea_dec 0 22 B4AT;PGhaN=K0O=V4E1MH3
+!i122 1
+l31
+L16 175
+V@_PUQFJNlJbgER9_^SW?l3
+!s100 2X7d]1`TC2na`5[ko8^UV1
+R9
+33
+R10
+!i10b 1
+R20
+R21
+R22
+!i113 1
+R13
+R14
+Extea_enc
+Z24 w1717599909
+R2
+R3
+R4
+R5
+R6
+!i122 0
+R0
+Z25 8ENC/xtea_enc.vhd
+Z26 FENC/xtea_enc.vhd
+l0
+L7 1
+Vh>dnHk_C0U=iGHO47W_V92
+!s100 <I9feNAVe>i:n8B`9?g_S2
+R9
+33
+Z27 !s110 1717622701
+!i10b 1
+R20
+Z28 !s90 -reportprogress|300|-work|work|ENC/xtea_enc.vhd|
+Z29 !s107 ENC/xtea_enc.vhd|
+!i113 1
+R13
+R14
 Axtea_enc
 R2
 R3
 R4
 R5
 R6
-DEx4 work 8 xtea_enc 0 22 h3QiF9bZ8`4OzlX0APJiR0
-l30
-L15
-V:LeM^:f<KMZ`EEK2DnH292
-!s100 >@UkBkcTF;_GWk:lDKOT=3
+Z30 DEx4 work 8 xtea_enc 0 22 h>dnHk_C0U=iGHO47W_V92
+!i122 0
+l31
+L16 173
+Vn^mH]To`hCBQeEcMe33Y`1
+!s100 EH]7VmzRh`8==LML:iN@A2
+R9
+33
+R27
+!i10b 1
+R20
+R28
+R29
+!i113 1
+R13
+R14
+Extea_top
+Z31 w1717619755
+R4
+R5
+R6
+!i122 2
+R0
+Z32 8xtea_top.vhd
+Z33 Fxtea_top.vhd
+l0
+L5 1
+V^m9PYYM^260c0iT9P?c^^2
+!s100 `<Ii[eXlOk>nS8YOkSRLe1
 R9
 33
 R10
 !i10b 1
 R11
-R19
-R20
+Z34 !s90 -reportprogress|300|-work|work|xtea_top.vhd|
+Z35 !s107 xtea_top.vhd|
 !i113 1
+R13
 R14
-R15
-Extea_top
-w1717293513
+Axtea_top
+R23
+R2
+R3
+R30
 R4
 R5
 R6
-R0
-8xtea_top.vhd
-Fxtea_top.vhd
-l0
-L5
-V_RWEG7g6_HHlW`n<Ne6iJ0
-!s100 ejQzc_=>AKmDNm?MB4AOC3
+R15
+!i122 2
+l21
+L13 89
+V<3V9XWlV_0Ck9Q87NXSmK0
+!s100 B[eb=PK2H`7COnU_bR<[M0
 R9
 33
-!s110 1717350514
+R10
 !i10b 1
 R11
-!s90 -reportprogress|300|-work|work|xtea_top.vhd|
-!s107 xtea_top.vhd|
+R34
+R35
 !i113 1
+R13
 R14
-R15
