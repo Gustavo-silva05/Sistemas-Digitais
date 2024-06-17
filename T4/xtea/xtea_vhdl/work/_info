@@ -16,19 +16,19 @@ Z4 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z5 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z6 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
 R0
-Z7 8DEC/xtea_dec.vhd
-Z8 FDEC/xtea_dec.vhd
+Z7 8xtea_dec.vhd
+Z8 Fxtea_dec.vhd
 l0
 L7
 VZ8KbJmOBP4e7B^Nf^h8[a1
 !s100 G<::Jb2be;z_H]lV1eXDO0
 Z9 OV;C;10.5b;63
 33
-Z10 !s110 1717293748
+Z10 !s110 1717350513
 !i10b 1
-Z11 !s108 1717293748.000000
-Z12 !s90 -reportprogress|300|-work|work|DEC/xtea_dec.vhd|
-Z13 !s107 DEC/xtea_dec.vhd|
+Z11 !s108 1717350513.000000
+Z12 !s90 -reportprogress|300|-work|work|xtea_dec.vhd|
+Z13 !s107 xtea_dec.vhd|
 !i113 1
 Z14 o-work work
 Z15 tExplicit 1 NoCoverage 1 CvgOpt 0
@@ -61,8 +61,8 @@ R4
 R5
 R6
 R0
-Z17 8ENC/xtea_enc.vhd
-Z18 FENC/xtea_enc.vhd
+Z17 8xtea_enc.vhd
+Z18 Fxtea_enc.vhd
 l0
 L7
 Vh3QiF9bZ8`4OzlX0APJiR0
@@ -72,8 +72,8 @@ R9
 R10
 !i10b 1
 R11
-Z19 !s90 -reportprogress|300|-work|work|ENC/xtea_enc.vhd|
-Z20 !s107 ENC/xtea_enc.vhd|
+Z19 !s90 -reportprogress|300|-work|work|xtea_enc.vhd|
+Z20 !s107 xtea_enc.vhd|
 !i113 1
 R14
 R15
@@ -112,7 +112,7 @@ V_RWEG7g6_HHlW`n<Ne6iJ0
 !s100 ejQzc_=>AKmDNm?MB4AOC3
 R9
 33
-!s110 1717293749
+!s110 1717350514
 !i10b 1
 R11
 !s90 -reportprogress|300|-work|work|xtea_top.vhd|
