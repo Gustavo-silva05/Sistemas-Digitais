@@ -2,7 +2,7 @@ module FSM_antifurto (
     input ignition, door_driver, door_pass, reprogram, clock, reset, expired, one_hz_enable,
     output [1:0] interval,
     output status,
-    output start_timer, eneble_siren,
+    output start_timer, enable_siren,
     output [2:0] estado
 
 );
@@ -86,16 +86,7 @@ always @(posedge clock) begin
                 end
                 else begin
                     start <= 1'b1;
-                    PE <= 3'b110;
-                end
-
-        3'b110: if (expired) begin
                     PE <= 3'b000;
-                    start <= 1'b1;
-                end
-                else begin
-                    start <= 1'b0;
-                    PE <= 3'b110;
                 end
     endcase
 end
@@ -158,6 +149,6 @@ assign estado = EA;
 assign start_timer = start;
 assign interval = intervalo;
 assign status = stats;
-assign eneble_siren = enable;
+assign enable_siren = enable;
 
 endmodule

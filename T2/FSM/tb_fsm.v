@@ -4,7 +4,7 @@ module tb_fsm ();
 reg clock, reset;
 reg ignition, door_driver, door_pass, reprogram, expired, one_hz_enable;
 wire [1:0] interval;
-wire status, start_timer, eneble_siren;
+wire status, start_timer, enable_siren;
 wire [2:0] estado;
 
 reg start;
@@ -15,6 +15,12 @@ wire [3:0] counter;
 reg [1:0] time_param_sel, interval_param;
 reg [3:0] time_value;
 wire [3:0] value_param;
+
+reg break, hidden_sw;
+wire fuel_pump;
+
+reg enable_siren_ger, two_hz_enable_ger;
+wire [2:0]siren;
 
 
 assign one_hz_enable = one_hz_enable_timer;
@@ -32,7 +38,7 @@ FSM_antifurto FSM(
 .interval(interval),
 .status(status),
 .start_timer(start_timer), 
-.eneble_siren(eneble_siren),
+.enable_siren(enable_siren),
 .estado(estado)
 );
 
@@ -64,22 +70,27 @@ Timer relogio(.reset (reset),
     .counter(counter)    
 );
 
-// logica_comb combustivel(
-//     .clock(clock),
-//     .reset(reset),
-//     .break(break),
-//     .hidden_sw(hidden_sw),
-//     .ignition(ignition),
+logica_comb combustivel(
+    .clock(clock),
+    .reset(reset),
+    .break(break),
+    .hidden_sw(hidden_sw),
+    .ignition(ignition),
     
-//     .fuel_pump(fuel_pump)
-// );
+    .fuel_pump(fuel_pump)
+);
 
-// gerador_sirene sirene(
-//     .clock(clock), .reset(reset),
-//     .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
+assign enable_siren_ger = enable_siren;
+assign two_hz_enable_ger = two_hz_enable;
+
+gerador_sirene sirene(
+    .clock(clock), 
+    .reset(reset),
+    .enable_siren(enable_siren_ger), 
+    .two_hz_enable(two_hz_enable_ger),
     
-//     .siren(siren), .color(color)
-// );
+    .siren(siren)
+);
 
 
 localparam PERIOD = 10;
@@ -90,14 +101,35 @@ initial begin
     reset <= 1'b1;
     #PERIOD;
     reset <= 1'b0;
+    repeat (100) begin
+        #PERIOD;
+    end
+    door_driver <= 1'b1;
+    repeat (100) begin
+        #PERIOD;
+    end
+    ignition <= 1'b1;
     repeat (10) begin
         #PERIOD;
     end
-    door_pass <= 1'b1;
+    break <= 1'b1;
+    hidden_sw <= 1'b1;
     repeat (1000) begin
         #PERIOD;
     end
-    door_pass <= 1'b0;
+    door_driver <= 1'b0;
+    repeat (1000) begin
+        #PERIOD;
+    end
+    ignition <= 1'b0;
+    repeat (1000) begin
+        #PERIOD;
+    end
+    door_driver <= 1'b1;
+    repeat (100) begin
+        #PERIOD;
+    end
+    door_driver <= 1'b0;
 
 end
 

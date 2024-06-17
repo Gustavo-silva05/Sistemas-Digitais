@@ -5,21 +5,21 @@ module Parametros_Tempo(
     input reprogram, 
     input clock, 
     input reset,
-    output [4:0] value
+    output [3:0] value
 );
-reg [4:0] T_ARM_DELAY;
-reg [4:0] T_DRIVER_DELAY;
-reg [4:0] T_PASSAGER_DELAY;
-reg [4:0] T_ALARM_ON;
-reg [4:0] valor;
+reg [3:0] T_ARM_DELAY;
+reg [3:0] T_DRIVER_DELAY;
+reg [3:0] T_PASSAGER_DELAY;
+reg [3:0] T_ALARM_ON;
+reg [3:0] valor;
 
 
 always @(posedge clock) begin
     if (reset) begin
-        T_ARM_DELAY <= 5'b00110;
-        T_DRIVER_DELAY <= 5'b01000;
-        T_PASSAGER_DELAY <= 5'b01111;
-        T_ALARM_ON <= 5'b01010;
+        T_ARM_DELAY <= 4'b0110;
+        T_DRIVER_DELAY <= 4'b1000;
+        T_PASSAGER_DELAY <= 4'b1111;
+        T_ALARM_ON <= 4'b1010;
     end
     case (interval)
         2'b00: valor <= T_ARM_DELAY;
