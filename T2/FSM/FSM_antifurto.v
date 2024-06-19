@@ -67,21 +67,21 @@ always @(posedge clock) begin
                     end              
                 end 
 
-        3'b011: if (ignition) begin
+        3'b011: if (ignition) begin   // desarme.1
                     PE <= 3'b011;
                 end
                 else begin
                     PE <= 3'b100;
                 end
 
-        3'b100: if (door_driver) begin
+        3'b100: if (door_driver) begin // desarme.2
                     PE <= 3'b101;
                 end
                 else begin
                     PE <= 3'b100;
                 end
 
-        3'b101: if (door_driver) begin
+        3'b101: if (door_driver) begin //desarme.3
                     PE <= 3'b101;
                 end
                 else begin
