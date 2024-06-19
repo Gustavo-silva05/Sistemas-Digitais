@@ -116,7 +116,7 @@ logica_comb combustivel(
 
 gerador_sirene sirene(
     .clock(clock), .reset(reset),
-    .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
+    .enable_siren(eneble_siren), .two_hz_enable(two_hz_enable),
     .siren(siren)
 );
 
