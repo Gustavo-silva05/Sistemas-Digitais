@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module top(
     input clock,
     input reset,
@@ -28,37 +26,37 @@ wire [3:0] value;
 wire two_hz_enable;
 wire clean;
 
-debouncer ignition (
+debounce i (
     .reset(reset), 
     .clock(clock), 
     .noisy(ignition), 
     .clean(clean) 
 );
-debouncer break (
+debounce b (
     .reset(reset), 
     .clock(clock), 
     .noisy(break), 
     .clean(clean) 
 );
-debouncer hidden_sw (
+debounce hsw (
     .reset(reset), 
     .clock(clock), 
     .noisy(hidden_sw), 
     .clean(clean) 
 );
-debouncer door_driver (
+debounce dd (
     .reset(reset), 
     .clock(clock), 
     .noisy(door_driver), 
     .clean(clean) 
 );
-debouncer door_pass (
+debounce dp (
     .reset(reset), 
     .clock(clock), 
     .noisy(door_pass), 
     .clean(clean) 
 );
-debouncer reprogram (
+debounce r (
     .reset(reset), 
     .clock(clock), 
     .noisy(reprogram), 
@@ -78,7 +76,7 @@ FSM_antifurto FSM(
 .interval(interval),
 .status(status),
 .start_timer(start_timer), 
-.eneble_siren(eneble_siren),
+.enable_siren(eneble_siren),
 .estado(estado)
 );
 
@@ -119,7 +117,7 @@ logica_comb combustivel(
 gerador_sirene sirene(
     .clock(clock), .reset(reset),
     .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
-    .siren(siren),
+    .siren(siren)
 );
 
 
