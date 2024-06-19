@@ -10,7 +10,7 @@ z2
 cModel Technology
 Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T2/FSM
 vFSM_antifurto
-Z1 !s110 1718556611
+Z1 !s110 1718761685
 !i10b 1
 !s100 Z:GOJX]YdV];;ARoNNO;h2
 I5^;n>8]`g;a?_2CLc^P;A2
@@ -25,7 +25,7 @@ Z3 OV;L;2021.1;73
 r1
 !s85 0
 31
-Z4 !s108 1718556611.000000
+Z4 !s108 1718761685.000000
 !s107 FSM_antifurto.v|
 !s90 -reportprogress|300|-work|work|FSM_antifurto.v|
 !i113 1
@@ -33,16 +33,16 @@ Z5 o-work work
 Z6 tCvgOpt 0
 n@f@s@m_antifurto
 vgerador_sirene
-Z7 !s110 1718556612
+Z7 !s110 1718761686
 !i10b 1
-!s100 i@_PBAebLdZjgPQAYTKf?1
-I:LnXSRFRoZU^N7fc]k01_3
+!s100 ^eL6X39lFJ:i1_Ub`gm`H1
+Ina_=aNiFIgCgSEoMd@mCK0
 R0
-w1718556501
+w1718556739
 8gerador_sirene.v
 Fgerador_sirene.v
 !i122 2
-L0 1 61
+Z8 L0 1 64
 R2
 R3
 r1
@@ -70,7 +70,7 @@ R3
 r1
 !s85 0
 31
-Z8 !s108 1718556612.000000
+Z9 !s108 1718761686.000000
 !s107 logica_comb.v|
 !s90 -reportprogress|300|-work|work|logica_comb.v|
 !i113 1
@@ -92,7 +92,7 @@ R3
 r1
 !s85 0
 31
-R8
+R9
 !s107 Parametros_Tempo.v|
 !s90 -reportprogress|300|-work|work|Parametros_Tempo.v|
 !i113 1
@@ -131,13 +131,13 @@ w1718486751
 8Timer.v
 FTimer.v
 !i122 5
-L0 1 64
+R8
 R2
 R3
 r1
 !s85 0
 31
-R8
+R9
 !s107 Timer.v|
 !s90 -reportprogress|300|-work|work|Timer.v|
 !i113 1
