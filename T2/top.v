@@ -9,15 +9,13 @@ module top(
     input reprogram,
     input [1:0] time_param_sel,
     input [3:0] time_value,
-    output [3:0] estado,
-    output [3:0] counter,
     output fuel_pump,
     output [2:0]siren,
     output status,
     output [7:0] an,
     output [7:0] dec_cat
 );
-
+wire [3:0] estado,counter;
 
 wire expired, one_hz_enable;
 wire [1:0] interval;
@@ -124,14 +122,14 @@ gerador_sirene sirene(
 dspl_drv_NexysA7 display(
     .reset(reset),
     .clock(clock),
-    .d1({1'd0,estado,1'b0}),
+    .d1({1'd1,estado,1'b0}),
     .d2(6'd0),
     .d3(6'd0),
     .d4(6'd0),
     .d5(6'd0),
     .d6(6'd0),
     .d7(6'd0),
-    .d8({1'b0,counter,1'b0}),
+    .d8({1'b1,counter,1'b0}),
     .dec_cat(dec_cat),
     .an(an)
 );
