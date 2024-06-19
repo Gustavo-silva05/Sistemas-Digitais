@@ -8,12 +8,6 @@ module debounce (
     inout reset, 
     inout clock, 
     inout noisy, 
-    inout reprogram, 
-    inout door_pass, 
-    inout door_pass, 
-    inout ignition, 
-    inout hidden_sw, 
-    inout break,
     output reg clean 
     );
 
