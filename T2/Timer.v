@@ -22,7 +22,7 @@ always @(posedge clock ) begin
         if (start_timer) begin
             expirou = 1'b0;
             count <= value;
-            timer_1sec <= 29'd200_000_000;
+            timer_1sec <= 29'd100_000_000;
         end
         else begin
             if (count > 4'd0) begin
@@ -31,20 +31,19 @@ always @(posedge clock ) begin
                     two_hz <= 1'b0;
                     one_hz <= 1'b0;
                     if (timer_1sec == 29'd50_000_000) begin
-                        one_hz <= 1'b1;
-                        count <= count - 5'd1;
+                        two_hz <= 1'b1;
                         timer_1sec <= timer_1sec - 29'd1;
                     end
                     else begin
                         timer_1sec <= timer_1sec - 29'd1;
-                        one_hz <= 1'b0;
+                        two_hz <= 1'b0;
                     end
                 end
                 else begin
-                    timer_1sec <= 29'd200_000_000;
+                    timer_1sec <= 29'd100_000_000;
                     two_hz <= 1'b1;
                     one_hz <= 1'b1;
-                    count <= count - 5'd1;
+                    count <= count - 4'd1;
                 end
             end
             else begin
