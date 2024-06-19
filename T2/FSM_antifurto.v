@@ -35,8 +35,14 @@ always @(posedge clock) begin
                     PE <= 3'b001;
                 end
                 else begin
-                    PE <= 3'b000;
-                    start <= 1'b0;
+                    if (expired) begin
+						PE <= 3'b000;
+						start <= 1'b1;
+					end
+					else begin
+						PE <= 3'b000;
+						start <= 1'b0;
+					end
                 end
         
         3'b001:  if (ignition) begin // Acionado
