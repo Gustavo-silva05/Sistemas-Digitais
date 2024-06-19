@@ -124,14 +124,14 @@ gerador_sirene sirene(
 dspl_drv_NexysA7 display(
     .reset(reset),
     .clock(clock),
-    .d1({2'd0,estado,1'b0}),
+    .d1({1'd0,estado,1'b0}),
     .d2(6'd0),
     .d3(6'd0),
     .d4(6'd0),
     .d5(6'd0),
     .d6(6'd0),
     .d7(6'd0),
-    .d8({1'b0,count,1'b0}),
+    .d8({1'b0,counter,1'b0}),
     .dec_cat(dec_cat),
     .an(an)
 );
