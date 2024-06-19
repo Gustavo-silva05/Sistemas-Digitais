@@ -14,28 +14,57 @@ module top(
     output [3:0] estado,
     output [3:0] counter,
     output fuel_pump,
-    output siren,
+    output [2:0]siren,
     output status,
     output [7:0] an,
     output [7:0] dec_cat
 );
-reg noisy;
-wire clean;
 
-reg expired, one_hz_enable;
+
+wire expired, one_hz_enable;
 wire [1:0] interval;
 wire start_timer, eneble_siren;
+wire [3:0] value;
+wire two_hz_enable;
+wire clean;
 
-reg start;
-reg [3:0] value;
-wire expired_timer, one_hz_enable_timer, two_hz_enable;
+debouncer ignition (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(ignition), 
+    .clean(clean) 
+);
+debouncer break (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(break), 
+    .clean(clean) 
+);
+debouncer hidden_sw (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(hidden_sw), 
+    .clean(clean) 
+);
+debouncer door_driver (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(door_driver), 
+    .clean(clean) 
+);
+debouncer door_pass (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(door_pass), 
+    .clean(clean) 
+);
+debouncer reprogram (
+    .reset(reset), 
+    .clock(clock), 
+    .noisy(reprogram), 
+    .clean(clean) 
+);
 
-reg [1:0]  interval_param;
-wire [3:0] value_param;
-
-
-assign one_hz_enable = one_hz_enable_timer;
-assign expired = expired_timer;
 FSM_antifurto FSM(
 .ignition(ignition), 
 .door_driver(door_driver), 
@@ -53,57 +82,46 @@ FSM_antifurto FSM(
 .estado(estado)
 );
 
-assign interval_param = interval;
 
 Parametros_Tempo parametros(
     .time_param_sel(time_param_sel), 
-    .interval(interval_param),
+    .interval(interval),
     .time_value(time_value),
     .reprogram(reprogram), 
     .clock(clock), 
     .reset(reset),
     
-    .value(value_param)
+    .value(value)
 );
 
-
-assign start = start_timer;
-assign value = value_param;
 
 Timer relogio(.reset (reset),
     .clock (clock),
     .value(value),
-    .start_timer(start),
+    .start_timer(start_timer),
     
-    .expired(expired_timer),
-    .one_hz_enable(one_hz_enable_timer),
+    .expired(expired),
+    .one_hz_enable(one_hz_enable),
     .two_hz_enable(two_hz_enable),
     .counter(counter)    
 );
 
-// logica_comb combustivel(
-//     .clock(clock),
-//     .reset(reset),
-//     .break(break),
-//     .hidden_sw(hidden_sw),
-//     .ignition(ignition),
+logica_comb combustivel(
+    .clock(clock),
+    .reset(reset),
+    .break(break),
+    .hidden_sw(hidden_sw),
+    .ignition(ignition),
     
-//     .fuel_pump(fuel_pump)
-// );
-
-// gerador_sirene sirene(
-//     .clock(clock), .reset(reset),
-//     .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
-    
-//     .siren(siren), .color(color)
-// );
-
-debouncer deb (
-    .reset(reset), 
-    .clock(clock), 
-    .noisy(noisy), 
-    .clean(clean) 
+    .fuel_pump(fuel_pump)
 );
+
+gerador_sirene sirene(
+    .clock(clock), .reset(reset),
+    .eneble_siren(eneble_siren), .two_hz_enable(two_hz_enable),
+    .siren(siren),
+);
+
 
 dspl_drv_NexysA7 display(
     .reset(reset),
