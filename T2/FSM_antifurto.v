@@ -92,6 +92,10 @@ always @(posedge clock) begin
 end
     
 always @(posedge clock) begin
+    if (reset) begin
+        intervalo <= 2'b00;
+    end
+    else begin
     case (EA)
         3'b000:  if (door_driver) begin
                    intervalo <= 2'b01;
@@ -109,6 +113,7 @@ always @(posedge clock) begin
                 end
         default: intervalo <= 2'b00;
     endcase
+    end
 end
 
 always @(posedge clock ) begin
