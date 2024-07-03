@@ -38,7 +38,7 @@ always @(posedge clk ) begin
     timers <= 9'd1;
   end
   else begin
-    if (update) begin
+    //if (update) begin
       case (prog_in)
         3'd0: timers <= 9'd1; 
         3'd1: timers <= 9'd2;
@@ -50,7 +50,7 @@ always @(posedge clk ) begin
         3'd7: timers <= 9'd128;
         default: timers <= 9'd1; 
       endcase
-    end
+    //end
   end
 end
 
