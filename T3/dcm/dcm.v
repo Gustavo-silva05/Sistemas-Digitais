@@ -30,22 +30,11 @@ always @(posedge clk ) begin
     else if (counter == 9'd0) begin
       c_2 <= c_2_0;
     end
-    // else if (counter == (timers/2)) begin
-    //   c_2 <= ~c_2;
-    //   counter <= counter + 9'd1;
-    // end
     else begin
       counter <= counter + 9'd1;
     end
   end
 end
-
-always @* begin
-  if (prog_in == 3'd0) begin
-    c_2_0 <= clk;
-  end
-end
-
 
 
 always @(posedge clk ) begin
@@ -68,6 +57,6 @@ always @(posedge clk ) begin
 end
 
 assign clk_1 = clk;
-assign clk_2 = c_2;
+assign clk_2 = (timers == 9'd0) ? clk : c_2;
 assign prog_out = prog_in;
 endmodule
