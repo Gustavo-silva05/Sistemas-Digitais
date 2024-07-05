@@ -1,0 +1,55 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T3/dcm
+vdcm
+Z1 !s110 1720140690
+!i10b 1
+!s100 gn6<>1B1BEV@;CS:@8?;N3
+IcEZB1a6ie<_l4WAT=1[cn0
+R0
+w1720140685
+8dcm.v
+Fdcm.v
+!i122 0
+L0 1 73
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+Z4 !s108 1720140690.000000
+!s107 dcm.v|
+!s90 -reportprogress|300|-work|work|dcm.v|
+!i113 1
+Z5 o-work work
+Z6 tCvgOpt 0
+vtb_dcm
+R1
+!i10b 1
+!s100 PR8kLc]FeXH4i`agL^8Kl3
+IUhP9G2jFC;ZnX>HafWf@c2
+R0
+w1720129688
+8tb_dcm.v
+Ftb_dcm.v
+!i122 1
+L0 3 54
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 tb_dcm.v|
+!s90 -reportprogress|300|-work|work|tb_dcm.v|
+!i113 1
+R5
+R6
