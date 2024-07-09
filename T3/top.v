@@ -20,22 +20,22 @@ dcm dcm (
     .clk_2(clk_2)
 );
 
-wire f_en, f_valid; 
+wire f_valid; 
 wire [15:0] f_out;
 fibonacci fib (
     .rst(rst), 
     .clk(clk), 
-    .f_en(f_en),
+    .f_en(start_f),
     .f_valid(f_valid),
     .f_out (f_out)
 );
 
-wire t_en, t_valid;
+wire  t_valid;
 wire [15:0] t_out;
 timer t (
     .rst(rst), 
     .clk(clk), 
-    .t_en(t_en),
+    .t_en(start_t),
     .t_valid(t_valid),
     .t_out (t_out)
 );
@@ -44,9 +44,9 @@ wire [15:0] data_2;
 dm dm (
   .rst(rst), 
   .clk(clk), 
-  .prog(prog_out),
+  .prog(prog),
   .modules(modules),
-  .data_2(),
+  .data_2(data_1),
   .an(an), 
   .dec_ddp(dec_ddp)
 
