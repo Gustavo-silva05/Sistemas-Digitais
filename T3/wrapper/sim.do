@@ -10,5 +10,5 @@ vsim -voptargs=+acc=lprn -t ns work.tb_w
 set StdArithNoWarnings 1
 set StdVitalGlitchNoWarnings 1
 
-
+do wave.do
 run 1000 ns
