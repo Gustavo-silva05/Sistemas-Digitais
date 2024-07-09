@@ -20,33 +20,35 @@ dcm dcm (
     .clk_2(clk_2)
 );
 
-wire f_valid; 
+wire f_en, f_valid; 
 wire [15:0] f_out;
 fibonacci fib (
     .rst(rst), 
     .clk(clk), 
-    .f_en(start_f),
+    .f_en(f_en),
     .f_valid(f_valid),
     .f_out (f_out)
 );
 
-wire  t_valid;
+wire  t_en,t_valid;
 wire [15:0] t_out;
 timer t (
     .rst(rst), 
     .clk(clk), 
-    .t_en(start_t),
+    .t_en(t_en),
     .t_valid(t_valid),
     .t_out (t_out)
 );
-wire [1:0] modules;
+reg [1:0] modules_fsm;
+wire modules;
+assign modules = modules_fsm;
 wire [15:0] data_2;
 dm dm (
   .rst(rst), 
   .clk(clk), 
   .prog(prog),
   .modules(modules),
-  .data_2(data_1),
+  .data_2(data_2),
   .an(an), 
   .dec_ddp(dec_ddp)
 
@@ -67,7 +69,7 @@ wrapper buffering (
 
 
 
-wire [2:0] EA, PE;
+reg [2:0] EA, PE;
 
 always @(posedge clk ) begin
   if (rst) begin
@@ -125,7 +127,7 @@ always @(posedge clk, EA ) begin
           PE <= 3'd3;
         end
       end
-      3'd4:begin
+      3'd4:begin                  /*S_WAIT_F*/
         if (stop_f_t) begin
           PE <= 3'd3;
         end
@@ -136,7 +138,7 @@ always @(posedge clk, EA ) begin
           PE <= 3'd4;
         end
       end
-      3'd5:begin
+      3'd5:begin                /*S_WAIT_T*/
         if (stop_f_t) begin
           PE <= 3'd3;
         end
@@ -152,43 +154,71 @@ always @(posedge clk, EA ) begin
   end
 end
 
-always @(posedge clk , EA) begin
+always @(posedge clk) begin
   if (rst) begin
-    t_en <= 1'b0;
-    f_en <= 1'b0;
+    modules_fsm <= 2'd0;
   end
   else begin
-    case (EA)
-      3'd0: begin
-        t_en <= 1'b0;
-        f_en <= 1'b0;
+    if ((EA== 3'd0) || (EA== 3'd1) || (EA== 3'd2)) begin
+      if (data_2_valid) begin
+        modules_fsm <= EA[1:0];
+      end 
+      else begin
+        modules_fsm <= 2'd0;
       end
-      3'd1:begin
-        f_en <= 1'b1;
-        t_en <= 1'b0;
-        data_1 <= f_out;
-        data_1_en <= f_valid;
-      end
-      3'd2:begin
-        f_en <= 1'b0;
-        t_en <= 1'b1;
-        data_1 <= t_out;
-        data_1_en <= t_valid;
-      end
-      3'd3:begin
-        
-      end
-      3'd4:begin
-      end
-      3'd5 :begin
-      end
-      default: begin
-        t_en <= 1'b0;
-        f_en <= 1'b0;
-      end
-    endcase
+    end
   end
 end
 
+
+always @(posedge clk ) begin
+  if (rst) begin
+    f_en <= 1'b0;
+    t_en <= 1'b0;
+    data_1 <= 16'd0;
+  end
+  else begin
+    if (!buffer_full) begin
+      case (EA)
+        3'd0: begin
+          f_en <= 1'b0;
+          t_en <= 1'b0;
+          data_1 <= 16'd0;
+        end
+        3'd1:begin
+          f_en <= 1'b1;
+          t_en <= 1'b0;
+          data_1 <= f_out;
+        end
+        3'd2:begin
+          t_en <= 1'b1;
+          f_en <= 1'b0;
+          data_1 <= t_out;
+        end
+        3'd3:begin
+          f_en <= 1'b0;
+          t_en <= 1'b0;
+        end
+        3'd4: begin
+          f_en <= 1'b1;
+          t_en <= 1'b0;
+          data_1 <= f_out;
+        end
+        3'd5: begin
+          t_en <= 1'b1;   
+          f_en <= 1'b0;   
+          data_1 <= t_out;    
+        end
+        default: begin
+          f_en <= 1'b0;
+          t_en <= 1'b0;
+          data_1 <= 16'd0;
+        end
+      endcase
+    end
+  end
+end
+
+assign data_1_en = (f_valid || t_valid);
 
 endmodule
