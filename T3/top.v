@@ -175,10 +175,17 @@ always @(posedge clk , EA) begin
         data_1 <= t_out;
         data_1_en <= t_valid;
       end
-      3'd3:
-      3'd4:
-      3'd5 :
-      default: 
+      3'd3:begin
+        
+      end
+      3'd4:begin
+      end
+      3'd5 :begin
+      end
+      default: begin
+        t_en <= 1'b0;
+        f_en <= 1'b0;
+      end
     endcase
   end
 end

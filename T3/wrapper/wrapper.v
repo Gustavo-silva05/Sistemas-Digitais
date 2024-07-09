@@ -10,43 +10,38 @@ reg data_v;
 reg [15:0]d2;
 
 reg [15:0] buffer [0:7];
-reg [3:0] b_reader, b_writer;
+reg [2:0] b_reader, b_writer;
 
 always @(posedge clk_1 ) begin
   if (rst) begin
-    b_writer <= 4'd0;
+    b_writer <= 3'd0;
   end
   else begin
     if (data_1_en) begin
-      if (buffer_full == 1'd0) begin
+      while (buffer_full == 1'd0) begin
         buffer[b_writer] <= data_1;
-        b_writer <= b_writer + 4'd1;
+        b_writer <= b_writer + 3'd1;
       end
     end
-    else begin
-      b_writer <= 4'b0;
+    else if (buffer_empty) begin
+      b_writer <= 3'd0;
     end
   end
 end
 
 always @(posedge clk_2) begin
   if (rst) begin
-    b_reader <= 4'd0;
-    data_2_valid <= 1'd0;
+    b_reader <= 3'd0;
   end
   else begin
-    if (b_reader == 4'd8) begin
-      b_reader <= 4'd0;
-    end
-    else begin
-      d2 <= buffer[b_reader];
-      b_reader <= b_reader + 4'd1;
-    end
+    d2 <= buffer[b_reader];
+    b_reader <= b_reader + 3'd1;
   end
 end
 
 assign buffer_empty = (b_writer == b_reader)? 1'd1 : 1'd0;
-assign buffer_full  = (b_writer == 4'd8)    ? 1'd1 : 1'd0;    
+assign buffer_full  = (b_writer == 3'd7)? 1'd1 : 1'd0;    
 assign data_2 = d2;
+// assign data_2_valid
 
 endmodule
