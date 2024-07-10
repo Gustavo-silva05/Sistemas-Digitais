@@ -1,65 +1,158 @@
-module wrapper 
-(
-  input rst, clk_1, clk_2, data_1_en,
-  input [15:0] data_1,
-  output buffer_empty, buffer_full, data_2_valid,
-  output [15:0] data_2
+
+module top(
+  input rst, clk, start_f, start_t, stop_f_t ,update,
+  input[2:0] prog,
+  output [5:0] led, 
+  output [7:0] an , dec_ddp,
+  output parity
 );
 
-reg data_v;
-reg [15:0]d2;
+reg f_en, t_en;
+wire f_valid, t_valid;
+wire [15:0] f_out, t_out;
+wire [2:0] prog_out;
+wire clk_1, clk_2;
+wire data_1_en;
+wire [15:0] data_2, data_1;
+wire buffer_empty, buffer_full;
+wire update_ed, stop_f_t_ed, start_f_ed, start_t_ed;
 
-reg [15:0] buffer [0:7];
-reg [3:0] b_reader, b_writer;
+fibonacci fib (
+    .rst(rst), 
+    .clk(clk), 
+    .f_en(f_en),
+    .f_valid(f_valid),
+    .f_out (f_out)
+);
 
-always @(posedge clk_1 ) begin
+timer t (
+    .rst(rst), 
+    .clk(clk), 
+    .t_en(t_en),
+    .t_valid(t_valid),
+    .t_out (t_out)
+);
+
+dcm dcm (
+    .rst(rst), 
+    .clk(clk), 
+    .update(update_ed),
+    .prog_in(prog),
+    .prog_out(prog_out),
+    .clk_1(clk_1), 
+    .clk_2(clk_2)
+);
+
+wrapper w (
+    .rst(rst), 
+    .clk_1(clk_1), 
+    .clk_2(clk_2), 
+    .data_1_en(data_1_en),
+    .data_1(data_1),
+    .buffer_empty(buffer_empty), 
+    .buffer_full(buffer_full), 
+    .data_2_valid(data_2_valid),
+    .data_2(data_2)
+);
+
+dm dm(
+  .rst(rst), .clk(clk_2),
+  .prog(prog),
+  .modules(),
+  .data_2(),
+  .an(an), .dec_ddp(dec_ddp)
+);
+
+edge_detector SF  (.clock(clk), .reset(rst), .din(start_f), .rising(start_f_ed));
+edge_detector ST  (.clock(clk), .reset(rst), .din(start_t), .rising(start_t_ed));
+edge_detector SFT (.clock(clk), .reset(rst), .din(stop_f_t), .rising(stop_f_t_ed));
+edge_detector U   (.clock(clk), .reset(rst), .din(update), .rising(update_ed));
+
+reg [2:0] EA, PE;
+
+always @(posedge clk ) begin
   if (rst) begin
-    b_writer <= 4'd0;
+    EA <= 3'd0;
   end
   else begin
-    if (data_1_en) begin
-      if (buffer_full == 1'd0) begin
-        buffer[b_writer] <= data_1;
-        b_writer <= b_writer + 4'd1;
-      end
-    end
+    EA <= PE;
+  end
+end
+
+always @(posedge clk ) begin
+  if (rst) begin
     
   end
-end
-
-always @(posedge clk_2) begin
-  if (rst) begin
-    b_reader <= 4'd0;
-  end
   else begin
-    if (buffer_empty == 1'b0) begin
-      d2 <= buffer[b_reader];
-      b_reader <= b_reader + 4'd1;
-    end
-    else if (buffer_empty && buffer_full) begin
-      b_reader <= 4'd0;
-      b_writer <= 4'd0;
-    end
+    case (EA)
+      3'd0: begin
+        if (start_f_ed) begin
+          PE <= 3'd1;
+        end
+        else if (start_t_ed) begin
+          PE <= 3'd4;
+        end
+        else begin
+          PE <= 3'd0;
+        end
+      end
+      3'd1: begin
+        if (buffer_full) begin
+          PE <= 3'd2;
+        end       
+        else if (stop_f_t_ed) begin
+          PE <= 3'd3;
+        end
+        else begin
+          PE <= 3'd1;
+        end
+      end
+      3'd2:begin
+        if (!buffer_full) begin
+          PE <= 3'd1;
+        end
+        else if (stop_f_t_ed) begin
+          PE <= 3'd3;
+        end
+        else begin
+          PE <= 3'd2;
+        end
+      end
+      3'd3:begin
+        if (buffer_empty && !data_2_valid) begin
+          PE <= 3'd0;
+        end
+        else begin
+          PE <=3'd3;
+        end
+      end
+      3'd4:begin
+        if (buffer_full) begin
+          PE <= 3'd5;
+        end       
+        else if (stop_f_t_ed) begin
+          PE <= 3'd3;
+        end
+        else begin
+          PE <= 3'd4;
+        end
+      end
+      3'd5: begin
+        if (!buffer_full) begin
+          PE <= 3'd4;
+        end
+        else if (stop_f_t_ed) begin
+          PE <= 3'd3;
+        end
+        else begin
+          PE <= 3'd5;
+        end
+      end
+      default: PE <= 3'd0; 
+    endcase
   end
 end
 
-always @* begin
-  if (rst) begin
-    data_v <= 1'b0;
-  end
-  else begin
-    if (buffer_empty) begin
-      data_v <= 1'b0;
-    end
-    else begin
-      data_v <= 1'b1;
-    end
-  end
-end
 
-assign buffer_empty = (b_writer == b_reader)? 1'd1 : 1'd0;
-assign buffer_full  = (b_writer == 4'd8)    ? 1'd1 : 1'd0;    
-assign data_2 = d2;
-assign data_2_valid = data_v;
- 
 endmodule
+ 
