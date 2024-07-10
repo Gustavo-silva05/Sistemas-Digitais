@@ -57,6 +57,6 @@ always @(posedge clk ) begin
 end
 
 assign clk_1 = clk;
-assign clk_2 = (timers == 9'd0) ? clk : c_2;
+assign clk_2 = (prog_in == 3'd0 || rst ) ? clk : c_2;
 assign prog_out = prog_in;
 endmodule

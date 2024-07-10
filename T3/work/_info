@@ -9,68 +9,68 @@ z2
 cModel Technology
 Z0 dC:/Users/gusss/Documents/GitHub/Sistemas-Digitais/T3
 vdcm
-Z1 !s110 1720640275
+Z1 !s110 1720647129
 !i10b 1
-!s100 2K2Z:eXlehBMok7=EMQc?0
-I7AFgzDf]@FI4YLMRaC^081
+!s100 OF09@43e^zH>W4AHiU@@d3
+IH4_05WPP>7MFgZea1Th>e2
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
-Z3 w1720637276
+w1720642959
 8dcm.v
 Fdcm.v
 L0 1
-Z4 OV;L;10.5b;63
+Z3 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z5 !s108 1720640275.000000
+Z4 !s108 1720647129.000000
 !s107 dcm.v|
 !s90 -reportprogress|300|-work|work|dcm.v|
 !i113 1
-Z6 o-work work
-Z7 tCvgOpt 0
+Z5 o-work work
+Z6 tCvgOpt 0
 vdm
-Z8 !s110 1720640276
+R1
 !i10b 1
 !s100 33YF8Jh16YjTa2bgI^j3g1
 I:0C::<FLoQVAfHBYL3ng?3
 R2
 R0
-R3
+Z7 w1720637276
 8dm.v
 Fdm.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
-Z9 !s108 1720640276.000000
+R4
 !s107 dm.v|
 !s90 -reportprogress|300|-work|work|dm.v|
 !i113 1
+R5
 R6
-R7
 vdspl_drv_NexysA7
-R8
+Z8 !s110 1720647130
 !i10b 1
 !s100 V;]>PbcIm0kBf?ceHQYBK2
 IRZT249@VXoR2GHc73J0G<3
 R2
 R0
-R3
+R7
 8dspl_drv_NexysA7.v
 Fdspl_drv_NexysA7.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
-R9
+Z9 !s108 1720647130.000000
 !s107 dspl_drv_NexysA7.v|
 !s90 -reportprogress|300|-work|work|dspl_drv_NexysA7.v|
 !i113 1
+R5
 R6
-R7
 ndspl_drv_@nexys@a7
 vedge_detector
 R8
@@ -79,11 +79,11 @@ R8
 IOoYD=:dHTKFFQgzc@YJHk1
 R2
 R0
-R3
+R7
 8edge_detector_sintese.v
 Fedge_detector_sintese.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
@@ -91,8 +91,8 @@ R9
 !s107 edge_detector_sintese.v|
 !s90 -reportprogress|300|-work|work|edge_detector_sintese.v|
 !i113 1
+R5
 R6
-R7
 vfibonacci
 R1
 !i10b 1
@@ -100,32 +100,32 @@ R1
 IEL0S1FCb2ozB4CUT4V1MJ3
 R2
 R0
-R3
+w1720647124
 8fibonacci.v
 Ffibonacci.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
-R5
+R4
 !s107 fibonacci.v|
 !s90 -reportprogress|300|-work|work|fibonacci.v|
 !i113 1
+R5
 R6
-R7
 vtb
 R8
 !i10b 1
-!s100 ]3KzVi<CC0Y;nAVi1C_zX0
-IC0eXV5jjo2^WQPZWeKhiP2
+!s100 6UJI]ag5E3d093W2i9hz73
+I=nRFiJL<DjbQeSoWFbeTI2
 R2
 R0
-w1720640268
+w1720642257
 8tb.v
 Ftb.v
 L0 3
-R4
+R3
 r1
 !s85 0
 31
@@ -133,8 +133,8 @@ R9
 !s107 tb.v|
 !s90 -reportprogress|300|-work|work|tb.v|
 !i113 1
+R5
 R6
-R7
 vtimer
 R1
 !i10b 1
@@ -142,32 +142,32 @@ R1
 I9hdWETLmC0^LCXP=@Tib[0
 R2
 R0
-R3
+R7
 8timer.v
 Ftimer.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
-R5
+R4
 !s107 timer.v|
 !s90 -reportprogress|300|-work|work|timer.v|
 !i113 1
+R5
 R6
-R7
 vtop
 R8
 !i10b 1
-!s100 OLSFI^c?4EO`8z<e9EJeC3
-I[Xe9Z[`1e?om6j:SIjAlK3
+!s100 K1DCdz[g60zH;Wab=3YG;2
+I[;g=P:o:5OUWR0bdb[zBE1
 R2
 R0
-w1720640171
+w1720647085
 8top.v
 Ftop.v
 L0 2
-R4
+R3
 r1
 !s85 0
 31
@@ -175,20 +175,20 @@ R9
 !s107 top.v|
 !s90 -reportprogress|300|-work|work|top.v|
 !i113 1
+R5
 R6
-R7
 vwrapper
 R8
 !i10b 1
-!s100 KLNUP0fNI@ARF>@nizzz[1
-I<YklU1WUGPLkdi=nF6[cY1
+!s100 E8CCo_hKb`AGBZ[iPILM[3
+IzMBjO=?`Ub7NX3TX:U8Bf3
 R2
 R0
-w1720637597
+w1720645796
 8wrapper.v
 Fwrapper.v
 L0 1
-R4
+R3
 r1
 !s85 0
 31
@@ -196,5 +196,5 @@ R9
 !s107 wrapper.v|
 !s90 -reportprogress|300|-work|work|wrapper.v|
 !i113 1
+R5
 R6
-R7
