@@ -8,7 +8,8 @@ vlog -work work dcm.v
 vlog -work work dm.v
 vlog -work work wrapper.v
 vlog -work work top.v
-
+vlog -work work dspl_drv_NexysA7.v
+vlog -work work edge_detector_sintese.v
 vlog -work work tb.v
 
 vsim -voptargs=+acc=lprn -t ns work.tb
