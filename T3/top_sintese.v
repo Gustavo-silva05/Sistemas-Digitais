@@ -89,10 +89,10 @@ always @* begin
   else begin
     case (EA)
       3'd0: begin
-        if (start_f_ed) begin
+        if (start_f) begin
           PE <= 3'd1;
         end
-        else if (start_t_ed) begin
+        else if (start_t) begin
           PE <= 3'd4;
         end
         else begin
@@ -103,7 +103,7 @@ always @* begin
         if (buffer_full) begin
           PE <= 3'd2;
         end       
-        else if (stop_f_t_ed) begin
+        else if (stop_f_t) begin
           PE <= 3'd3;
         end
         else begin
@@ -114,7 +114,7 @@ always @* begin
         if (!buffer_full) begin
           PE <= 3'd1;
         end
-        else if (stop_f_t_ed) begin
+        else if (stop_f_t) begin
           PE <= 3'd3;
         end
         else begin
@@ -133,7 +133,7 @@ always @* begin
         if (buffer_full) begin
           PE <= 3'd5;
         end       
-        else if (stop_f_t_ed) begin
+        else if (stop_f_t) begin
           PE <= 3'd3;
         end
         else begin
@@ -144,7 +144,7 @@ always @* begin
         if (!buffer_full) begin
           PE <= 3'd4;
         end
-        else if (stop_f_t_ed) begin
+        else if (stop_f_t) begin
           PE <= 3'd3;
         end
         else begin

@@ -87,21 +87,37 @@ module dspl_drv_NexysA7
   always @*
   begin
     case (selected_dig[4:1])
-      4'h0 : dec_cat[7:1] = 7'b0000001;
-      4'h1 : dec_cat[7:1] = 7'b1001111;
-      4'h2 : dec_cat[7:1] = 7'b0010010;
-      4'h3 : dec_cat[7:1] = 7'b0000110;
-      4'h4 : dec_cat[7:1] = 7'b1001100;
-      4'h5 : dec_cat[7:1] = 7'b0100100;
-      4'h6 : dec_cat[7:1] = 7'b0100000;
-      4'h7 : dec_cat[7:1] = 7'b0001111;
+      // 4'h0 : dec_cat[7:1] = 7'b0000001;
+      4'h0 : dec_cat[7:1] = 7'b1000000;
+      // 4'h1 : dec_cat[7:1] = 7'b1001111;
+      // 4'h2 : dec_cat[7:1] = 7'b0010010;
+      // 4'h3 : dec_cat[7:1] = 7'b0000110;
+      // 4'h4 : dec_cat[7:1] = 7'b1001100;
+      // 4'h5 : dec_cat[7:1] = 7'b0100100;
+      // 4'h6 : dec_cat[7:1] = 7'b0100000;
+      // 4'h7 : dec_cat[7:1] = 7'b0001111;
+      // 4'h8 : dec_cat[7:1] = 7'b0000000;
+      // 4'h9 : dec_cat[7:1] = 7'b0000100;
+      // 4'hA : dec_cat[7:1] = 7'b0001000;
+      // 4'hB : dec_cat[7:1] = 7'b1100000;
+      // 4'hC : dec_cat[7:1] = 7'b0110001;
+      // 4'hD : dec_cat[7:1] = 7'b1000010;
+      // 4'hE : dec_cat[7:1] = 7'b0110000;
+      4'h1 : dec_cat[7:1] = 7'b1111001;
+      4'h2 : dec_cat[7:1] = 7'b0100100;
+      4'h3 : dec_cat[7:1] = 7'b0110000;
+      4'h4 : dec_cat[7:1] = 7'b0011001;
+      4'h5 : dec_cat[7:1] = 7'b0010010;
+      4'h6 : dec_cat[7:1] = 7'b0000010;
+      4'h7 : dec_cat[7:1] = 7'b1111000;
       4'h8 : dec_cat[7:1] = 7'b0000000;
-      4'h9 : dec_cat[7:1] = 7'b0000100;
+      4'h9 : dec_cat[7:1] = 7'b0010000;
       4'hA : dec_cat[7:1] = 7'b0001000;
-      4'hB : dec_cat[7:1] = 7'b1100000;
-      4'hC : dec_cat[7:1] = 7'b0110001;
-      4'hD : dec_cat[7:1] = 7'b1000010;
-      4'hE : dec_cat[7:1] = 7'b0110000;
+      4'hB : dec_cat[7:1] = 7'b0000011;
+      4'hC : dec_cat[7:1] = 7'b1000110;
+      4'hD : dec_cat[7:1] = 7'b0100001;
+      4'hE : dec_cat[7:1] = 7'b0000110;
+
       default : dec_cat[7:1] = 7'b0111000;
     endcase
     dec_cat[0] = ~selected_dig[0];

@@ -18,9 +18,9 @@ always @(posedge clk ) begin
     n_2 <= 16'd0;
   end
   else begin
-    if (f_en) begin
+    if ( f_en) begin
       if( n_1 == 16'd0) begin
-        f_o <= 16'd1;
+        f_o <= 16'd0;
         n_1 <= 16'd1;
         n_2 <= 16'd0;
       end
@@ -38,6 +38,7 @@ always @(posedge clk ) begin
         end
       end
     end
+    
   end
 end
 

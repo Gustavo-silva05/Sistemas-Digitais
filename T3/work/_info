@@ -10,71 +10,71 @@ z2
 cModel Technology
 Z0 dC:/Users/USER/Documents/GitHub/Sitemas Digitais/T3
 vdcm
-Z1 !s110 1720716315
+Z1 !s110 1720741968
 !i10b 1
-!s100 BUm84jf`1D11SzmF7?_Rd3
-I<D@CcU_]WEgn6EV8OM>Z;3
+!s100 ]Vb[VcX`dhH6H`hTel>i21
+IUc1o5?>LIk7LONBJ^k8D42
 R0
-Z2 w1720713907
-8dcm.v
-Fdcm.v
+w1720741878
+8dcm_sintese.v
+Fdcm_sintese.v
 !i122 2
-L0 1 62
-Z3 VDg1SIo80bB@j0V0VzS_@n1
-Z4 OV;L;2021.1;73
+L0 1 80
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
 r1
 !s85 0
 31
-Z5 !s108 1720716315.000000
-!s107 dcm.v|
-!s90 -reportprogress|300|-work|work|dcm.v|
+Z4 !s108 1720741968.000000
+!s107 dcm_sintese.v|
+!s90 -reportprogress|300|-work|work|dcm_sintese.v|
 !i113 1
-Z6 o-work work
-Z7 tCvgOpt 0
+Z5 o-work work
+Z6 tCvgOpt 0
 vdm
 R1
 !i10b 1
-!s100 iY^PYB>^M_dUj:D4o;I972
-ILdPL@<2`cZAV]^2Zd<nd22
+!s100 7KE@^5Qb_boNSeDm23OAY2
+IcbY^;]>[VdILMje6R3Cob1
 R0
-w1720715689
+w1720718849
 8dm.v
 Fdm.v
 !i122 3
-L0 1 26
+L0 1 30
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 dm.v|
 !s90 -reportprogress|300|-work|work|dm.v|
 !i113 1
+R5
 R6
-R7
 vdspl_drv_NexysA7
 R1
 !i10b 1
-!s100 00a1<a>M8UOd5ekZ6]IUa0
-IX=PU9^MAASZ62UMMLOmMn3
+!s100 ==>2nDl3nXa<m2K67iIJQ1
+IcI1W:3O8nhA;n9W5^GFj<1
 R0
-w1719955987
+w1720718305
 8dspl_drv_NexysA7.v
 Fdspl_drv_NexysA7.v
 !i122 6
-L0 1 110
+L0 1 126
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 dspl_drv_NexysA7.v|
 !s90 -reportprogress|300|-work|work|dspl_drv_NexysA7.v|
 !i113 1
+R5
 R6
-R7
 ndspl_drv_@nexys@a7
 vedge_detector
 R1
@@ -87,63 +87,63 @@ w1719955988
 Fedge_detector_sintese.v
 !i122 7
 L0 1 42
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 edge_detector_sintese.v|
 !s90 -reportprogress|300|-work|work|edge_detector_sintese.v|
 !i113 1
+R5
 R6
-R7
 vfibonacci
 R1
 !i10b 1
-!s100 X>`Nf71Y[fRAAMH7b0_VE1
-ILNS>X22MgJ5`[<58B<<XP0
+!s100 dWY6;zij4k<87^VI9`P:02
+IBZVYcS9BDW@WSA;njlncc2
 R0
-R2
+w1720732404
 8fibonacci.v
 Ffibonacci.v
 !i122 1
-L0 1 71
+L0 1 72
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 fibonacci.v|
 !s90 -reportprogress|300|-work|work|fibonacci.v|
 !i113 1
+R5
 R6
-R7
 vtb
 R1
 !i10b 1
-!s100 5OQKZ_9BM1O<hJ0g>I5[60
-IZCDSmT@A6Hd@oIgCm;29e3
+!s100 b98nZJ4_Vgj]I9aWFU`WP0
+IDeSB5]Q=[ki>dkRgNZid>1
 R0
-R2
+w1720716476
 8tb.v
 Ftb.v
 !i122 8
 L0 3 81
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 tb.v|
 !s90 -reportprogress|300|-work|work|tb.v|
 !i113 1
+R5
 R6
-R7
 vtimer
-!s110 1720716314
+R1
 !i10b 1
 !s100 h]IW:nKaFnBAk7H`PdH;U2
 Icla0Ja0JH[8LFMdK<h]3K3
@@ -153,58 +153,58 @@ w1719963127
 Ftimer.v
 !i122 0
 L0 1 49
+R2
 R3
-R4
 r1
 !s85 0
 31
-!s108 1720716313.000000
+R4
 !s107 timer.v|
 !s90 -reportprogress|300|-work|work|timer.v|
 !i113 1
+R5
 R6
-R7
 vtop
 R1
 !i10b 1
-!s100 CEZ7kVM99VeK]iV5TXV:S1
-Ig54nWQ4CTAA;Hc8B=EZdK2
+!s100 MK6NG7o`PYc8i1nRT38OP1
+IlZD_kIkVGEW0]]bi_FOJ_1
 R0
-w1720714593
-8top.v
-Ftop.v
+w1720741912
+8top_sintese.v
+Ftop_sintese.v
 !i122 5
-L0 2 202
+L0 2 218
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
-!s107 top.v|
-!s90 -reportprogress|300|-work|work|top.v|
+R4
+!s107 top_sintese.v|
+!s90 -reportprogress|300|-work|work|top_sintese.v|
 !i113 1
+R5
 R6
-R7
 vwrapper
 R1
 !i10b 1
-!s100 [A1TEHmK`VMmz;S4FJCIS2
-IEFZzY1=;5k>BYDfD5PDeR3
+!s100 FJJc<9kfFT@7QQ3W2EjUK3
+IG:G]hTAnfOLcgLE04S?Wj1
 R0
-w1720715596
+w1720736604
 8wrapper.v
 Fwrapper.v
 !i122 4
-L0 1 73
+L0 1 82
+R2
 R3
-R4
 r1
 !s85 0
 31
-R5
+R4
 !s107 wrapper.v|
 !s90 -reportprogress|300|-work|work|wrapper.v|
 !i113 1
+R5
 R6
-R7

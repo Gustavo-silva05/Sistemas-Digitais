@@ -35,18 +35,27 @@ always @(posedge clk_2) begin
     d2 <= 16'd0;
   end
   else begin
-      if (buffer_full  && !buffer_empty) begin
-        d2 <= buffer[b_reader];
-        b_reader <= b_reader + 3'd1;
+      if (buffer_full) begin
+        if (buffer_empty) begin
+          b_reader <= 3'd0;
+        end
+        else begin
+          d2 <= buffer[b_reader];
+          b_reader <= b_reader + 3'd1;
+        end
       end
-      // else if (b_writer > b_reader) begin
-      //   d2 <= buffer[b_reader];
-      //   b_reader <= b_reader + 3'd1;
-      // end
-      else if (buffer_empty) begin
-        b_reader <= 3'd0;
+      else begin
+        if (buffer_empty) begin
+          b_reader <= 3'd0;
+          if (buffer[3'd7] != 16'dx) begin
+            d2 <= buffer[3'd7];
+          end
+        end
+        else begin
+          d2 <= buffer[b_reader];
+          b_reader <= b_reader + 3'd1;
+        end
       end
-    // end
   end
 end
 

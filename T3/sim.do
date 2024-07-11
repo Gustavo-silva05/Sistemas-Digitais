@@ -4,10 +4,10 @@ vmap work work
 
 vlog -work work timer.v
 vlog -work work fibonacci.v
-vlog -work work dcm.v
+vlog -work work dcm_sintese.v
 vlog -work work dm.v
 vlog -work work wrapper.v
-vlog -work work top.v
+vlog -work work top_sintese.v
 vlog -work work dspl_drv_NexysA7.v
 vlog -work work edge_detector_sintese.v
 vlog -work work tb.v
@@ -19,4 +19,4 @@ set StdVitalGlitchNoWarnings 1
 
 do wave.do
 
-run 20000 ns
+run 200000 ns
