@@ -3,8 +3,8 @@ module top(
   input rst, clk, start_f, start_t, stop_f_t ,update,
   input[2:0] prog,
   output [5:0] led, 
-  output [7:0] an , dec_ddp,
-  output parity
+  output [7:0] an , dec_ddp
+  //output parity
 );
 
 reg f_en, t_en;

@@ -32,6 +32,7 @@ end
 always @(posedge clk_2) begin
   if (rst) begin
     b_reader <= 3'd0;
+    d2 <= 16'd0;
   end
   else begin
       if (buffer_full  && !buffer_empty) begin
