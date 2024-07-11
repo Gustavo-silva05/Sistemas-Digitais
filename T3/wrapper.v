@@ -23,7 +23,9 @@ always @(posedge clk_1 ) begin
         b_writer <= b_writer + 3'd1;
       end
     end
-    
+    else if (buffer_full && buffer_empty )begin
+        b_writer <= 3'd0;
+    end
   end
 end
 
@@ -32,12 +34,18 @@ always @(posedge clk_2) begin
     b_reader <= 3'd0;
   end
   else begin
-    if (!data_1_en) begin
-      if (buffer_full || !buffer_empty) begin
+      if (buffer_full  && !buffer_empty) begin
         d2 <= buffer[b_reader];
         b_reader <= b_reader + 3'd1;
       end
-    end
+      // else if (b_writer > b_reader) begin
+      //   d2 <= buffer[b_reader];
+      //   b_reader <= b_reader + 3'd1;
+      // end
+      else if (buffer_empty) begin
+        b_reader <= 3'd0;
+      end
+    // end
   end
 end
 
@@ -56,7 +64,8 @@ always @* begin
 end
 
 assign buffer_empty = (b_writer == b_reader)? 1'd1 : 1'd0;
-assign buffer_full  = (b_writer + 3'd1 == b_reader)? 1'd1 : 1'd0;    
+// assign buffer_full  = (b_writer + 3'd1 == b_reader)? 1'd1 : 1'd0;    
+assign buffer_full = (b_writer == 3'b111) ? 1'b1 : 1'b0;
 assign data_2 = d2;
 assign data_2_valid = data_v;
  

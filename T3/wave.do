@@ -37,7 +37,7 @@ add wave -noupdate -radix decimal /tb/DUT/w/data_2
 add wave -noupdate -radix binary /tb/DUT/w/b_reader
 add wave -noupdate -radix binary /tb/DUT/w/b_writer
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {670 ns} 0}
+WaveRestoreCursors {{Cursor 1} {2335 ns} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -53,4 +53,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ns} {1314 ns}
+WaveRestoreZoom {0 ns} {21 us}
