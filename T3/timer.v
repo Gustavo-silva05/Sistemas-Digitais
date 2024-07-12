@@ -20,7 +20,7 @@ always @(posedge clk ) begin
   end
 end
 
-always @(posedge clk ) begin
+always @* begin
   if (rst) begin
     t_valido <= 1'b0;
     flag <= 1'b0;

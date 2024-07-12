@@ -42,18 +42,19 @@ add wave -noupdate -radix binary /tb/DUT/w/buffer_empty
 add wave -noupdate -radix binary /tb/DUT/w/buffer_full
 add wave -noupdate -radix binary /tb/DUT/w/data_2_valid
 add wave -noupdate -radix decimal /tb/DUT/w/data_2
-add wave -noupdate -radix binary /tb/DUT/w/b_reader
-add wave -noupdate -radix binary /tb/DUT/w/b_writer
+add wave -noupdate /tb/DUT/w/buffer_wr
+add wave -noupdate /tb/DUT/w/buffer_rd
+add wave -noupdate /tb/DUT/w/buffer_count
 add wave -noupdate -divider -height 25 DM
 add wave -noupdate /tb/DUT/dm/rst
 add wave -noupdate /tb/DUT/dm/clk
 add wave -noupdate /tb/DUT/dm/prog
 add wave -noupdate /tb/DUT/dm/modules
-add wave -noupdate /tb/DUT/dm/data_2
+add wave -noupdate -radix decimal /tb/DUT/dm/data_2
 add wave -noupdate /tb/DUT/dm/an
 add wave -noupdate /tb/DUT/dm/dec_ddp
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {133 ns} 0}
+WaveRestoreCursors {{Cursor 1} {369 ns} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -69,4 +70,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {18752 ns} {20066 ns}
+WaveRestoreZoom {0 ns} {31500 ns}
