@@ -29,7 +29,7 @@ BEGIN
         END IF;
     END PROCESS;
 
-    next_state : PROCESS (clk, start, config, EA, ready_enc, ready_dec)
+    next_state : PROCESS ( start, config, EA, ready_enc, ready_dec)
     BEGIN
         CASE EA IS
             WHEN IDLE =>
@@ -67,7 +67,7 @@ BEGIN
         END CASE;
     END PROCESS next_state;
 
-    saidas : PROCESS (clk,EA, start_enc)
+    saidas : PROCESS (EA, start_enc)
     BEGIN
         CASE EA IS
             WHEN IDLE =>

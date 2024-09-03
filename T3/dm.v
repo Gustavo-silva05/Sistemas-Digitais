@@ -10,10 +10,6 @@ module dm
 dspl_drv_NexysA7 display (
   .clock(clk), 
   .reset(rst),
-  // .d1(6'd0),
-  // .d2(6'd0),
-  // .d3(6'd0),
-  // .d4(6'd0),
   .d1({1'd1, data_2[3:0], 1'd0}), 
   .d2({1'd1, data_2[7:4], 1'd0}), 
   .d3({1'd1, data_2[11:8], 1'd0}), 
@@ -26,5 +22,4 @@ dspl_drv_NexysA7 display (
   .dec_cat(dec_ddp)
 );
 
-// {1'd1, 2'd0, modules, 1'd0}
 endmodule

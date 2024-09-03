@@ -10,7 +10,7 @@ entity clock_divider is
 end clock_divider;
 
 architecture arch of clock_divider is
-  signal ONECS        : integer := (100000000 / 100 / 2);
+  signal ONECS        : integer := (100000000 * 100 / 2);
   signal counter      : integer := 0;
   signal clock1cs_sig : std_logic;
 begin
