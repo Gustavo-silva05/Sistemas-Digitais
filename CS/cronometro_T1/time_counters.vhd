@@ -1,4 +1,4 @@
-library IEEE;
+library IEEE; -- last version
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
@@ -6,16 +6,15 @@ entity time_counters is
   port( 
     clock1cs, reset, enable    : in std_logic;
     do_split                   : in std_logic;
-    fsm_state                  : in std_logic_vector(2 downto 0);
-    centsec, hour              : out std_logic_vector(7 downto 0);
+    centsec, hour              : out std_logic_vector(6 downto 0);
     second, minute             : out std_logic_vector(6 downto 0)
   );
 end time_counters;
 
 architecture arch_tc of time_counters is
-    signal centsec_sig, hour_sig      : std_logic_vector(7 downto 0);
+    signal centsec_sig, hour_sig      : std_logic_vector(6 downto 0);
     signal second_sig, minute_sig     : std_logic_vector(6 downto 0);
-    signal centsec_split, hour_split  : std_logic_vector(7 downto 0);
+    signal centsec_split, hour_split  : std_logic_vector(6 downto 0);
     signal second_split, minute_split : std_logic_vector(6 downto 0);    
     signal flag_split                 : std_logic;
 begin

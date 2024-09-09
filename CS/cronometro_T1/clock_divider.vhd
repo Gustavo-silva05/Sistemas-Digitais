@@ -1,11 +1,11 @@
-library IEEE;
+library IEEE; -- last version
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity clock_divider is
   port( 
-    clock, reset        : in std_logic;
-    clock1cs, out_250ms : out std_logic
+    clock, reset, do_split : in std_logic;
+    clock1cs, out_250ms    : out std_logic
   );
 end clock_divider;
 
@@ -26,15 +26,17 @@ begin
           counter_1cs   <= 0;
           counter_250ms <= 0;
       elsif rising_edge(clock) then
-          if (counter_250ms <= int_250MS) then
-             sig_250ms <= '0';
-          else
-             sig_250ms <= '1';
-          end if;
-          if (counter_250ms = int_250MS) then
-             counter_250ms <= 0;
-          else 
-             counter_250ms <= counter_250ms + 1;       
+          if (do_split = '1') then
+              if (counter_250ms <= int_250MS/2) then
+                 sig_250ms <= '1';
+              else
+                 sig_250ms <= '0';
+              end if;
+              if (counter_250ms = int_250MS) then
+                 counter_250ms <= 0;
+              else 
+                 counter_250ms <= counter_250ms + 1;       
+              end if;
           end if;
           if (counter_1cs = ONECS) then
               counter_1cs  <= 0;

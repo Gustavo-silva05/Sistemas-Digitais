@@ -1,4 +1,4 @@
-library IEEE;
+library IEEE; -- last version
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
@@ -6,8 +6,7 @@ entity fsm is
     port (
         signal clock, reset       : in std_logic;
         signal start, stop, split : in std_logic;
-        signal enable, do_split   : out std_logic;
-        signal fsm_state          : out std_logic_vector(2 downto 0)
+        signal enable, do_split   : out std_logic
     );
 end fsm;
 
@@ -27,6 +26,7 @@ begin
 
     process (EA, start, stop, split)
     begin
+        PE <= EA;
         case EA is
 
             when S_RESET =>
@@ -73,6 +73,9 @@ begin
                 else
                     PE <= S_SPLIT;
                 end if;
+            
+            when others =>
+                PE <= S_RESET;         
 
         end case;
     end process;
@@ -108,14 +111,12 @@ begin
             when S_SPLIT =>  
                 enable <= '1';
                 do_split <= '1';
+                                
+            when others =>
+                enable <= '0';
+                do_split <= '0';
 
         end case;
     end process;   
 
-    fsm_state <= "000" when EA = S_RESET else
-                 "001" when EA = S_START_HIGH else
-                 "010" when EA = S_START else
-                 "011" when EA = S_STOP_HIGH else
-                 "100" when EA = S_STOP else
-                 "101" when EA = S_SPLIT_HIGH else "110";
 end arch_fsm;

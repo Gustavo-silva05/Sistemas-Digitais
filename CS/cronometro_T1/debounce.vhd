@@ -1,4 +1,4 @@
-library ieee;
+library ieee; -- last version
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
@@ -20,7 +20,7 @@ architecture debounce_arch of debounce is
 begin
 	process(clk_i, rstn_i)
 	begin
-		if rstn_i = '0' then
+		if rstn_i = '1' then
 			state <= state1;
 		elsif clk_i'event and clk_i = '1' then
 			case state is
@@ -56,7 +56,7 @@ begin
 	
 	process(clk_i, rstn_i)
 	begin
-		if rstn_i = '0' then
+		if rstn_i = '1' then
 			clockdiv <= (others => '0');
 			intclock <= '0';
 		elsif clk_i'event and clk_i = '1' then
