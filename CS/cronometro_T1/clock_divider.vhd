@@ -26,7 +26,6 @@ begin
           counter_1cs   <= 0;
           counter_250ms <= 0;
       elsif rising_edge(clock) then
-<<<<<<< HEAD
           if (do_split = '1') then
               if (counter_250ms <= int_250MS/2) then
                  sig_250ms <= '1';
@@ -38,17 +37,6 @@ begin
               else 
                  counter_250ms <= counter_250ms + 1;       
               end if;
-=======
-          if (counter_250ms <= int_250MS/2) then
-             sig_250ms <= '0';
-          else
-             sig_250ms <= '1';
-          end if;
-          if (counter_250ms = int_250MS) then
-             counter_250ms <= 0;
-          else 
-             counter_250ms <= counter_250ms + 1;       
->>>>>>> fc0d7ad38e8afc8807111b30c0d6d13331f00b37
           end if;
           if (counter_1cs = ONECS) then
               counter_1cs  <= 0;
