@@ -15,7 +15,7 @@ add wave -noupdate /tb/DUT/time_counters_inst/do_split
 add wave -noupdate -radix decimal /tb/DUT/time_counters_inst/centsec
 add wave -noupdate -radix decimal /tb/DUT/time_counters_inst/second
 add wave -noupdate -radix decimal /tb/DUT/time_counters_inst/minute
-add wave -noupdate -radix decimal -childformat {{/tb/DUT/time_counters_inst/hour(7) -radix decimal} {/tb/DUT/time_counters_inst/hour(6) -radix decimal} {/tb/DUT/time_counters_inst/hour(5) -radix decimal} {/tb/DUT/time_counters_inst/hour(4) -radix decimal} {/tb/DUT/time_counters_inst/hour(3) -radix decimal} {/tb/DUT/time_counters_inst/hour(2) -radix decimal} {/tb/DUT/time_counters_inst/hour(1) -radix decimal} {/tb/DUT/time_counters_inst/hour(0) -radix decimal}} -subitemconfig {/tb/DUT/time_counters_inst/hour(7) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(6) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(5) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(4) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(3) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(2) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(1) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(0) {-height 15 -radix decimal}} /tb/DUT/time_counters_inst/hour
+add wave -noupdate -radix decimal -childformat {{/tb/DUT/time_counters_inst/hour(6) -radix decimal} {/tb/DUT/time_counters_inst/hour(5) -radix decimal} {/tb/DUT/time_counters_inst/hour(4) -radix decimal} {/tb/DUT/time_counters_inst/hour(3) -radix decimal} {/tb/DUT/time_counters_inst/hour(2) -radix decimal} {/tb/DUT/time_counters_inst/hour(1) -radix decimal} {/tb/DUT/time_counters_inst/hour(0) -radix decimal}} -subitemconfig {/tb/DUT/time_counters_inst/hour(6) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(5) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(4) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(3) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(2) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(1) {-height 15 -radix decimal} /tb/DUT/time_counters_inst/hour(0) {-height 15 -radix decimal}} /tb/DUT/time_counters_inst/hour
 add wave -noupdate /tb/DUT/time_counters_inst/centsec_sig
 add wave -noupdate /tb/DUT/time_counters_inst/second_sig
 add wave -noupdate /tb/DUT/time_counters_inst/minute_sig
@@ -32,7 +32,6 @@ add wave -noupdate /tb/DUT/debounce_stop/clockdiv
 add wave -noupdate -divider -height 20 {DB - SPLIT}
 add wave -noupdate /tb/DUT/debounce_split/key_i
 add wave -noupdate /tb/DUT/debounce_split/debkey_o
-add wave -noupdate -divider -height 20 {DB - RESET}
 add wave -noupdate -divider -height 20 {DB - START}
 add wave -noupdate /tb/DUT/debounce_start/key_i
 add wave -noupdate /tb/DUT/debounce_start/debkey_o
@@ -49,7 +48,6 @@ add wave -noupdate /tb/DUT/fsm_inst/stop
 add wave -noupdate /tb/DUT/fsm_inst/split
 add wave -noupdate /tb/DUT/fsm_inst/enable
 add wave -noupdate /tb/DUT/fsm_inst/do_split
-add wave -noupdate /tb/DUT/fsm_inst/fsm_state
 add wave -noupdate /tb/DUT/fsm_inst/EA
 add wave -noupdate /tb/DUT/fsm_inst/PE
 add wave -noupdate -divider -height 20 DISPLAY
@@ -63,10 +61,19 @@ add wave -noupdate /tb/DUT/dspl_drv_inst/d2
 add wave -noupdate /tb/DUT/dspl_drv_inst/d1
 add wave -noupdate /tb/DUT/dspl_drv_inst/an
 add wave -noupdate /tb/DUT/dspl_drv_inst/dec_ddp
+add wave -noupdate -divider -height 20 {CONTADOR - DECIMAL}
+add wave -noupdate -radix unsigned /tb/DUT/converter_hour/counter_high
+add wave -noupdate -radix unsigned /tb/DUT/converter_hour/counter_low
+add wave -noupdate -radix unsigned /tb/DUT/converter_minute/counter_high
+add wave -noupdate -radix unsigned /tb/DUT/converter_minute/counter_low
+add wave -noupdate -radix unsigned /tb/DUT/converter_second/counter_high
+add wave -noupdate -radix unsigned /tb/DUT/converter_second/counter_low
+add wave -noupdate -radix unsigned /tb/DUT/converter_centsec/counter_high
+add wave -noupdate -radix unsigned /tb/DUT/converter_centsec/counter_low
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {687118 ns} 0}
+WaveRestoreCursors {{Cursor 1} {157319 ns} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 98
+configure wave -namecolwidth 129
 configure wave -valuecolwidth 73
 configure wave -justifyvalue left
 configure wave -signalnamewidth 1
@@ -80,4 +87,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ns} {1365 us}
+WaveRestoreZoom {156357 ns} {157319 ns}
