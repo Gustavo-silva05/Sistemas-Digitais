@@ -192,5 +192,16 @@ begin
       an       => an,
       dec_ddp  => dec_ddp
     );
+    
+    ila_0 : entity work.ila_0
+    port map(
+        clk => clock,
+        prob0 => reset,
+        prob1 => start,
+        prob2 => stop,
+        prob3 => split,
+        prob4 => an,
+        prob5 => dec_ddp
+    );
 
 end arch_top;
