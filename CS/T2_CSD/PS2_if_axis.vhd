@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity if_axis is
+entity ps2_if_axis is
 	generic (
 		SOC_SEGMENT : integer := 	16#e4#;		-- SoC segment address is 0xe4
 		SOC_CLASS : integer := 		16#a9#;		-- Class address is 0xa9
@@ -22,9 +22,9 @@ entity if_axis is
 		s_axis_tvalid_i : in std_logic;
 		s_axis_tdata_i : in std_logic_vector(AXIS_DATA_WIDTH-1 downto 0)
 	);
-end if_axis;
+end ps2_if_axis;
 
-architecture if_arch of if_axis is
+architecture if_arch of ps2_if_axis is
 	-- AXIS internal signals
 	signal data_access : std_logic;
 	signal data_read_axis : std_logic_vector(31 downto 0);
