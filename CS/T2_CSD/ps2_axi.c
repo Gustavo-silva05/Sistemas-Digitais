@@ -92,7 +92,7 @@ char *LUT(uint8_t make_code)
     case 0x46:
         return "9";
     case 0x0E:
-        return "`";
+        return "";
     case 0x4E:
         return "-";
     case 0x55:
@@ -160,7 +160,7 @@ char *LUT(uint8_t make_code)
     case 0x4A:
         return "/";
     default:
-        return "Código desconhecido";
+        return "";
     }
 }
 
@@ -172,13 +172,16 @@ int main(void)
     while (1)
     {
         uint8_t n = read_ps2_data();
-        if (tecla != n)
+        if (n != tecla)
         {
-            printf("Tecla pressionada: %s\n", LUT(read_ps2_data()));
-            delay_ms(100);
+            if (n != 0xF0 && tecla == 0xF0)
+            {
+                printf("Tecla pressionada: %s\n", LUT(n));
+            }
             tecla = n;
         }
     }
 
     return 0;
 }
+
