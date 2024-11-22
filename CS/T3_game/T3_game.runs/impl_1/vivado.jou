@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Nov 22 18:12:06 2024
+# Process ID: 9105
+# Current directory: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1
+# Command line: vivado -log hfrisc_soc.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source hfrisc_soc.tcl -notrace
+# Log file: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/hfrisc_soc.vdi
+# Journal file: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/vivado.jou
+# Running On        :gustavo-silva-pc
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 24.04.1 LTS
+# Processor Detail  :Intel(R) Core(TM) i3-2370M CPU @ 2.40GHz
+# CPU Frequency     :2167.674 MHz
+# CPU Physical cores:2
+# CPU Logical cores :4
+# Host memory       :8271 MB
+# Swap memory       :4294 MB
+# Total Virtual     :12566 MB
+# Available Virtual :8425 MB
+#-----------------------------------------------------------
+source hfrisc_soc.tcl -notrace

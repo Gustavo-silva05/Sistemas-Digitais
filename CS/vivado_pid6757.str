@@ -1,0 +1,232 @@
+/*
+
+AMD Vivado v2024.1 (64-bit) [Major: 2024, Minor: 1]
+SW Build: 5076996 on Wed May 22 18:36:09 MDT 2024
+IP Build: 5075265 on Wed May 22 21:45:21 MDT 2024
+IP Build: 5075265 on Wed May 22 21:45:21 MDT 2024
+
+Process ID (PID): 6757
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Fri Nov 22 18:00:59 BRT 2024
+Time zone: 	Brasilia Standard Time (America/Sao_Paulo)
+
+OS: Ubuntu
+OS Version: 6.8.0-48-generic
+OS Architecture: amd64
+Available processors (cores): 4
+LSB Release Description: Ubuntu 24.04.1 LTS
+
+Display: 0
+Screen size: 1366x768
+Local screen bounds: x = 66, y = 32, width = 1300, height = 736
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+OS font scaling: 100%
+Anti-Alias Enabled: false
+
+Java version: 	21.0.1 64-bit
+JavaFX version: 21.0.1
+Java home: 	/home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/tps/lnx64/jre21.0.1_12
+Java executable: 	/home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/tps/lnx64/jre21.0.1_12/bin/java
+Java arguments: 	[-Dsun.java2d.pmoffscreen=false, -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2, -Dsun.java2d.xrender=false, -Dsun.java2d.uiScale.enabled=false, -Dswing.aatext=true, -XX:-UsePerfData, -Djdk.map.althashing.threshold=512, -XX:StringTableSize=4072, -XX:+UseStringDeduplication, -XX:MaxGCPauseMillis=200, -XX:+ParallelRefProcEnabled, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.base/java.nio=ALL-UNNAMED, --add-opens=java.desktop/sun.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/java.awt.event=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.base/java.nio=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.table=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED, --add-exports=java.base/sun.security.action=ALL-UNNAMED, --add-exports=java.desktop/sun.font=ALL-UNNAMED, --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED, -XX:NewSize=80m, -XX:MaxNewSize=80m, -Xms512m, -Xmx4072m, -Xss10m, -Xrs]
+Java initial memory (-Xms): 	512 MB
+Java maximum memory (-Xmx):	 3 GB
+
+User name: 	gustavo-souza-da-silva
+User home directory: /home/gustavo-souza-da-silva
+User working directory: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /home/gustavo-souza-da-silva/Vivado/Vivado
+HDI_APPROOT: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1
+RDI_DATADIR: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/data
+RDI_BINDIR: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/bin
+
+Vivado preferences file: /home/gustavo-souza-da-silva/.Xilinx/Vivado/2024.1/vivado.xml
+Vivado preferences directory: /home/gustavo-souza-da-silva/.Xilinx/Vivado/2024.1/
+Vivado layouts directory: /home/gustavo-souza-da-silva/.Xilinx/Vivado/2024.1/data/layouts
+PlanAhead jar file: 	/home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/lib/classes/planAhead.jar
+Vivado log file: 	/home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/vivado.log
+Vivado journal file: 	/home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-6757-gustavo-silva-pc
+Non-Default Parameters:	[]
+
+Xilinx & AMD Environment Variables
+--------------------------------------------------------------------------------------------
+GNOME_SHELL_SESSION_MODE: ubuntu
+RDI_APPROOT: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1
+RDI_BASEROOT: /home/gustavo-souza-da-silva/Vivado/Vivado
+RDI_BINROOT: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/bin
+RDI_BUILD: yes
+RDI_DATADIR: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/data
+RDI_INSTALLROOT: /home/gustavo-souza-da-silva/Vivado
+RDI_INSTALLVER: 2024.1
+RDI_JAVA_PLATFORM: 
+RDI_JAVA_VERSION: 21.0.1_12
+RDI_LIBDIR: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/lib/lnx64.o/Ubuntu:/home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/lib/lnx64.o
+RDI_OPT_EXT: .o
+RDI_PATCHROOT: 
+RDI_PLATFORM: lnx64
+RDI_PREPEND_PATH: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/ids_lite/ISE/bin/lin64
+RDI_PROG: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/bin/unwrapped/lnx64.o/vivado
+RDI_SESSION_INFO: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS:gustavo-silva-pc_1732309208_6688
+RDI_SHARED_DATA: /home/gustavo-souza-da-silva/Vivado/SharedData/2024.1/data
+RDI_TPS_ROOT: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/tps/lnx64
+RDI_USE_JDK21: True
+SHELL: /bin/bash
+XILINX: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/ids_lite/ISE
+XILINX_DSP: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/ids_lite/ISE
+XILINX_HLS: /home/gustavo-souza-da-silva/Vivado/Vitis_HLS/2024.1
+XILINX_PLANAHEAD: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1
+XILINX_VIVADO: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1
+XILINX_VIVADO_HLS: /home/gustavo-souza-da-silva/Vivado/Vivado/2024.1
+
+
+GUI allocated memory:	512 MB
+GUI max memory:		4,072 MB
+Engine allocated memory: 1,374 MB
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// WARNING: HTimer (HSTRUtils Dump STR Log Timer) is taking 3081ms to process. Increasing delay to 5000 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  3089 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,394 MB. GUI used memory: 64 MB. Current time: 11/22/24, 6:01:02 PM BRT
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,481 MB. GUI used memory: 62 MB. Current time: 11/22/24, 6:01:20 PM BRT
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1003 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+selectButton(PAResourceEtoH.GettingStartedView_CREATE_NEW_PROJECT, "Create Project"); // t (PAResourceEtoH.GettingStartedView_CREATE_NEW_PROJECT)
+// Run Command: PAResourceCommand.PACommandNames_NEW_PROJECT
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// Elapsed time: 16 seconds
+setText(PAResourceOtoP.ProjectNameChooser_PROJECT_NAME, "T3_game"); // R (PAResourceOtoP.ProjectNameChooser_PROJECT_NAME)
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 70 MB. Current time: 11/22/24, 6:04:20 PM BRT
+// Elapsed time: 16 seconds
+String[] filenames31467 = {"/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/alu.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/bshifter.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/control.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/cpu.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/datapath.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/int_control.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/reg_bank.vhd"};
+setFileChooser(filenames31467);
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// Elapsed time: 10 seconds
+String[] filenames16706 = {"/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/rams/boot_ram_50mhz.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/rams/ram.vhd"};
+setFileChooser(filenames16706);
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// Elapsed time: 10 seconds
+setFileChooser("/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.vhd");
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// Elapsed time: 14 seconds
+setFileChooser("/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/uart/uart.vhd");
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// Elapsed time: 30 seconds
+setFileChooser("/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/peripherals/basic_soc.vhd");
+// Elapsed time: 26 seconds
+selectButton(PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT, "Add Files", "New Project"); // a (PAResourceQtoS.SrcChooserPanel_ADD_HDL_AND_NETLIST_FILES_TO_YOUR_PROJECT)
+// Elapsed time: 18 seconds
+String[] filenames29306 = {"/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/freq_divider.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/h_sync_gen.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/if_vga.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/v_sync_gen.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/vga.vhd", "/home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/vram.vhd"};
+setFileChooser(filenames29306);
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// [GUI Memory]: 134 MB (+137708kb) [00:06:01]
+// [Engine Memory]: 1,524 MB (+1446169kb) [00:06:01]
+// [GUI Memory]: 141 MB (+302kb) [00:06:01]
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,537 MB. GUI used memory: 65 MB. Current time: 11/22/24, 6:06:40 PM BRT
+// WARNING: HEventQueue.dispatchEvent() is taking  1092 ms.
+selectTable(PAResourceEtoH.FPGAChooser_FPGA_TABLE, "xc7a100tcsg324-1 ; 324 ; 210 ; 63400 ; 126800 ; 135 ; 0 ; 240 ; 32 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 1 ; 6 ;  ;  ;  ;  ; 0 ;  ;  ;  ;  ;  ;  ; 0.95 ; 0.95 ; 1.05", 3, "210", 2); // c (PAResourceEtoH.FPGAChooser_FPGA_TABLE)
+selectTable(PAResourceEtoH.FPGAChooser_FPGA_TABLE, "xc7a100tcsg324-1 ; 324 ; 210 ; 63400 ; 126800 ; 135 ; 0 ; 240 ; 32 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 1 ; 6 ;  ;  ;  ;  ; 0 ;  ;  ;  ;  ;  ;  ; 0.95 ; 0.95 ; 1.05", 3, "210", 2, false, false, false, false, true); // c (PAResourceEtoH.FPGAChooser_FPGA_TABLE) - Double Click
+selectButton("NEXT", "Next >", "New Project"); // JButton (NEXT)
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: FLOW_ADDED
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_ADD
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// Tcl Message: create_project T3_game /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game -part xc7a100tcsg324-1 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified 
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 1,638 MB (+40423kb) [00:06:12]
+// WARNING: HEventQueue.dispatchEvent() is taking  4112 ms.
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/gustavo-souza-da-silva/Vivado/Vivado/2024.1/data/ip'. 
+// [Engine Memory]: 1,729 MB (+9200kb) [00:06:15]
+// TclEventType: FILE_SET_OPTIONS_CHANGE
+// Tcl Message: create_project: Time (s): cpu = 00:00:17 ; elapsed = 00:00:07 . Memory (MB): peak = 7826.027 ; gain = 182.414 ; free physical = 794 ; free virtual = 8231 
+// TclEventType: FILE_SET_CHANGE
+selectButton("FINISH", "Finish", "New Project"); // JButton (FINISH)
+// 'g' command handler elapsed time: 179 seconds
+dismissDialog("Create Project"); // bj (Create Project Progress)
+dismissDialog("New Project"); // f (dialog0)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,757 MB. GUI used memory: 71 MB. Current time: 11/22/24, 6:07:00 PM BRT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 62 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Project Manager, Add Sources]", 2, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+// 'f' command handler elapsed time: 60 seconds
+// Elapsed time: 58 seconds
+dismissDialog("Add Sources"); // c (dialog7)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Project Manager, Add Sources]", 2, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Run Command: PAResourceCommand.PACommandNames_ADD_SOURCES
+selectRadioButton(PAResourceAtoD.AddSrcWizard_SPECIFY_OR_CREATE_CONSTRAINT_FILES, "Add or create constraints"); // a (PAResourceAtoD.AddSrcWizard_SPECIFY_OR_CREATE_CONSTRAINT_FILES)
+selectButton("NEXT", "Next >", "Add Sources"); // JButton (NEXT)
+selectButton(PAResourceAtoD.ConstraintsChooserPanel_ADD_FILES, "Add Files", "Add Sources"); // a (PAResourceAtoD.ConstraintsChooserPanel_ADD_FILES)
+// Elapsed time: 16 seconds
+setFileChooser("/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.xdc");
+selectButton("FINISH", "Finish", "Add Sources"); // JButton (FINISH)
+// 'f' command handler elapsed time: 21 seconds
+// TclEventType: FILE_SET_CHANGE
+dismissDialog("Add Sources"); // c (dialog8)
+// Tcl Message: add_files -fileset constrs_1 -norecurse /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.xdc 
+// [GUI Memory]: 151 MB (+3062kb) [00:08:45]
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Constraints]", 2); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 21, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+dismissDialog("Resetting Runs"); // bj (Resetting Runs Progress)
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_MODIFY
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 4 
+// Tcl Message: [Fri Nov 22 18:09:33 2024] Launched synth_1... Run output will be captured here: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/synth_1/runme.log 
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Nov 22 18:09:33 2024] Launched impl_1... Run output will be captured here: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/runme.log 
+dismissDialog("Generate Bitstream"); // bj (Generate Bitstream Progress)
+// TclEventType: RUN_STATUS_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 1,809 MB. GUI used memory: 72 MB. Current time: 11/22/24, 6:09:40 PM BRT
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// WARNING: HTimer (a Update Status Timer) is taking 500ms to process. Increasing delay to 3000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 1024 ms. Increasing delay to 3000 ms.
+// [Engine Memory]: 1,817 MB (+958kb) [00:11:27]
+// TclEventType: RUN_STEP_COMPLETED

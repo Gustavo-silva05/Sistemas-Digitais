@@ -16,7 +16,7 @@ always @(posedge clk ) begin
   else begin
     if (t_en) begin
       t_o <=  t_o + 16'd1;
-    end
+      end
   end
 end
 
@@ -26,7 +26,7 @@ always @* begin
     flag <= 1'b0;
   end
   else begin
-    if (t_en) begin
+        if(t_en) begin
       t_valido <= 1'b1;
       flag <= 1'b0;
     end
