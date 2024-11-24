@@ -379,8 +379,29 @@ void init_enemies(int qnty)
 }
 
 /* main game loop */
-int main(void)
-{
+#define DEBOUNCE_INTERVAL 200 
+
+// Armazena o tempo da última leitura
+unsigned long last_input_time = 0;
+
+// Função para obter o tempo atual em milissegundos
+unsigned long get_current_time() {
+    return timer_get_ticks(); // Supondo que timer_get_ticks() retorna o tempo em ms.
+}
+
+// Função debounce para entradas
+int debounce_input(struct object_s *hero) {
+    unsigned long current_time = get_current_time();
+    if (current_time - last_input_time < DEBOUNCE_INTERVAL) {
+        return 0; // Ignorar entrada
+    }
+
+    last_input_time = current_time; // Atualiza o tempo da última entrada
+    return get_input(hero);         // Captura a entrada
+}
+
+// Uso no loop principal
+int main(void) {
     struct object_s hero;
 
     init_display();
@@ -390,13 +411,12 @@ int main(void)
 
     init_enemies(NUM_INIMIES);
 
-    while (1)
-    {
+    while (1) {
         move_object(&hero);
         update();
 
-        if (get_input(&hero) == KEY_UP)
-        {
+        int keys = debounce_input(&hero); // Usa debounce para capturar entrada
+        if (keys & KEY_UP) {
             create_bullet(&hero);
         }
 
