@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1732309773">
-  <File Type="VDS-TIMINGSUMMARY" Name="hfrisc_soc_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="hfrisc_soc.dcp"/>
   <File Type="RDS-UTIL-PB" Name="hfrisc_soc_utilization_synth.pb"/>
-  <File Type="RDS-UTIL" Name="hfrisc_soc_utilization_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="hfrisc_soc_timing_summary_synth.pb"/>
   <File Type="PA-TCL" Name="hfrisc_soc.tcl"/>
+  <File Type="RDS-UTIL" Name="hfrisc_soc_utilization_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="hfrisc_soc_reports.tcl"/>
   <File Type="RDS-RDS" Name="hfrisc_soc.vds"/>
-  <File Type="RDS-PROPCONSTRS" Name="hfrisc_soc_drc_synth.rpt"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../../../../hf-risc/riscv/core_rv32e/bshifter.vhd">
@@ -144,9 +141,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>
