@@ -219,47 +219,41 @@ int num_bullets = 0;
 
 void move_object(struct object_s *obj)
 {
-    if (obj->active)
+
+    struct object_s oldobj;
+
+    memcpy(&oldobj, obj, sizeof(struct object_s));
+
+    if (--obj->speedxcnt == 0)
     {
-        struct object_s oldobj;
-
-        memcpy(&oldobj, obj, sizeof(struct object_s));
-
-        if (--obj->speedxcnt == 0)
-        {
-            obj->speedxcnt = obj->speedx;
-            obj->posx = obj->posx + obj->dx;
-        }
-        if (--obj->speedycnt == 0)
-        {
-            obj->speedycnt = obj->speedy;
-            obj->posy = obj->posy + obj->dy;
-        }
-        if (obj->posy == 0 || obj->posy == VGA_HEIGHT)
-        {
-            draw_object(&oldobj, 0, 0);
-            draw_object(obj, 0, 0);
-        }
-        if (obj->active && ((obj->speedx == obj->speedxcnt) || (obj->speedy == obj->speedycnt)))
-        {
-            draw_object(&oldobj, 0, 0);
-            draw_object(obj, 1, -1);
-        }
-
-        // logica para a colisao, se chegar na parede, inverte a direcao
-        if (obj->posx == 0)
-        {
-            obj->dx = 1;
-        }
-        if (obj->posx == (VGA_WIDTH - obj->spriteszx))
-        {
-            obj->dx = -1;
-        }
+        obj->speedxcnt = obj->speedx;
+        obj->posx = obj->posx + obj->dx;
     }
-    // else
-    // {
-    //     draw_object(obj, 0, 0);
-    // }
+    if (--obj->speedycnt == 0)
+    {
+        obj->speedycnt = obj->speedy;
+        obj->posy = obj->posy + obj->dy;
+    }
+    if (obj->posy == 0)
+    {
+        draw_object(&oldobj, 0, 0);
+        draw_object(obj, 0, 0);
+    }
+    if (obj->active && ((obj->speedx == obj->speedxcnt) || (obj->speedy == obj->speedycnt)))
+    {
+        draw_object(&oldobj, 0, 0);
+        draw_object(obj, 1, -1);
+    }
+
+    // logica para a colisao, se chegar na parede, inverte a direcao
+    if (obj->posx == 0)
+    {
+        obj->dx = 1;
+    }
+    if (obj->posx == (300 - obj->spriteszx))
+    {
+        obj->dx = -1;
+    }
 }
 
 /* display and input */
@@ -340,17 +334,17 @@ void create_bullet(struct object_s *hero)
 
 // atualiza a posicao do tiro e verifica se bateu em algum monstro
 struct object_s enemies[NUM_INIMIES];
-void update()
+void update_bullets()
 {
-    for (int i = 0; i < NUM_INIMIES; i++)
+    for (int i = 0; i < num_bullets; i++)
     {
-        if (!enemies[i].active)
-            continue;
-        for (int j = 0; j < num_bullets; j++)
+        if (!(bullets[i].active)) continue;
+        move_object(&bullets[i]);
+        for (int j = 0; j < NUM_INIMIES; j++)
         {
-            if (!bullets[j].active)
-                continue;
-            if (check_collision(&bullets[j], &enemies[i]))
+            if (!bullets[i].active) break;
+            if (!(enemies[j].active)) continue;
+            if (check_collision(&bullets[i], &enemies[j]))
             {
                 bullets[i].active = 0;
                 enemies[j].active = 0;
@@ -358,11 +352,8 @@ void update()
                 draw_object(&enemies[j], 0, 0);
                 break;
             }
-            move_object(&bullets[j]);
         }
-        move_object(&enemies[i]);
     }
-        
 }
 // inicia a criacao dos enimigos, por categoria, e coloca-os num vetor
 void init_enemies(int qnty)
@@ -378,30 +369,15 @@ void init_enemies(int qnty)
     }
 }
 
+void update_enimies()
+{
+    for (int i = 0; i < NUM_INIMIES; i++)
+        move_object(&enemies[i]);
+}
+
 /* main game loop */
-#define DEBOUNCE_INTERVAL 200 
-
-// Armazena o tempo da última leitura
-unsigned long last_input_time = 0;
-
-// Função para obter o tempo atual em milissegundos
-unsigned long get_current_time() {
-    return timer_get_ticks(); // Supondo que timer_get_ticks() retorna o tempo em ms.
-}
-
-// Função debounce para entradas
-int debounce_input(struct object_s *hero) {
-    unsigned long current_time = get_current_time();
-    if (current_time - last_input_time < DEBOUNCE_INTERVAL) {
-        return 0; // Ignorar entrada
-    }
-
-    last_input_time = current_time; // Atualiza o tempo da última entrada
-    return get_input(hero);         // Captura a entrada
-}
-
-// Uso no loop principal
-int main(void) {
+int main(void)
+{
     struct object_s hero;
 
     init_display();
@@ -411,15 +387,16 @@ int main(void) {
 
     init_enemies(NUM_INIMIES);
 
-    while (1) {
-        move_object(&hero);
-        update();
+    while (1)
+    {
+        update_enimies();
+        update_bullets();
 
-        int keys = debounce_input(&hero); // Usa debounce para capturar entrada
-        if (keys & KEY_UP) {
+        if (get_input(&hero) == KEY_UP)
+        {
             create_bullet(&hero);
         }
-
+        move_object(&hero);
         delay_ms(20);
     }
 
