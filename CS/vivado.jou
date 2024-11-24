@@ -1,0 +1,46 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Nov 22 18:00:24 2024
+# Process ID: 6757
+# Current directory: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS
+# Command line: vivado
+# Log file: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/vivado.log
+# Journal file: /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/vivado.jou
+# Running On        :gustavo-silva-pc
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 24.04.1 LTS
+# Processor Detail  :Intel(R) Core(TM) i3-2370M CPU @ 2.40GHz
+# CPU Frequency     :2394.267 MHz
+# CPU Physical cores:2
+# CPU Logical cores :4
+# Host memory       :8271 MB
+# Swap memory       :4294 MB
+# Total Virtual     :12566 MB
+# Available Virtual :9876 MB
+#-----------------------------------------------------------
+start_gui
+create_project T3_game /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game -part xc7a100tcsg324-1
+add_files -norecurse {/home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/rams/ram.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/peripherals/basic_soc.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/if_vga.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/int_control.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/datapath.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/uart/uart.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/vga.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/vram.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/h_sync_gen.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/bshifter.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/freq_divider.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/reg_bank.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/devices/controllers/vga_controller/v_sync_gen.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/control.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/rams/boot_ram_50mhz.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/cpu.vhd /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/core_rv32e/alu.vhd}
+update_compile_order -fileset sources_1
+add_files -fileset constrs_1 -norecurse /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.xdc
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {/home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/hfrisc_soc.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {/home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/hfrisc_soc.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {/home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.runs/impl_1/hfrisc_soc.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]

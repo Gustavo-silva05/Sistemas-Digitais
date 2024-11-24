@@ -102,9 +102,9 @@ char *LUT(uint8_t make_code)
     case 0x66:
         return "BKSP";
     case 0x29:
-        return "SPACE";
+        return " ";
     case 0x0D:
-        return "TAB";
+        return "\t";
     case 0x58:
         return "CAPS";
     case 0x12:
@@ -116,7 +116,7 @@ char *LUT(uint8_t make_code)
     case 0x59:
         return "R SHIFT";
     case 0x5A:
-        return "ENTER";
+        return "\n";
     case 0x76:
         return "ESC";
     case 0x05:
@@ -176,7 +176,7 @@ int main(void)
         {
             if (n != 0xF0 && tecla == 0xF0)
             {
-                printf("Tecla pressionada: %s\n", LUT(n));
+                printf("%s", LUT(n));
             }
             tecla = n;
         }
