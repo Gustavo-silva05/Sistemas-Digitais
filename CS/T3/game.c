@@ -384,7 +384,7 @@ int main(void)
     init_display();
     init_input();
 
-    init_object(&hero, spaceShip[0], spaceShip[0], 0, 11, 8, 150, 210, 0, 0, 7, 7);
+    init_object(&hero, spaceShip[0], spaceShip[0], 0, 11, 8, 150, 210, 0, 0, 1,1);
 
     init_enemies(NUM_INIMIES);
 
