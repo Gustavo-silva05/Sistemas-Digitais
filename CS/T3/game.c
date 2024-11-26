@@ -327,7 +327,7 @@ void create_bullet(struct object_s *hero)
     {
         init_object(&bullets[num_bullets], bullet2a[0], bullet2b[0], 0, 3, 4,
                     hero->posx + (hero->spriteszx + 1) / 2,
-                    hero->posy - hero->spriteszy, 0, -1, 0, 8);
+                    hero->posy - hero->spriteszy, 0, -1, 0, 1);
         num_bullets++;
     }
 }
@@ -372,7 +372,8 @@ void init_enemies(int qnty)
 void update_enimies()
 {
     for (int i = 0; i < NUM_INIMIES; i++)
-        move_object(&enemies[i]);
+        if(enimies[i].active)
+            move_object(&enemies[i]);
 }
 
 /* main game loop */
