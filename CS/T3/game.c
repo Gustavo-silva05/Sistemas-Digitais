@@ -3,6 +3,7 @@
 
 #define NUM_INIMIES 12
 #define MAX_BULLETS 200
+#define NUM_BARRIER 3
 
 /* sprites and sprite drawing */
 char monster1a[8][11] = {
@@ -75,7 +76,7 @@ char misteryShip[7][14] = {
 	{0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0}};
 
 char barrierFull[10][14] = {
-	{0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0},
 	{0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0},
 	{0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0},
@@ -182,9 +183,13 @@ struct object_s
 	int active; // 1 = ativo, 0 = inativo
 };
 
-struct object_s barrier[3];
-struct object_s h_bullets[MAX_BULLETS], e_bullets[MAX_BULLETS];
+struct object_s hero;
+struct object_s barrier[NUM_BARRIER];
+struct object_s bullets[MAX_BULLETS];
+// struct object_s e_bullets[MAX_BULLETS];
 struct object_s enemies[NUM_INIMIES];
+int n_bullets = 0;
+int n_inimigos = NUM_INIMIES;
 
 void init_object(struct object_s *obj, char *spritea, char *spriteb,
 				 char *spritec, char spriteszx, char spriteszy, int posx, int posy,
@@ -219,8 +224,6 @@ void draw_object(struct object_s *obj, char chgsprite, int color)
 	draw_sprite(obj->posx, obj->posy, obj->sprite_frame[obj->cursprite],
 				obj->spriteszx, obj->spriteszy, color);
 }
-int hero_bullets = 0, enimies_bullets = 0;
-int active_e_bullets = 0;
 
 void move_object(struct object_s *obj)
 {
@@ -239,12 +242,10 @@ void move_object(struct object_s *obj)
 		obj->speedycnt = obj->speedy;
 		obj->posy = obj->posy + obj->dy;
 	}
-	if (obj->posy == 0 || obj->posy + obj->spriteszy == 218)
+	if (obj->posy == 0 || obj->posy + obj->spriteszy == VGA_HEIGHT)
 	{
 		draw_object(&oldobj, 0, 0);
 		obj->active = 0;
-		if (obj->posy + obj->spriteszy == 218)
-			active_e_bullets--;
 	}
 	else if ((obj->speedx == obj->speedxcnt) || (obj->speedy == obj->speedycnt))
 	{
@@ -257,7 +258,7 @@ void move_object(struct object_s *obj)
 	{
 		obj->dx = 1;
 	}
-	if (obj->posx == (300 - obj->spriteszx))
+	if (obj->posx == (VGA_WIDTH - obj->spriteszx))
 	{
 		obj->dx = -1;
 	}
@@ -271,28 +272,63 @@ void init_display()
 
 // cria o objeto tiro quando o botao eh apertado, com base na posicao da nave
 
-void create_h_bullet(struct object_s *hero)
+void create_bullet(struct object_s *hero, char type)
 {
-	if (hero_bullets < MAX_BULLETS)
+	if (n_bullets < MAX_BULLETS)
 	{
-		init_object(&h_bullets[hero_bullets], bullet2a[0], bullet2b[0], 0, 3, 4,
-					hero->posx + (hero->spriteszx + 1) / 2,
-					hero->posy - hero->spriteszy, 0, -1, 0, 1);
-		hero_bullets++;
+		if (type == 'h')
+		{
+			init_object(&bullets[n_bullets], bullet2a[0], bullet2b[0], 0, 3, 4,
+						hero->posx - 1 + (hero->spriteszx / 2),
+						hero->posy - 4, 0, -1, 0, 1);
+			n_bullets++;
+		}
+		else
+		{
+			int shots = 0;
+			if (n_inimigos >= 3)
+			{
+				for (int i = 0; i < NUM_INIMIES; i++)
+				{
+					if (shots < 3)
+					{
+						if (!(enemies[i].active))
+							continue;
+						init_object(&bullets[n_bullets], bullet1a[0], bullet1b[0], 0, 2, 4,
+									enemies[i].posx - 1 + (enemies[i].spriteszx / 2),
+									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1);
+						shots++;
+						n_bullets++;
+						if (n_bullets == MAX_BULLETS)
+							return;
+					}
+					else
+						return;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < n_inimigos; i++)
+				{
+					for (int i = 0; i < NUM_INIMIES; i++)
+					{
+						if (!(enemies[i].active))
+							continue;
+						init_object(&bullets[n_bullets], bullet1a[0], bullet1b[0], 0, 2, 4,
+									enemies[i].posx - 1 + (enemies[i].spriteszx / 2),
+									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1);
+						shots++;
+						n_bullets++;
+						if (n_bullets == MAX_BULLETS)
+							return;
+						break;
+					}
+				}
+			}
+		}
 	}
 }
-// cria o objeto tiro quando o botao eh apertado, com base na posicao da nave
 
-void create_e_bullet(struct object_s *e)
-{
-	if (enimies_bullets < MAX_BULLETS)
-	{
-		init_object(&e_bullets[enimies_bullets], bullet2a[0], bullet2b[0], 0, 3, 4,
-					e->posx + (e->spriteszx + 1) / 2,
-					e->posy - e->spriteszy, 0, 1, 0, 1);
-		enimies_bullets++;
-	}
-}
 enum
 {
 	KEY_CENTER = 0x01,
@@ -320,7 +356,7 @@ int get_input(struct object_s *hero)
 	{
 		while (GPIOB->IN & MASK_P9)
 			;
-		create_h_bullet(hero);
+		create_bullet(hero, 'h');
 	}
 	if (GPIOB->IN & MASK_P10)
 	{
@@ -351,138 +387,143 @@ int check_collision(struct object_s *bullet, struct object_s *enemy)
 	return overlap_x && overlap_y;
 }
 
-
 // atualiza a posicao do tiro e verifica se bateu em algum monstro
 void update_bullets()
 {
-	for (int i = 0; i < hero_bullets; i++)
+	for (int i = 0; i < n_bullets; i++)
 	{
-		if (!(h_bullets[i].active))
+		if (!(bullets[i].active))
 			continue;
-		move_object(&h_bullets[i]);
+		move_object(&bullets[i]);
+		if (check_collision(&bullets[i], &hero))
+		{
+			draw_object(&bullets[i], 0, 0);
+			draw_object(&hero, 0, 0);
+			hero.active = 0;
+			return;
+		}
 		for (int j = 0; j < NUM_INIMIES; j++)
 		{
 			if (!(enemies[j].active))
 				continue;
-			if (check_collision(&h_bullets[i], &enemies[j]))
+			if (check_collision(&bullets[i], &enemies[j]))
 			{
-				h_bullets[i].active = 0;
-				enemies[j].active = 0;
-				draw_object(&h_bullets[i], 0, 0);
-				draw_object(&enemies[j], 0, 0);
+				if (bullets[i].dy == -1)
+				{
+					n_inimigos--;
+					bullets[i].active = 0;
+					enemies[j].active = 0;
+					draw_object(&bullets[i], 0, 0);
+					draw_object(&enemies[j], 0, 0);
+					break;
+				}
+			}
+		}
+		for (int j = 0; j < NUM_BARRIER; j++)
+		{
+			if (!barrier[j].active)
+				continue;
+			if (check_collision(&bullets[i], &barrier[j]))
+			{
+				bullets[i].active = 0;
+				draw_object(&bullets[i], 0, 0);
+				if (bullets[i].dy == 1)
+				{
+					draw_object(&barrier[j], 0, 0);
+					if (barrier[j].sprite_frame[0] == barrierFull[0])
+					{
+						barrier[j].sprite_frame[0] = barrierDamaged[0];
+						move_object(&barrier[j]);
+					}
+					else if (barrier[j].sprite_frame == barrierDamaged[0])
+					{
+						barrier[j].sprite_frame[0] = barrierBroken[0];
+						move_object(&barrier[j]);
+					}
+					else
+					{
+						barrier[j].active = 0;
+					}
+				}
 				break;
 			}
 		}
 	}
 }
 // inicia a criacao dos enimigos, por categoria, e coloca-os num vetor
-void init_enemies(int qnty)
+void init_enemies()
 {
-	int q = qnty / 3;
-	for (int i = 0; i < qnty / 3; i++)
+	int q = NUM_INIMIES / 3;
+	for (int i = 0; i < NUM_INIMIES / 3; i++)
 	{
-		init_object(&enemies[i], monster1a[0], monster1b[0], 0, 11, 8, 20 + i * 20, 90, 1, 0, 5, 5);
+		init_object(&enemies[i], monster1a[0], monster1b[0], 0, 11, 8, (20 + i * 20), 90, 1, 0, 5, 5);
 
-		init_object(&enemies[1 * q + i], monster2a[0], monster2b[0], 0, 8, 8, 20 + i * 20, 60, 1, 0, 3, 3);
+		init_object(&enemies[1 * q + i], monster2a[0], monster2b[0], 0, 8, 8, (20 + i * 20), 60, 1, 0, 3, 3);
 
-		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 12, 8, 20 + i * 20, 30, 1, 0, 2, 2);
+		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 12, 8, (20 + i * 20), 30, 1, 0, 2, 2);
 	}
-	printf("created");
 }
 void init_barrier()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < NUM_BARRIER; i++)
 	{
-		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, 50 + i * 60, 180, 0, 0, 0, 0);
+		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, (80 + i * 80), 140, 0, 0, 10, 10);
 	}
-	printf("created\n");
 }
-
 
 void update_barrier()
 {
-	for (int j = 0; j < 3; j++)
+	for (int i = 0; i < NUM_BARRIER; i++)
 	{
-		if (!barrier[j].active) continue;
-		move_object(&barrier[j]);
-		// for (int i = 0; i < enimies_bullets; i++)
-		// {
-		// 	if (!e_bullets[i].active)
-		// 		continue;
-		// 	if (check_collision(&e_bullets[i], &barrier[j]))
-		// 	{
-		// 		if (barrier[j].sprite_frame[0] == barrierBroken[0])
-		// 		{
-		// 			draw_object(&barrier[j], 0, 0);
-		// 			draw_object(&e_bullets[i], 0, 0);
-		// 			barrier[j].active = 0;
-		// 			e_bullets[i].active = 0;
-		// 		}
-		// 		else if (*barrier[j].sprite_frame == barrierDamaged[0])
-		// 		{
-		// 			barrier[j].sprite_frame[0] = barrierBroken[0];
-		// 			draw_object(&e_bullets[i], 0, 0);
-		// 			e_bullets[i].active = 0;
-		// 		}
-		// 		else
-		// 		{
-		// 			barrier[j].sprite_frame[0] = barrierDamaged[0];
-		// 			draw_object(&e_bullets[i], 0, 0);
-		// 			e_bullets[i].active = 0;
-		// 		}
-		// 	}
-		}
-	// 	for (int i = 0; i < hero_bullets; i++)
-	// 	{
-	// 		if (!h_bullets[i].active)
-	// 			continue;
-	// 		if (check_collision(&h_bullets[i], &barrier[j]))
-	// 		{
-	// 			draw_object(&h_bullets[i], 0, 0);
-	// 			h_bullets->active = 0;
-	// 		}
-	// 	}
-	// }
+		if (!(barrier[i].active))
+			continue;
+		move_object(&barrier[i]);
+	}
 }
 
-int aeb = 0;
 void update_enimies()
 {
 	for (int i = 0; i < NUM_INIMIES; i++)
 	{
 		if (!enemies[i].active)
 			continue;
-		aeb = active_e_bullets;
 		move_object(&enemies[i]);
-		// if (aeb < 5)
-		// {
-		// 	create_e_bullet(&enemies[i]);
-		// 	active_e_bullets++;
-		// }
 	}
+}
+
+void init_hero()
+{
+	init_object(&hero, spaceShip[0], spaceShip[0], 0, 11, 8, 150, 209, 0, 0, 1, 1);
 }
 
 /* main game loop */
 int main(void)
 {
-	struct object_s hero;
 
 	init_display();
 	init_input();
-
-	init_object(&hero, spaceShip[0], spaceShip[0], 0, 11, 8, 150, 209, 0, 0, 1, 1);
-
+	int clk = TIMER0;
+	init_hero();
 	init_barrier();
-	init_enemies(NUM_INIMIES);
-
-	while (1)
+	init_enemies();
+	int time = 0;
+	while (hero.active)
 	{
+		clk = TIMER0 - clk;
+		time += clk;
+		if (time > 630)
+		{
+			create_bullet(&hero, 'e');
+			time = 0;
+			printf("inimigo atirou\n");
+		}
 		update_enimies();
-		update_bullets();
+		update_bullets(&hero);
 		update_barrier();
 		get_input(&hero);
 		move_object(&hero);
 		delay_ms(20);
+		clk = TIMER0;
 	}
 
 	return 0;
