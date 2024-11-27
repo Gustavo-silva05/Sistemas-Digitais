@@ -1,9 +1,9 @@
 #include <hf-risc.h>
 #include "vga_drv.h"
 
-#define NUM_INIMIES 12
+#define NUM_INIMIES 15
 #define MAX_BULLETS 200
-#define NUM_BARRIER 3
+#define NUM_BARRIER 4
 
 /* sprites and sprite drawing */
 char monster1a[8][11] = {
@@ -483,6 +483,11 @@ void update_barrier()
 
 void update_enimies()
 {
+// 	if (n_inimigos == 0)
+// 	{
+// 		hero.active = 0;
+// 		return;
+// 	}
 	for (int i = 0; i < NUM_INIMIES; i++)
 	{
 		if (!enemies[i].active)
@@ -515,7 +520,6 @@ int main(void)
 		{
 			create_bullet(&hero, 'e');
 			time = 0;
-			printf("inimigo atirou\n");
 		}
 		update_enimies();
 		update_bullets(&hero);
