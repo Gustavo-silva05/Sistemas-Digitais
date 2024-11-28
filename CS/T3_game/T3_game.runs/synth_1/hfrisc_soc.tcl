@@ -56,6 +56,8 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 1
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a100tcsg324-1
 
@@ -103,6 +105,8 @@ read_xdc /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_n
 set_property used_in_implementation false [get_files /home/gustavo-souza-da-silva/Documentos/hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/gustavo-souza-da-silva/Documentos/Github/Sistemas-Digitais/CS/T3_game/T3_game.srcs/utils_1/imports/synth_1/hfrisc_soc.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
