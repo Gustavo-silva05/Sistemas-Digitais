@@ -2,69 +2,214 @@
 #include "vga_drv.h"
 
 #define NUM_INIMIES 15
-#define MAX_BULLETS 200
-#define NUM_BARRIER 4
+#define MAX_BULLETS 50
+#define NUM_BARRIER 3
 
 /* sprites and sprite drawing */
-char monster1a[8][11] = {
-	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
-	{2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2},
-	{2, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2},
-	{2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2},
-	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-	{0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
-	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
-	{0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0}};
+// char monster1a[8][11] = {
+// 	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
+// 	{2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2},
+// 	{2, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2},
+// 	{2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2},
+// 	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+// 	{0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
+// 	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
+// 	{0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0}};
 
-char monster1b[8][11] = {
-	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
-	{0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0},
-	{0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0},
-	{0, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0},
-	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-	{2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 2},
-	{0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0}};
+// char monster1b[8][11] = {
+// 	{0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0},
+// 	{0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0},
+// 	{0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0},
+// 	{0, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0},
+// 	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+// 	{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+// 	{2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 2},
+// 	{0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0}};
 
-char monster2a[8][8] = {
-	{0, 0, 0, 6, 6, 0, 0, 0},
-	{0, 0, 6, 6, 6, 6, 0, 0},
-	{0, 6, 6, 6, 6, 6, 6, 0},
-	{6, 6, 0, 6, 6, 0, 6, 6},
-	{6, 6, 6, 6, 6, 6, 6, 6},
-	{0, 6, 0, 6, 6, 0, 6, 0},
-	{6, 0, 0, 0, 0, 0, 0, 6},
-	{0, 6, 0, 0, 0, 0, 6, 0}};
+// char monster2a[8][8] = {
+// 	{0, 0, 0, 6, 6, 0, 0, 0},
+// 	{0, 0, 6, 6, 6, 6, 0, 0},
+// 	{0, 6, 6, 6, 6, 6, 6, 0},
+// 	{6, 6, 0, 6, 6, 0, 6, 6},
+// 	{6, 6, 6, 6, 6, 6, 6, 6},
+// 	{0, 6, 0, 6, 6, 0, 6, 0},
+// 	{6, 0, 0, 0, 0, 0, 0, 6},
+// 	{0, 6, 0, 0, 0, 0, 6, 0}};
 
-char monster2b[8][8] = {
-	{0, 0, 0, 6, 6, 0, 0, 0},
-	{0, 0, 6, 6, 6, 6, 0, 0},
-	{0, 6, 6, 6, 6, 6, 6, 0},
-	{6, 6, 0, 6, 6, 0, 6, 6},
-	{6, 6, 6, 6, 6, 6, 6, 6},
-	{0, 0, 6, 0, 0, 6, 0, 0},
-	{0, 6, 0, 6, 6, 0, 6, 0},
-	{6, 0, 6, 0, 0, 6, 0, 6}};
+// char monster2b[8][8] = {
+// 	{0, 0, 0, 6, 6, 0, 0, 0},
+// 	{0, 0, 6, 6, 6, 6, 0, 0},
+// 	{0, 6, 6, 6, 6, 6, 6, 0},
+// 	{6, 6, 0, 6, 6, 0, 6, 6},
+// 	{6, 6, 6, 6, 6, 6, 6, 6},
+// 	{0, 0, 6, 0, 0, 6, 0, 0},
+// 	{0, 6, 0, 6, 6, 0, 6, 0},
+// 	{6, 0, 6, 0, 0, 6, 0, 6}};
 
-char monster3a[8][12] = {
-	{0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
-	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-	{0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0},
-	{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},
-	{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1}};
+// char monster3a[8][12] = {
+// 	{0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+// 	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+// 	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+// 	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
+// 	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+// 	{0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0},
+// 	{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},
+// 	{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1}};
 
-char monster3b[8][12] = {
-	{0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
-	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
-	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-	{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},
-	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
-	{0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0}};
+// char monster3b[8][12] = {
+// 	{0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+// 	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+// 	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+// 	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
+// 	{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+// 	{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},
+// 	{0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0},
+// 	{0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0}};
+
+// char misteryShip[7][14] = {
+// 	{0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0},
+// 	{0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0},
+// 	{0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0},
+// 	{0, 4, 4, 0, 4, 0, 4, 4, 0, 4, 0, 4, 4, 0},
+// 	{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+// 	{0, 0, 4, 4, 4, 0, 4, 4, 0, 4, 4, 4, 0, 0},
+// 	{0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0}};
+
+// char barrierFull[10][14] = {
+// 	{0, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0, 0, 0, 0},
+// 	{0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0},
+// 	{0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0},
+// 	{0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0},
+// 	{0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0},
+// 	{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8}};
+
+// char barrierDamaged[10][14] = {
+// 	{0, 0, 0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0, 0},
+// 	{0, 0, 0, 0, 8, 8, 0, 8, 8, 8, 0, 0, 0, 0},
+// 	{0, 0, 0, 8, 0, 8, 0, 0, 8, 8, 8, 0, 0, 0},
+// 	{0, 0, 8, 8, 0, 8, 8, 8, 0, 8, 8, 8, 0, 0},
+// 	{0, 8, 8, 0, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0},
+// 	{8, 8, 8, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8}};
+
+// char barrierBroken[10][14] = {
+// 	{0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 0, 0, 0, 0},
+// 	{0, 0, 0, 0, 8, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+// 	{0, 0, 0, 8, 8, 8, 0, 8, 8, 0, 0, 0, 0, 0},
+// 	{0, 0, 8, 8, 0, 8, 0, 8, 0, 8, 8, 8, 0, 0},
+// 	{0, 8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8, 8, 0},
+// 	{8, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 8, 8},
+// 	{0, 8, 8, 0, 8, 8, 0, 0, 8, 8, 8, 8, 0, 8},
+// 	{8, 8, 8, 0, 8, 0, 0, 0, 0, 8, 0, 0, 8, 8},
+// 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 8, 8, 8, 8},
+// 	{8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8}};
+
+// char spaceShip[8][11] = {
+// 	{0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+// 	{0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0},
+// 	{0, 0, 0, 0, 7, 8, 7, 0, 0, 0, 0},
+// 	{0, 0, 0, 7, 7, 8, 7, 7, 0, 0, 0},
+// 	{4, 4, 4, 7, 7, 7, 7, 7, 4, 4, 4},
+// 	{7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7},
+// 	{0, 7, 7, 7, 7, 0, 7, 7, 7, 7, 0},
+// 	{0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0}};
+
+// char bulletShip[4][1] = {
+// 	{7},
+// 	{7},
+// 	{7},
+// 	{7}};
+
+// char bullet1a[4][2] = {
+// 	{0, 7},
+// 	{7, 0},
+// 	{0, 7},
+// 	{7, 0}};
+
+// char bullet1b[4][2] = {
+// 	{7, 0},
+// 	{0, 7},
+// 	{7, 0},
+// 	{0, 7}};
+
+// char bullet2a[4][3] = {
+// 	{0, 7, 0},
+// 	{0, 7, 0},
+// 	{7, 7, 7},
+// 	{0, 7, 0}};
+
+// char bullet2b[4][3] = {
+// 	{0, 7, 0},
+// 	{7, 7, 7},
+// 	{0, 7, 0},
+// 	{0, 7, 0}};
+
+char cassa1a[8][11] = {
+	{8, 8, 0, 0, 0, 0, 0, 0, 0, 8, 8},
+	{8, 8, 0, 0, 8, 8, 8, 0, 0, 8, 8},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{8, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8},
+	{8, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{8, 8, 0, 0, 8, 8, 8, 0, 0, 8, 8},
+	{8, 8, 0, 0, 0, 0, 0, 0, 0, 8, 8}};
+
+char cassa1b[8][11] = {
+	{0, 8, 8, 0, 0, 0, 0, 0, 8, 8, 0},
+	{8, 8, 0, 0, 8, 8, 8, 0, 0, 8, 8},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{8, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8},
+	{8, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{8, 8, 0, 0, 4, 8, 4, 0, 0, 8, 8},
+	{0, 8, 8, 0, 0, 0, 0, 0, 8, 8, 0}};
+
+char tay2a[8][11] = {
+	{0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{0, 0, 0, 8, 8, 0, 8, 8, 0, 0, 0},
+	{0, 8, 8, 8, 8, 0, 8, 8, 8, 8, 0},
+	{8, 8, 0, 0, 4, 8, 4, 0, 0, 8, 8},
+	{8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8}};
+
+char tay2b[8][11] = {
+	{0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0},
+	{0, 0, 8, 8, 0, 8, 0, 8, 8, 0, 0},
+	{0, 8, 8, 0, 0, 8, 0, 0, 8, 8, 0},
+	{0, 8, 0, 0, 8, 8, 8, 0, 0, 8, 0},
+	{8, 8, 0, 8, 8, 0, 8, 8, 0, 8, 8},
+	{8, 8, 8, 8, 8, 0, 8, 8, 8, 8, 8},
+	{0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+char monster3a[8][11] = {
+	{0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0},
+	{0, 0, 8, 8, 0, 0, 0, 8, 8, 0, 0},
+	{0, 8, 8, 8, 0, 0, 0, 8, 8, 8, 0},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0}};
+
+char monster3b[8][11] = {
+	{0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0},
+	{0, 0, 8, 8, 0, 0, 0, 8, 8, 0, 0},
+	{0, 8, 8, 4, 0, 0, 0, 4, 8, 8, 0},
+	{8, 8, 0, 8, 8, 8, 8, 8, 0, 8, 8},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 4, 8, 0, 0, 0, 0}};
 
 char misteryShip[7][14] = {
 	{0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0},
@@ -111,46 +256,60 @@ char barrierBroken[10][14] = {
 	{8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 8, 8, 8, 8},
 	{8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8}};
 
-char spaceShip[8][11] = {
-	{0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0},
-	{0, 0, 0, 0, 7, 8, 7, 0, 0, 0, 0},
-	{0, 0, 0, 7, 7, 8, 7, 7, 0, 0, 0},
-	{4, 4, 4, 7, 7, 7, 7, 7, 4, 4, 4},
-	{7, 7, 7, 7, 6, 6, 6, 7, 7, 7, 7},
-	{0, 7, 7, 7, 7, 0, 7, 7, 7, 7, 0},
-	{0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0}};
+char Rebel1[8][11] = {
+	{0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{8, 0, 0, 0, 4, 8, 4, 0, 0, 0, 8},
+	{8, 0, 0, 0, 4, 8, 4, 0, 0, 0, 8},
+	{8, 0, 0, 0, 8, 1, 8, 0, 0, 0, 8},
+	{8, 8, 0, 8, 8, 1, 8, 8, 0, 8, 8},
+	{8, 4, 4, 8, 8, 8, 8, 8, 4, 4, 8},
+	{0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0},
+	{0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0}};
 
-char bulletShip[4][1] = {
-	{7},
-	{7},
-	{7},
-	{7}};
+char MileniumFalcon[10][10] = {
+	{0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+	{0, 0, 8, 8, 0, 8, 8, 0, 0, 0},
+	{0, 0, 8, 8, 0, 8, 4, 0, 1, 1},
+	{0, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+	{8, 8, 8, 0, 0, 0, 8, 0, 8, 8},
+	{8, 4, 8, 0, 8, 0, 0, 0, 4, 4},
+	{8, 8, 8, 0, 0, 0, 8, 8, 8, 8},
+	{8, 8, 8, 8, 8, 8, 8, 4, 8, 8},
+	{0, 8, 0, 8, 0, 8, 0, 8, 0, 0},
+	{0, 0, 8, 8, 8, 8, 8, 0, 0, 0}};
 
-char bullet1a[4][2] = {
-	{0, 7},
-	{7, 0},
-	{0, 7},
-	{7, 0}};
+char bullet_dark[4][1] = {
+	{4},
+	{4},
+	{4},
+	{4}};
 
-char bullet1b[4][2] = {
-	{7, 0},
-	{0, 7},
-	{7, 0},
-	{0, 7}};
+char bullet_light[4][1] = {
+	{2},
+	{2},
+	{2},
+	{2}};
 
-char bullet2a[4][3] = {
-	{0, 7, 0},
-	{0, 7, 0},
-	{7, 7, 7},
-	{0, 7, 0}};
-
-char bullet2b[4][3] = {
-	{0, 7, 0},
-	{7, 7, 7},
-	{0, 7, 0},
-	{0, 7, 0}};
-
+char DeathStar[20][22] = {
+	{0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 8, 8, 8, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 8, 8, 0, 0, 0},
+	{0, 0, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 8, 8, 8, 0, 8, 8, 8, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0},
+	{0, 8, 8, 8, 0, 7, 7, 8, 0, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{8, 8, 8, 8, 0, 7, 7, 8, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+	{8, 8, 8, 8, 8, 0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{8, 8, 8, 8, 8, 8, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+	{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+	{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+	{0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0},
+	{0, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 8, 8, 8, 0},
+	{0, 0, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
+	{0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0},
+	{0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0}};
 void draw_sprite(unsigned int x, unsigned int y, char *sprite,
 				 unsigned int sizex, unsigned int sizey, int color)
 {
@@ -180,10 +339,12 @@ struct object_s
 	int dx, dy;
 	int speedx, speedy;
 	int speedxcnt, speedycnt;
+	int lives;
 	int active; // 1 = ativo, 0 = inativo
 };
 
 struct object_s hero;
+struct object_s boss;
 struct object_s barrier[NUM_BARRIER];
 struct object_s bullets[MAX_BULLETS];
 // struct object_s e_bullets[MAX_BULLETS];
@@ -193,7 +354,7 @@ int n_inimigos = NUM_INIMIES;
 
 void init_object(struct object_s *obj, char *spritea, char *spriteb,
 				 char *spritec, char spriteszx, char spriteszy, int posx, int posy,
-				 int dx, int dy, int spx, int spy)
+				 int dx, int dy, int spx, int spy, int lives)
 {
 	obj->sprite_frame[0] = spritea;
 	obj->sprite_frame[1] = spriteb;
@@ -210,6 +371,7 @@ void init_object(struct object_s *obj, char *spritea, char *spriteb,
 	obj->speedxcnt = spx;
 	obj->speedycnt = spy;
 	obj->active = 1;
+	obj->lives = lives;
 }
 
 void draw_object(struct object_s *obj, char chgsprite, int color)
@@ -242,6 +404,24 @@ void move_object(struct object_s *obj)
 		obj->speedycnt = obj->speedy;
 		obj->posy = obj->posy + obj->dy;
 	}
+	if (obj->posx == 0 + obj->spriteszx)
+	{
+		draw_object(&oldobj, 0, 0);
+		obj->dx = 1;
+		if (obj->posy <= 120 && obj->posy >= 30)
+		{
+			obj->posy += 9;
+		}
+	}
+	if (obj->posx == (VGA_WIDTH - obj->spriteszx))
+	{
+		draw_object(&oldobj, 0, 0);
+		obj->dx = -1;
+		if (obj->posy <= 120 && obj->posy >= 30)
+		{
+			obj->posy += 9;
+		}
+	}
 	if (obj->posy == 0 || obj->posy + obj->spriteszy == VGA_HEIGHT)
 	{
 		draw_object(&oldobj, 0, 0);
@@ -251,16 +431,6 @@ void move_object(struct object_s *obj)
 	{
 		draw_object(&oldobj, 0, 0);
 		draw_object(obj, 1, -1);
-	}
-
-	// logica para a colisao, se chegar na parede, inverte a direcao
-	if (obj->posx == 0)
-	{
-		obj->dx = 1;
-	}
-	if (obj->posx == (VGA_WIDTH - obj->spriteszx))
-	{
-		obj->dx = -1;
 	}
 }
 
@@ -278,9 +448,9 @@ void create_bullet(struct object_s *hero, char type)
 	{
 		if (type == 'h')
 		{
-			init_object(&bullets[n_bullets], bullet2a[0], bullet2b[0], 0, 3, 4,
+			init_object(&bullets[n_bullets], bullet_light[0], 0, 0, 1, 4,
 						hero->posx - 1 + (hero->spriteszx / 2),
-						hero->posy - 4, 0, -1, 0, 1);
+						hero->posy - 4, 0, -1, 0, 1, 1);
 			n_bullets++;
 		}
 		else
@@ -294,9 +464,9 @@ void create_bullet(struct object_s *hero, char type)
 					{
 						if (!(enemies[i].active))
 							continue;
-						init_object(&bullets[n_bullets], bullet1a[0], bullet1b[0], 0, 2, 4,
+						init_object(&bullets[n_bullets], bullet_dark[0], 0, 0, 1, 4,
 									enemies[i].posx - 1 + (enemies[i].spriteszx / 2),
-									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1);
+									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1, 1);
 						shots++;
 						n_bullets++;
 						if (n_bullets == MAX_BULLETS)
@@ -314,9 +484,9 @@ void create_bullet(struct object_s *hero, char type)
 					{
 						if (!(enemies[i].active))
 							continue;
-						init_object(&bullets[n_bullets], bullet1a[0], bullet1b[0], 0, 2, 4,
+						init_object(&bullets[n_bullets], bullet_dark[0], 0, 0, 1, 4,
 									enemies[i].posx - 1 + (enemies[i].spriteszx / 2),
-									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1);
+									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1, 1);
 						shots++;
 						n_bullets++;
 						if (n_bullets == MAX_BULLETS)
@@ -326,6 +496,18 @@ void create_bullet(struct object_s *hero, char type)
 				}
 			}
 		}
+	}
+	else
+	{
+		int clk = TIMER0;
+		int time = 0;
+		clk = TIMER0 - clk;
+		while (time < 2500)
+		{
+			time += clk;
+			clk = TIMER0;
+		}
+		n_bullets = 0;
 	}
 }
 
@@ -398,24 +580,57 @@ void update_bullets()
 		if (check_collision(&bullets[i], &hero))
 		{
 			draw_object(&bullets[i], 0, 0);
-			draw_object(&hero, 0, 0);
-			hero.active = 0;
-			return;
+			if (hero.lives == 1)
+			{
+				draw_object(&hero, 0, 0);
+				hero.active = 0;
+				return;
+			}
+			else
+			{
+				hero.lives--;
+				continue;
+			}
+		}
+		if (boss.active && check_collision(&bullets[i], &boss))
+		{
+			draw_object(&bullets[i], 0, 0);
+			if (boss.lives == 1)
+			{
+				draw_object(&boss, 0, 0);
+				boss.active = 0;
+				return;
+			}
+			else
+			{
+				boss.lives--;
+				continue;
+			}
 		}
 		for (int j = 0; j < NUM_INIMIES; j++)
 		{
 			if (!(enemies[j].active))
 				continue;
+			if (!bullets[i].active)
+				break;
 			if (check_collision(&bullets[i], &enemies[j]))
 			{
 				if (bullets[i].dy == -1)
 				{
 					n_inimigos--;
 					bullets[i].active = 0;
-					enemies[j].active = 0;
 					draw_object(&bullets[i], 0, 0);
-					draw_object(&enemies[j], 0, 0);
-					break;
+					if (enemies[j].lives == 1)
+					{
+						enemies[j].active = 0;
+						draw_object(&enemies[j], 0, 0);
+						break;
+					}
+					else
+					{
+						enemies[j].lives--;
+						continue;
+					}
 				}
 			}
 		}
@@ -423,6 +638,8 @@ void update_bullets()
 		{
 			if (!barrier[j].active)
 				continue;
+			if (!bullets[i].active)
+				break;
 			if (check_collision(&bullets[i], &barrier[j]))
 			{
 				bullets[i].active = 0;
@@ -430,20 +647,20 @@ void update_bullets()
 				if (bullets[i].dy == 1)
 				{
 					draw_object(&barrier[j], 0, 0);
-					if (barrier[j].sprite_frame[0] == barrierFull[0])
+					if (barrier[j].lives == 6 )
 					{
 						barrier[j].sprite_frame[0] = barrierDamaged[0];
-						move_object(&barrier[j]);
 					}
-					else if (barrier[j].sprite_frame == barrierDamaged[0])
+					else if (barrier[j].lives == 4)
 					{
 						barrier[j].sprite_frame[0] = barrierBroken[0];
-						move_object(&barrier[j]);
+						barrier[j].lives--;
 					}
-					else
+					else if (barrier[j].lives == 1)
 					{
-						barrier[j].active = 0;
+						barrier->active = 0;
 					}
+					barrier[j].lives--;
 				}
 				break;
 			}
@@ -456,18 +673,18 @@ void init_enemies()
 	int q = NUM_INIMIES / 3;
 	for (int i = 0; i < NUM_INIMIES / 3; i++)
 	{
-		init_object(&enemies[i], monster1a[0], monster1b[0], 0, 11, 8, (20 + i * 20), 90, 1, 0, 5, 5);
+		init_object(&enemies[i], cassa1a[0], cassa1b[0], 0, 11, 8, (20 + i * 20), 90, 1, 0, 1, 1, 1);
 
-		init_object(&enemies[1 * q + i], monster2a[0], monster2b[0], 0, 8, 8, (20 + i * 20), 60, 1, 0, 3, 3);
+		init_object(&enemies[1 * q + i], tay2a[0], tay2b[0], 0, 11, 8, (20 + i * 20), 60, 1, 0, 1, 1, 2);
 
-		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 12, 8, (20 + i * 20), 30, 1, 0, 2, 2);
+		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 11, 8, (20 + i * 20), 30, 1, 0, 1, 1, 3);
 	}
 }
 void init_barrier()
 {
 	for (int i = 0; i < NUM_BARRIER; i++)
 	{
-		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, (80 + i * 80), 140, 0, 0, 10, 10);
+		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, (80 + i * 80), 140, 0, 0, 10, 10, 5);
 	}
 }
 
@@ -483,11 +700,6 @@ void update_barrier()
 
 void update_enimies()
 {
-// 	if (n_inimigos == 0)
-// 	{
-// 		hero.active = 0;
-// 		return;
-// 	}
 	for (int i = 0; i < NUM_INIMIES; i++)
 	{
 		if (!enemies[i].active)
@@ -498,13 +710,39 @@ void update_enimies()
 
 void init_hero()
 {
-	init_object(&hero, spaceShip[0], spaceShip[0], 0, 11, 8, 150, 209, 0, 0, 1, 1);
+	init_object(&hero, MileniumFalcon[0], 0, 0, 10, 10, 150, 207, 0, 0, 1, 1, 3);
 }
 
-/* main game loop */
-int main(void)
+void update_boss()
 {
+	move_object(&boss);
+}
 
+void init_boss()
+{
+	init_display();
+	init_object(&boss, DeathStar[0], 0, 0, 22, 20, (VGA_WIDTH / 2) - 22, 5, -1, 0, 3, 3, 10);
+	init_enemies();
+	n_inimigos = NUM_INIMIES;
+	while (hero.active && boss.active)
+	{
+		update_enimies();
+		update_bullets(&hero);
+		update_barrier();
+		update_boss();
+		get_input(&hero);
+		move_object(&hero);
+		delay_ms(20);
+	}
+}
+
+void LEVEL_2()
+{
+	return;
+}
+
+void LEVEL_1()
+{
 	init_display();
 	init_input();
 	int clk = TIMER0;
@@ -516,7 +754,7 @@ int main(void)
 	{
 		clk = TIMER0 - clk;
 		time += clk;
-		if (time > 630)
+		if (time > 560)
 		{
 			create_bullet(&hero, 'e');
 			time = 0;
@@ -527,8 +765,15 @@ int main(void)
 		get_input(&hero);
 		move_object(&hero);
 		delay_ms(20);
+		if (n_inimigos == 0)
+			break;
 		clk = TIMER0;
 	}
+	init_boss();
+}
 
-	return 0;
+/* main game loop */
+int main(void)
+{
+	LEVEL_1();
 }
