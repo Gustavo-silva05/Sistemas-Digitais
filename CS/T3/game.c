@@ -1,9 +1,10 @@
 #include <hf-risc.h>
 #include "vga_drv.h"
 
-#define NUM_INIMIES 15
-#define MAX_BULLETS 50
-#define NUM_BARRIER 3
+#define NUM_INIMIES 6
+#define MAX_BULLETS 43
+#define NUM_BARRIER 4
+#define HERO_HEARTS 5
 
 /* sprites and sprite drawing */
 // char monster1a[8][11] = {
@@ -310,6 +311,49 @@ char DeathStar[20][22] = {
 	{0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0}};
+
+char VITORIA[15][63] = {
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 0},
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 0},
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2},
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2},
+	{0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 2}};
+
+char DERROTA[15][63] = {
+	{4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 0, 0},
+	{4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 0},
+	{4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 4, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 0, 4, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 4, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4},
+	{4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 4, 4, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 4, 4}};
+
+char coracao[6][7] = {
+	{0, 4, 0, 0, 0, 4, 0},
+	{4, 4, 4, 0, 4, 4, 4},
+	{4, 4, 4, 4, 4, 4, 4},
+	{0, 4, 4, 4, 4, 4, 0},
+	{0, 0, 4, 4, 4, 0, 0},
+	{0, 0, 0, 4, 0, 0, 0}};
+
 void draw_sprite(unsigned int x, unsigned int y, char *sprite,
 				 unsigned int sizex, unsigned int sizey, int color)
 {
@@ -343,11 +387,12 @@ struct object_s
 	int active; // 1 = ativo, 0 = inativo
 };
 
+struct object_s fim;
 struct object_s hero;
+struct object_s coracoes[HERO_HEARTS];
 struct object_s boss;
 struct object_s barrier[NUM_BARRIER];
 struct object_s bullets[MAX_BULLETS];
-// struct object_s e_bullets[MAX_BULLETS];
 struct object_s enemies[NUM_INIMIES];
 int n_bullets = 0;
 int n_inimigos = NUM_INIMIES;
@@ -417,7 +462,7 @@ void move_object(struct object_s *obj)
 	{
 		draw_object(&oldobj, 0, 0);
 		obj->dx = -1;
-		if (obj->posy <= 120 && obj->posy >= 30)
+		if (obj->posy <= 160 && obj->posy >= 30)
 		{
 			obj->posy += 9;
 		}
@@ -440,11 +485,22 @@ void init_display()
 	display_background(BLACK);
 }
 
+int check_active_bullet()
+{
+	int active = 0;
+	for (int i = 0; i < MAX_BULLETS; i++)
+	{
+		if (bullets[i].active)
+			active++;
+	}
+	return active;
+}
+
 // cria o objeto tiro quando o botao eh apertado, com base na posicao da nave
 
 void create_bullet(struct object_s *hero, char type)
 {
-	if (n_bullets < MAX_BULLETS)
+	if (n_bullets < MAX_BULLETS - 1)
 	{
 		if (type == 'h')
 		{
@@ -456,12 +512,14 @@ void create_bullet(struct object_s *hero, char type)
 		else
 		{
 			int shots = 0;
-			if (n_inimigos >= 3)
+			if (n_inimigos >= 4)
 			{
 				for (int i = 0; i < NUM_INIMIES; i++)
 				{
-					if (shots < 3)
+					if (shots < 4)
 					{
+						if (n_bullets == MAX_BULLETS - 1)
+							return;
 						if (!(enemies[i].active))
 							continue;
 						init_object(&bullets[n_bullets], bullet_dark[0], 0, 0, 1, 4,
@@ -469,8 +527,6 @@ void create_bullet(struct object_s *hero, char type)
 									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1, 1);
 						shots++;
 						n_bullets++;
-						if (n_bullets == MAX_BULLETS)
-							return;
 					}
 					else
 						return;
@@ -480,17 +536,17 @@ void create_bullet(struct object_s *hero, char type)
 			{
 				for (int i = 0; i < n_inimigos; i++)
 				{
-					for (int i = 0; i < NUM_INIMIES; i++)
+					printf("%d inimigos\n", n_inimigos);
+					for (int j = 0; j < NUM_INIMIES; j++)
 					{
-						if (!(enemies[i].active))
+						if (n_bullets == MAX_BULLETS - 1)
+							return;
+						if (!(enemies[j].active))
 							continue;
 						init_object(&bullets[n_bullets], bullet_dark[0], 0, 0, 1, 4,
-									enemies[i].posx - 1 + (enemies[i].spriteszx / 2),
-									enemies[i].posy + enemies[i].spriteszy + 1, 0, 1, 1, 1, 1);
-						shots++;
+									enemies[j].posx - 1 + (enemies[j].spriteszx / 2),
+									enemies[j].posy + enemies[j].spriteszy + 1, 0, 1, 1, 1, 1);
 						n_bullets++;
-						if (n_bullets == MAX_BULLETS)
-							return;
 						break;
 					}
 				}
@@ -499,15 +555,11 @@ void create_bullet(struct object_s *hero, char type)
 	}
 	else
 	{
-		int clk = TIMER0;
-		int time = 0;
-		clk = TIMER0 - clk;
-		while (time < 2500)
+		int a = check_active_bullet();
+		if (a == 0)
 		{
-			time += clk;
-			clk = TIMER0;
+			n_bullets = 0;
 		}
-		n_bullets = 0;
 	}
 }
 
@@ -579,30 +631,38 @@ void update_bullets()
 		move_object(&bullets[i]);
 		if (check_collision(&bullets[i], &hero))
 		{
+			bullets[i].active = 0;
 			draw_object(&bullets[i], 0, 0);
 			if (hero.lives == 1)
 			{
+				printf("perdeu\n");
 				draw_object(&hero, 0, 0);
 				hero.active = 0;
 				return;
 			}
 			else
 			{
+				draw_object(&coracoes[hero.lives - 1], 0, 0);
+				coracoes[hero.lives - 1].active = 0;
+				printf("hero attacked\n");
 				hero.lives--;
 				continue;
 			}
 		}
 		if (boss.active && check_collision(&bullets[i], &boss))
 		{
+			bullets[i].active = 0;
 			draw_object(&bullets[i], 0, 0);
 			if (boss.lives == 1)
 			{
+				printf("ganhou\n");
 				draw_object(&boss, 0, 0);
 				boss.active = 0;
 				return;
 			}
 			else
 			{
+				printf("boss attacked\n");
 				boss.lives--;
 				continue;
 			}
@@ -617,11 +677,11 @@ void update_bullets()
 			{
 				if (bullets[i].dy == -1)
 				{
-					n_inimigos--;
 					bullets[i].active = 0;
 					draw_object(&bullets[i], 0, 0);
 					if (enemies[j].lives == 1)
 					{
+						n_inimigos--;
 						enemies[j].active = 0;
 						draw_object(&enemies[j], 0, 0);
 						break;
@@ -647,14 +707,15 @@ void update_bullets()
 				if (bullets[i].dy == 1)
 				{
 					draw_object(&barrier[j], 0, 0);
-					if (barrier[j].lives == 6 )
+					if (barrier[j].lives == 6)
 					{
 						barrier[j].sprite_frame[0] = barrierDamaged[0];
+						draw_object(&barrier[j], 1, -1);
 					}
 					else if (barrier[j].lives == 4)
 					{
 						barrier[j].sprite_frame[0] = barrierBroken[0];
-						barrier[j].lives--;
+						draw_object(&barrier[j], 1, -1);
 					}
 					else if (barrier[j].lives == 1)
 					{
@@ -665,30 +726,17 @@ void update_bullets()
 				break;
 			}
 		}
-	}
-}
-// inicia a criacao dos enimigos, por categoria, e coloca-os num vetor
-void init_enemies()
-{
-	int q = NUM_INIMIES / 3;
-	for (int i = 0; i < NUM_INIMIES / 3; i++)
-	{
-		init_object(&enemies[i], cassa1a[0], cassa1b[0], 0, 11, 8, (20 + i * 20), 90, 1, 0, 1, 1, 1);
-
-		init_object(&enemies[1 * q + i], tay2a[0], tay2b[0], 0, 11, 8, (20 + i * 20), 60, 1, 0, 1, 1, 2);
-
-		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 11, 8, (20 + i * 20), 30, 1, 0, 1, 1, 3);
-	}
-}
-void init_barrier()
-{
-	for (int i = 0; i < NUM_BARRIER; i++)
-	{
-		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, (80 + i * 80), 140, 0, 0, 10, 10, 5);
+		for (int j = 0; j < HERO_HEARTS; j++)
+		{
+			if (check_collision(&bullets[i], &coracoes[j]))
+			{
+				draw_object(&bullets[i], 0, 0);
+			}
+		}
 	}
 }
 
-void update_barrier()
+void update()
 {
 	for (int i = 0; i < NUM_BARRIER; i++)
 	{
@@ -696,44 +744,91 @@ void update_barrier()
 			continue;
 		move_object(&barrier[i]);
 	}
-}
-
-void update_enimies()
-{
 	for (int i = 0; i < NUM_INIMIES; i++)
 	{
 		if (!enemies[i].active)
 			continue;
 		move_object(&enemies[i]);
 	}
+	if (boss.active)
+		move_object(&boss);
+	for (int i = 0; i < HERO_HEARTS; i++)
+	{
+		if (!coracoes[i].active)
+			continue;
+		move_object(&coracoes[i]);
+	}
 }
 
+void init_enemies()
+{
+	int q = NUM_INIMIES / 3;
+	for (int i = 0; i < NUM_INIMIES / 3; i++)
+	{
+		init_object(&enemies[i], cassa1a[0], cassa1b[0], 0, 11, 8, (20 + i * 20), 56, 1, 0, 1, 1, 1);
+
+		init_object(&enemies[1 * q + i], tay2a[0], tay2b[0], 0, 11, 8, (20 + i * 20), 48, -1, 0, 2, 2, 2);
+
+		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 11, 8, (20 + i * 20), 30, 1, 0, 2, 2, 3);
+	}
+}
+void init_barrier()
+{
+	int q = VGA_WIDTH / (NUM_BARRIER + 1);
+	for (int i = 0; i < NUM_BARRIER; i++)
+	{
+		init_object(&barrier[i], barrierFull[0], 0, 0, 14, 10, (q * (i + 1) - 7), 179, 0, 0, 10, 10, 8);
+	}
+}
 void init_hero()
 {
-	init_object(&hero, MileniumFalcon[0], 0, 0, 10, 10, 150, 207, 0, 0, 1, 1, 3);
+	init_object(&hero, Rebel1[0], 0, 0, 11, 8, 145, 209, 0, 0, 1, 1, HERO_HEARTS);
 }
 
-void update_boss()
+void init_hearts()
 {
-	move_object(&boss);
+	for (int i = 0; i < HERO_HEARTS; i++)
+	{
+		init_object(&coracoes[i], coracao[0], 0, 0, 7, 6, 10 +(i * 10), (VGA_HEIGHT - 7), 0, 0, 10, 10, 0);
+	}
 }
 
-void init_boss()
+void Level_boss()
 {
+
 	init_display();
+	delay_ms(2000);
 	init_object(&boss, DeathStar[0], 0, 0, 22, 20, (VGA_WIDTH / 2) - 22, 5, -1, 0, 3, 3, 10);
 	init_enemies();
+	init_barrier();
 	n_inimigos = NUM_INIMIES;
+	int clk = TIMER0;
+	int time = 0;
+	int timer = random() % 400;
 	while (hero.active && boss.active)
 	{
-		update_enimies();
-		update_bullets(&hero);
-		update_barrier();
-		update_boss();
+		clk = TIMER0 - clk;
+		time += clk;
+		if (time > timer)
+		{
+			create_bullet(&hero, 'e');
+			time = 0;
+			timer = random() % 600;
+		}
+		update_bullets();
+		update();
 		get_input(&hero);
 		move_object(&hero);
 		delay_ms(20);
+		clk = TIMER0;
 	}
+	delay_ms(2000);
+	display_background(BLACK);
+	if (hero.active)
+		init_object(&fim, VITORIA[0], 0, 0, 63, 15, 114, 102, 0, 0, 1, 1, 0);
+	else
+		init_object(&fim, DERROTA[0], 0, 0, 63, 15, 114, 102, 0, 0, 1, 1, 0);
+	move_object(&fim);
 }
 
 void LEVEL_2()
@@ -745,23 +840,25 @@ void LEVEL_1()
 {
 	init_display();
 	init_input();
-	int clk = TIMER0;
 	init_hero();
+	init_hearts();
 	init_barrier();
 	init_enemies();
+	int clk = TIMER0;
 	int time = 0;
+	int timer = random() % 750;
 	while (hero.active)
 	{
 		clk = TIMER0 - clk;
 		time += clk;
-		if (time > 560)
+		if (time > timer)
 		{
 			create_bullet(&hero, 'e');
 			time = 0;
+			timer = random() % 1000;
 		}
-		update_enimies();
-		update_bullets(&hero);
-		update_barrier();
+		update();
+		update_bullets();
 		get_input(&hero);
 		move_object(&hero);
 		delay_ms(20);
@@ -769,7 +866,15 @@ void LEVEL_1()
 			break;
 		clk = TIMER0;
 	}
-	init_boss();
+	delay_ms(2000);
+	display_background(BLACK);
+	if (hero.active)
+		Level_boss();
+	else
+	{
+		init_object(&fim, DERROTA[0], 0, 0, 63, 15, 114, 102, 0, 0, 1, 1, 0);
+		move_object(&fim);
+	}
 }
 
 /* main game loop */
