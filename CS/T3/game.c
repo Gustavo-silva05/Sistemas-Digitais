@@ -2,7 +2,7 @@
 #include "vga_drv.h"
 
 #define NUM_INIMIES 6
-#define MAX_BULLETS 43
+#define MAX_BULLETS 20
 #define NUM_BARRIER 4
 #define HERO_HEARTS 5
 
@@ -394,7 +394,7 @@ struct object_s boss;
 struct object_s barrier[NUM_BARRIER];
 struct object_s bullets[MAX_BULLETS];
 struct object_s enemies[NUM_INIMIES];
-int n_bullets = 0;
+int n_bullets = 1;
 int n_inimigos = NUM_INIMIES;
 
 void init_object(struct object_s *obj, char *spritea, char *spriteb,
@@ -504,10 +504,9 @@ void create_bullet(struct object_s *hero, char type)
 	{
 		if (type == 'h')
 		{
-			init_object(&bullets[n_bullets], bullet_light[0], 0, 0, 1, 4,
+			init_object(&bullets[0], bullet_light[0], 0, 0, 1, 4,
 						hero->posx - 1 + (hero->spriteszx / 2),
 						hero->posy - 4, 0, -1, 0, 1, 1);
-			n_bullets++;
 		}
 		else
 		{
@@ -558,7 +557,7 @@ void create_bullet(struct object_s *hero, char type)
 		int a = check_active_bullet();
 		if (a == 0)
 		{
-			n_bullets = 0;
+			n_bullets = 1;
 		}
 	}
 }
@@ -588,9 +587,10 @@ int get_input(struct object_s *hero)
 	}
 	if (GPIOB->IN & MASK_P9)
 	{
-		while (GPIOB->IN & MASK_P9)
-			;
-		create_bullet(hero, 'h');
+		if (!bullets[0].active)
+			create_bullet(hero, 'h');
+
+		// create_bullet(hero, 'h');
 	}
 	if (GPIOB->IN & MASK_P10)
 	{
@@ -765,11 +765,11 @@ void init_enemies()
 	int q = NUM_INIMIES / 3;
 	for (int i = 0; i < NUM_INIMIES / 3; i++)
 	{
-		init_object(&enemies[i], cassa1a[0], cassa1b[0], 0, 11, 8, (20 + i * 20), 56, 1, 0, 1, 1, 1);
+		init_object(&enemies[i], cassa1a[0], cassa1b[0], 0, 11, 8, (20 + i * 20), 56, 1, 0, 5, 5, 1);
 
-		init_object(&enemies[1 * q + i], tay2a[0], tay2b[0], 0, 11, 8, (20 + i * 20), 48, -1, 0, 2, 2, 2);
+		init_object(&enemies[1 * q + i], tay2a[0], tay2b[0], 0, 11, 8, (20 + i * 20), 48, -1, 0, 4, 4, 2);
 
-		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 11, 8, (20 + i * 20), 30, 1, 0, 2, 2, 3);
+		init_object(&enemies[2 * q + i], monster3a[0], monster3b[0], 0, 11, 8, (20 + i * 20), 30, 1, 0, 6, 6, 3);
 	}
 }
 void init_barrier()
@@ -782,14 +782,14 @@ void init_barrier()
 }
 void init_hero()
 {
-	init_object(&hero, Rebel1[0], 0, 0, 11, 8, 145, 209, 0, 0, 1, 1, HERO_HEARTS);
+	init_object(&hero, MileniumFalcon[0], 0, 0, 10, 10, 145, 207, 0, 0, 3, 3, HERO_HEARTS);
 }
 
 void init_hearts()
 {
 	for (int i = 0; i < HERO_HEARTS; i++)
 	{
-		init_object(&coracoes[i], coracao[0], 0, 0, 7, 6, 10 +(i * 10), (VGA_HEIGHT - 7), 0, 0, 10, 10, 0);
+		init_object(&coracoes[i], coracao[0], 0, 0, 7, 6, 10 + (i * 10), (VGA_HEIGHT - 7), 0, 0, 10, 10, 0);
 	}
 }
 
@@ -798,7 +798,7 @@ void Level_boss()
 
 	init_display();
 	delay_ms(2000);
-	init_object(&boss, DeathStar[0], 0, 0, 22, 20, (VGA_WIDTH / 2) - 22, 5, -1, 0, 3, 3, 10);
+	init_object(&boss, DeathStar[0], 0, 0, 22, 20, (VGA_WIDTH / 2) - 22, 5, -1, 0, 8, 8, 10);
 	init_enemies();
 	init_barrier();
 	n_inimigos = NUM_INIMIES;
@@ -819,7 +819,7 @@ void Level_boss()
 		update();
 		get_input(&hero);
 		move_object(&hero);
-		delay_ms(20);
+		delay_ms(5);
 		clk = TIMER0;
 	}
 	delay_ms(2000);
@@ -861,7 +861,7 @@ void LEVEL_1()
 		update_bullets();
 		get_input(&hero);
 		move_object(&hero);
-		delay_ms(20);
+		delay_ms(5);
 		if (n_inimigos == 0)
 			break;
 		clk = TIMER0;
@@ -877,8 +877,16 @@ void LEVEL_1()
 	}
 }
 
+void Menu (){
+	init_display();
+	display_print("SPACE", (VGA_WIDTH/2) - 60, (VGA_HEIGHT/2)-60, 3, 2);
+	display_print("INVADERS", (VGA_WIDTH/2) - 85, (VGA_HEIGHT/2)-30, 3, 2);
+}
+
 /* main game loop */
 int main(void)
 {
-	LEVEL_1();
+	// LEVEL_1();
+	Menu();
+	
 }
