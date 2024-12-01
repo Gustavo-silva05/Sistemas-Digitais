@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1732634222" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/hfrisc_soc.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1732982486" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/hfrisc_soc.dcp">
   <File Type="VDS-TIMINGSUMMARY" Name="hfrisc_soc_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="hfrisc_soc.dcp"/>
   <File Type="RDS-UTIL-PB" Name="hfrisc_soc_utilization_synth.pb"/>
@@ -11,6 +11,27 @@
   <File Type="PA-TCL" Name="hfrisc_soc.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
+    <File Path="$PPRDIR/../T2_CSD/ps2_keyboard.vhd">
+      <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../T2_CSD/PS2_axis.vhd">
+      <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../T2_CSD/PS2_if_axis.vhd">
+      <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PPRDIR/../../../../hf-risc/riscv/core_rv32e/bshifter.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -113,15 +134,15 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../../../../hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.vhd">
+    <File Path="$PPRDIR/../T2_CSD/debounce.vhd">
       <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../T2_CSD/debounce.vhd">
+    <File Path="$PPRDIR/../../../../hf-risc/riscv/platform/artix7_nexysA7/artix7_nexysa7_basic_soc_vga.vhd">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
